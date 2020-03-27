@@ -1,0 +1,18 @@
+NUMBER_OF_CARDS_IN_DECK = 52
+NUMBER_OF_CARDS_IN_HAND = 2
+NUMBER_OF_CARDS_ON_FLOP = 3
+NUMBER_OF_CARDS_ON_TURN = 1
+NUMBER_OF_CARDS_ON_RIVER = 1
+
+CARD_INDEX_TURN = 3
+CARD_INDEX_RIVER = 4
+CARD_INDEX_TOP_CARD = 0
+
+NO_CARD = 99
+
+################################
+# Player Statuses at the table #
+################################
+
+STATUS_SIT_OUT = 0
+STATUS_PLAYING = 1
