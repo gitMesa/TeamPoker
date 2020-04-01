@@ -2,11 +2,11 @@ from Common.VariableDefinitions import *
 from Player.PlayerProfile import PlayerProfile
 from GameLogic.CardDeck import CardDeck
 from GameLogic.Dealer import Dealer
+from GameLogic.HandEvaluator import HandEvaluator
 import numpy as np
 
 
 class PokerGame:
-
     numberOfPlayers = 0
     maximumPlayers = 9
 
@@ -79,6 +79,23 @@ class PokerGame:
                 prnt += self._deck.getCardNumberTranlation(card)
         print(prnt)
 
+    def takePlayerCardsPlusTableCards(self, playerID):
+        sevenCards = []
+        for card in eval(f'self._player{playerID}.getCardsInPlayerHand()'):
+            sevenCards.append(self._deck.getCardNumberTranlationEvaluation(card))
+        for card in self._dealer.getCardsOnTheTable():
+            sevenCards.append(self._deck.getCardNumberTranlationEvaluation(card))
+        return sevenCards
+
+    def evaluatePlayersHands(self):
+        print("\nResults:")
+        for player in range(self.numberOfPlayers):
+            playerName = eval(f'self._player{player}.name')
+            sevenCards = self.takePlayerCardsPlusTableCards(player)
+            handEvaluator = HandEvaluator(sevenCards, playerName)
+            result = handEvaluator.evaluteHand()
+            print(result)
+
 
 game = PokerGame()
 game.addNewPlayer('Victor', 10.0)
@@ -100,5 +117,4 @@ game.printTableCards()
 print('River: ')
 game.card_round_river()
 game.printTableCards()
-
-
+game.evaluatePlayersHands()
