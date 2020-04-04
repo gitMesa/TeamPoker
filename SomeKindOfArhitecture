@@ -1,0 +1,31 @@
+
+
+                    +--------------------------+-----------------------------+
+                    +                          +                             +
+                    +     Deck/Cards Class     +      Game Logic Class       +
+                    +                          +                             +
+        +-----------+--------------------------+-----------------------------+
+        +           +                                                        +
+        +           +                 Poker Game Class                       +
+        +   Player  +                                                        +
+        +   Class   +--------------------------+-----------------------------+
+        +           +         Server Mode      +       Client Mode           +
+        +           +           Instance       +        Instance             +
+        +-----------+--------------------------+-----------------------------+
+        +                      Main UI Class                                 +
+        +--------------------------------------------------------------------+
+
+Main UI Class
+    - Creates a instance of Poker Game Class by either creating a Server Mode instance or Client Mode instance
+    - If Server Mode, UI will ask for game rules, etc.
+    - If Client Mode, UI will ask for IP address of server.
+
+Player Class:
+    - Template for Player
+    - Contains Number of Chips.
+    - Player Hand.
+
+Poker Game Class
+    - Expands Deck/Card class and Game Logic Class
+    - Has methods to give cards to players, evaluate cards, etc.
+    - Handles Call/Raise/Fold/stuff.
