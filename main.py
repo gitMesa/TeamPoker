@@ -1,8 +1,8 @@
-from Common.VariableDefinitions import *
-from Player.PlayerProfile import PlayerProfile
-from GameLogic.CardDeck import CardDeck
-from GameLogic.Dealer import Dealer
-from GameLogic.HandEvaluator import HandEvaluator
+from TeamPokerMainApp.Common.VariableDefinitions import *
+from TeamPokerMainApp.Player.PlayerProfile import PlayerProfile
+from TeamPokerMainApp.PokerGame.DeckLogic.CardDeck import CardDeck
+from TeamPokerMainApp.PokerGame.GameLogic.Dealer import Dealer
+from TeamPokerMainApp.PokerGame.GameLogic.HandEvaluator import HandEvaluator
 import numpy as np
 
 
@@ -36,8 +36,8 @@ class PokerGame:
 
     def newPokerRound(self):
         self._dealer.clearCardsOnTheTableAndPot()
-        self.deck = self._deck.getShuffledDeck()
-        self._deck.printShuffledDeck(self.deck)
+        self.deck = self._deck.get_shuffled_deck()
+        self._deck.print_shuffled_deck(self.deck)
         # start giving cards to players
         for card in range(NUMBER_OF_CARDS_IN_HAND):
             for player in range(self.maximumPlayers):
@@ -67,7 +67,7 @@ class PokerGame:
             printingString = eval(f'self._player{player}.name')
             for item in eval(f'self._player{player}.getCardsInPlayerHand()'):
                 printingString += ' '
-                printingString += self._deck.getCardNumberTranlation(item)
+                printingString += self._deck.get_card_name_from_card_number(item)
 
             print(printingString)
 
@@ -76,15 +76,15 @@ class PokerGame:
         for card in self._dealer.getCardsOnTheTable():
             if card is not NO_CARD:
                 prnt += ' '
-                prnt += self._deck.getCardNumberTranlation(card)
+                prnt += self._deck.get_card_name_from_card_number(card)
         print(prnt)
 
     def takePlayerCardsPlusTableCards(self, playerID):
         sevenCards = []
         for card in eval(f'self._player{playerID}.getCardsInPlayerHand()'):
-            sevenCards.append(self._deck.getCardNumberTranlationEvaluation(card))
+            sevenCards.append(self._deck.get_card_number_from_card_id(card))
         for card in self._dealer.getCardsOnTheTable():
-            sevenCards.append(self._deck.getCardNumberTranlationEvaluation(card))
+            sevenCards.append(self._deck.get_card_number_from_card_id(card))
         return sevenCards
 
     def evaluatePlayersHands(self):
@@ -93,7 +93,7 @@ class PokerGame:
             playerName = eval(f'self._player{player}.name')
             sevenCards = self.takePlayerCardsPlusTableCards(player)
             handEvaluator = HandEvaluator(sevenCards, playerName)
-            result = handEvaluator.evaluteHand()
+            result = handEvaluator.evaluate_hand()
             print(result)
 
 
