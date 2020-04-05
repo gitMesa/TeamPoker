@@ -1,16 +1,18 @@
 from TeamPokerMainApp.Player.PlayerProfile import PlayerProfileClass
 from TeamPokerMainApp.PokerGame.PokerGame import PokerGameClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
+from PyQt5.QtWidgets import QApplication
+import sys
 
 
 class TeamPokerMain:
 
     def __init__(self):
-        pass
+        self._poker = PokerGameClass()
+        self._poker.show_main_window()
 
-    def create_poker_game_server(self):
-        self._PokerGame = PokerGameClass(mode=SERVER)
 
-    def create_poker_game_client(self):
-        self._PokerGame = PokerGameClass(mode=CLIENT)
-
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = TeamPokerMain()
+    app.exec()

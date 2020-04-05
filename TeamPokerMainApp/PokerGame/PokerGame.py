@@ -1,3 +1,4 @@
+from TeamPokerMainApp.PokerGame.GameUI.UiCode.TeamPokerUIController import TeamPokerUIControllerClass
 from TeamPokerMainApp.PokerGame.GameLogic.Dealer import DealerClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 
@@ -23,14 +24,11 @@ from TeamPokerMainApp.Common.VariableDefinitions import *
 
 class PokerGameClass:
 
-    def __init__(self, mode, player_info):
-        if mode is SERVER:
-            self._GameLogic = DealerClass
-            self.PlayerInfo = player_info
-        elif mode is CLIENT:
-            self.PlayerInfo = player_info
-        else:
-            print('Somebody fucked up!')
+    def __init__(self):
+        self._win = TeamPokerUIControllerClass()
+
+    def show_main_window(self):
+        self._win.showMainWindow()
 
 ###################################################################
 # 1. Mode Server:
@@ -42,4 +40,8 @@ class PokerGameClass:
 #   Shall receive actions from Players(Client Mode).
 ###################################################################
 
+    def create_server_mode(self):
+        self._dealer = DealerClass()
+
     def setup_game_rules(self):
+        pass

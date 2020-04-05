@@ -20,8 +20,13 @@ except Exception as e:
     print(f'Error {e}')
 
 for file in os.listdir(os.getcwd()):
+    path_one_folder_up = os.path.abspath(os.path.join(file, "../.."))
+    path_three_folder_up = os.path.abspath(os.path.join(file, "../../../.."))
     if file.endswith('.py') and file != 'generateUI.py':
-        print(f'Moving file {file}')
-        path_one_folder_up = os.path.abspath(os.path.join(file, "../.."))
-        shutil.copy(file, path_one_folder_up + '\\UiCode\\')
+        if file.startswith('pixels'):
+            print(f'Moving file {file}')
+            shutil.copy(file, path_three_folder_up)
+        else:
+            print(f'Moving file {file}')
+            shutil.copy(file, path_one_folder_up + '\\UiCode\\')
         os.remove(file)
