@@ -26,9 +26,14 @@ class PokerGameClass:
 
     def __init__(self):
         self._win = TeamPokerUIControllerClass()
+        self.initConnectButtons()
 
     def show_main_window(self):
         self._win.showMainWindow()
+
+    def initConnectButtons(self):
+        self._win.connectButtonHostGame(self.start_poker_server)
+        self._win.connectButtonJoinGame(self.start_poker_client)
 
 ###################################################################
 # 1. Mode Server:
@@ -40,8 +45,18 @@ class PokerGameClass:
 #   Shall receive actions from Players(Client Mode).
 ###################################################################
 
-    def create_server_mode(self):
+    def start_poker_server(self):
         self._dealer = DealerClass()
 
     def setup_game_rules(self):
+        pass
+
+###################################################################
+# 2. Client Mode:
+#   Shall connect to the server providing UserName and UserIcon?
+#   Shall receive from Server cards.
+#   Shall send to Server Actions.
+###################################################################
+
+    def start_poker_client(self):
         pass

@@ -11,7 +11,6 @@ class TeamPokerMain:
         self._poker = PokerGameClass()
         self._poker.show_main_window()
 
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = TeamPokerMain()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1204</width>
-    <height>868</height>
+    <height>904</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -104,7 +104,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="buttonHostAGame">
             <property name="minimumSize">
              <size>
               <width>80</width>
@@ -117,7 +117,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="buttonJoinAGame">
             <property name="minimumSize">
              <size>
               <width>80</width>
@@ -179,13 +179,244 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <widget class="QComboBox" name="comboBox">
+              <widget class="QComboBox" name="icon_selection_combobox">
                <property name="minimumSize">
                 <size>
                  <width>70</width>
                  <height>70</height>
                 </size>
                </property>
+               <property name="iconSize">
+                <size>
+                 <width>70</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-magneto-70.png</normaloff>:/user_icons/user_icons/icons8-magneto-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-popeye-70.png</normaloff>:/user_icons/user_icons/icons8-popeye-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-thanos-70.png</normaloff>:/user_icons/user_icons/icons8-thanos-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-yoda-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</iconset>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="pixels.qrc">
+                  <normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</iconset>
+                </property>
+               </item>
               </widget>
              </item>
              <item>
@@ -220,6 +451,12 @@
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Daniel Negreanu</string>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -239,6 +476,30 @@
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_69">
+          <item>
+           <spacer name="horizontalSpacer_41">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_test_play_arena">
+            <property name="text">
+             <string>test button please ignore</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -262,13 +523,13 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
-           <number>15</number>
+           <number>10</number>
           </property>
           <property name="topMargin">
-           <number>15</number>
+           <number>20</number>
           </property>
           <property name="bottomMargin">
-           <number>15</number>
+           <number>20</number>
           </property>
           <item>
            <spacer name="verticalSpacer_4">
@@ -566,7 +827,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_8">
+             <widget class="QPushButton" name="buttonStartHostingAGame">
               <property name="minimumSize">
                <size>
                 <width>150</width>
@@ -606,6 +867,43 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_71">
+            <item>
+             <spacer name="horizontalSpacer_46">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="button_host_to_main_page">
+              <property name="text">
+               <string>Back to Main Page</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_47">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
          </layout>
         </item>
         <item>
@@ -616,6 +914,304 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>402</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page">
+       <layout class="QHBoxLayout" name="horizontalLayout_66">
+        <item>
+         <spacer name="horizontalSpacer_28">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_19">
+          <property name="spacing">
+           <number>15</number>
+          </property>
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <item>
+           <spacer name="verticalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Join A Game:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_56">
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="rightMargin">
+             <number>20</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>IP Adress:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="line_ip">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>111.000.111.000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="line_port_number">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>1234</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_63">
+            <item>
+             <spacer name="horizontalSpacer_33">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="button_test_connection">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Test Connection Availability</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_36">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_68">
+            <item>
+             <spacer name="horizontalSpacer_38">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_connection_status">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_40">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_67">
+            <item>
+             <spacer name="horizontalSpacer_30">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="button_join_the_game">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Join the Game</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_31">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_70">
+            <item>
+             <spacer name="horizontalSpacer_43">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="button_client_to_main_page">
+              <property name="text">
+               <string>Back to Main Page</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_45">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_29">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
             <height>20</height>
            </size>
           </property>
@@ -2695,6 +3291,23 @@
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_82">
+          <item>
+           <widget class="QPushButton" name="button_play_arena_to_main_page">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>dev go to main</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
