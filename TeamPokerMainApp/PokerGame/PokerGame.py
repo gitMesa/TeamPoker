@@ -1,8 +1,9 @@
 from TeamPokerMainApp.PokerGame.GameLogic.Dealer import DealerClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 
-###################################################################
-# Purpose of this class is to create 2 types of PokerGameClasses
+####################################################################
+# Purpose of this class is to connect the UI to the Game Logic part.
+# From the UI you can either create a Server or a Client
 #
 # 1. Mode Server:
 #   Shall set up rules for the game. Small/Big Blind, Buy-In Rules, etc.
