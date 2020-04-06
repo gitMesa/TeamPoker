@@ -65,12 +65,12 @@ class PokerGameClass:
         tpl = (starting_ammount, currency, small_blind, big_blind, blind_interval)
         return tpl
 
-###################################################################
+######################################################################################################
 # 2. Client Mode:
-#   Shall connect to the server providing UserName and UserIcon?
-#   Shall receive from Server cards.
-#   Shall send to Server Actions.
-###################################################################
+#   Shall connect to the server.
+#   Shall update the packet based on own information (actions, bets, etc).
+#   Shall contact the server asking for updates from UI from other players.
+######################################################################################################
 
     def start_poker_client(self):
         self._client = ClientClass(ip=self._win.getJoinAGameIpAdress(), port=self._win.getJoinAGamePortNumber())
@@ -82,8 +82,12 @@ class PokerGameClass:
         self.update_timer.timeout.connect(self.request_update)
 
     def request_update(self):
+        #TODO: update my own packet info based on the UI settings before sending it to the server
         update_from_server = self._client.send_and_receive_update(self._comm.getCommunicationPacket())
         self.update_client_ui_based_on_server_update(update_from_server)
 
     def update_client_ui_based_on_server_update(self, update_from_server):
+        pass
+
+    def update_packet_from_own_ui(self):
         pass
