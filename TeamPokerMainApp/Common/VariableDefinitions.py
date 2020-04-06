@@ -1,9 +1,22 @@
 ################################
+#   Other Random Definitions   #
+################################
+NUMBER_INDEX_TUPLE = 0
+COLOR_INDEX_TUPLE = 1
+NO_CARD = 99
+
+STATUS_EMPTY_SEAT = 0
+STATUS_SIT_OUT = 1
+STATUS_PLAYING = 2
+
+################################
 #    Server/Client Stuff Def   #
 ################################
 
 SERVER = 0
 CLIENT = 1
+NO_OF_CLIENTS = 7  # server + 7 = 8
+BUFFERSIZE = 2048
 
 ################################
 #    Deck Stuff Definitions    #
@@ -59,18 +72,3 @@ TRIPS_DESCRIPTION = "trips"
 TWO_PAIRS_DESCRIPTION = "two pair"
 PAIR_DESCRIPTION = "pair"
 HIGH_CARD_DESCRIPTION = "high card"
-
-
-################################
-# Player Statuses at the table #
-################################
-
-STATUS_SIT_OUT = 0
-STATUS_PLAYING = 1
-
-################################
-#   Other Random Definitions   #
-################################
-NUMBER_INDEX_TUPLE = 0
-COLOR_INDEX_TUPLE = 1
-NO_CARD = 99

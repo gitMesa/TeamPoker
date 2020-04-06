@@ -33,7 +33,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -568,7 +568,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_4">
+             <widget class="QLineEdit" name="line_game_name">
               <property name="placeholderText">
                <string>Something Something Something Dark Side...</string>
               </property>
@@ -577,11 +577,67 @@
            </layout>
           </item>
           <item>
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string/>
+           <layout class="QHBoxLayout" name="horizontalLayout_83">
+            <property name="leftMargin">
+             <number>0</number>
             </property>
-           </widget>
+            <property name="rightMargin">
+             <number>15</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>IP Adress:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="line_host_game_ip">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>111.000.111.000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_48">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="line_host_game_port">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>1234</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -597,7 +653,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_3">
+                 <widget class="QLineEdit" name="line_starting_ammount">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -627,7 +683,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                 <widget class="QDoubleSpinBox" name="spinbox_small_blind">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -670,7 +726,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_2">
+                 <widget class="QLineEdit" name="line_currency">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -706,7 +762,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                 <widget class="QDoubleSpinBox" name="spinbox_big_blind">
                   <property name="minimumSize">
                    <size>
                     <width>60</width>
@@ -766,7 +822,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_2">
+             <widget class="QComboBox" name="combobox_blind_raise_interval">
               <item>
                <property name="text">
                 <string>No Blind Raising</string>
@@ -995,7 +1051,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="line_ip">
+             <widget class="QLineEdit" name="line_join_game_ip">
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -1012,7 +1068,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="line_port_number">
+             <widget class="QLineEdit" name="line_join_game_port">
               <property name="maximumSize">
                <size>
                 <width>50</width>
@@ -2832,7 +2888,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QPushButton" name="player1_dealer">
+                <widget class="QPushButton" name="playerEGO_dealer">
                  <property name="minimumSize">
                   <size>
                    <width>40</width>
@@ -2851,7 +2907,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="player1_action">
+                <widget class="QLabel" name="playerEGO_action">
                  <property name="text">
                   <string>TextLabel</string>
                  </property>
@@ -2879,7 +2935,7 @@
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_36">
                    <item>
-                    <widget class="QPushButton" name="player1_icon">
+                    <widget class="QPushButton" name="playerEGO_icon">
                      <property name="minimumSize">
                       <size>
                        <width>70</width>
@@ -2915,7 +2971,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QLabel" name="player1_name">
+                    <widget class="QLabel" name="playerEGO_name">
                      <property name="text">
                       <string>TextLabel</string>
                      </property>
@@ -2952,7 +3008,7 @@
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QLabel" name="player1_money_available">
+                    <widget class="QLabel" name="playerEGO_money_available">
                      <property name="text">
                       <string>0.00</string>
                      </property>
@@ -2978,7 +3034,7 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_45">
                  <item>
-                  <widget class="QPushButton" name="player1_card1">
+                  <widget class="QPushButton" name="playerEGO_card1">
                    <property name="minimumSize">
                     <size>
                      <width>90</width>
@@ -2991,7 +3047,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="player1_card2">
+                  <widget class="QPushButton" name="playerEGO_card2">
                    <property name="minimumSize">
                     <size>
                      <width>90</width>
