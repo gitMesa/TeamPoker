@@ -1,7 +1,7 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
 from _thread import *
 import socket
-import pickle
+import json
 
 # server = "192.168.0.114"
 # port = 5555
@@ -28,15 +28,16 @@ class MultiplayerServerClass:
             start_new_thread(self.threaded_client_comm, (conn, currentPlayer))
             currentPlayer += 1
 
-    def threaded_client_comm(self, conn, player):
-        # server reply on connect
-        conn.send(str.encode("Server replies Hi!", encoding='utf-8'))
+    def threaded_client_comm(self, conn, playerNumber):
+        # Handshake Sent Message:
+        conn.send(str(playerNumber).encode())
         while True:
             triesToWaitForDisconnection = 0
             try:
                 # Client sent new data
-                clientData = conn.recv(BUFFERSIZE).decode()
-                print(f"Server Received from Player{player}: {clientData}")
+                # this is done with byte-like data
+                clientData = self.string_to_dict(conn.recv(BUFFERSIZE).decode())
+                print(f"Server Received from Player{playerNumber}: {clientData}")
 
                 if not clientData:
                     if triesToWaitForDisconnection > 50:
@@ -44,13 +45,12 @@ class MultiplayerServerClass:
                         break
                     triesToWaitForDisconnection += 1
                 else:
-                    self.update_network_data_from_players(clientData, player)
-
+                    #self.update_network_data_from_players(clientData, playerNumber)
                     triesToWaitForDisconnection = 0
-                print(f"Server sending update to Player{player}.")
-                conn.sendall(str.encode(pickle.dumps(self.serverData), encoding='utf-8'))
+                print(f"Server sending update to Player{playerNumber}.")
+                conn.sendall(self.dict_to_string(self.serverData).encode())
             except Exception as e:
-                print(e)
+                print(f"threaded_client_comm: {e}")
                 break
         print("Lost connection")
         conn.close()
@@ -71,3 +71,14 @@ class MultiplayerServerClass:
             oldData = list(self.serverData["Players"][player])
             oldData[player][6] = dict_player_cards[player]
             self.serverData["Players"][player] = tuple(oldData)
+
+    def dict_to_string(self, dict):
+        newDict = json.dumps(dict)
+        type(f'dict_to_string Type: {newDict}')
+        return newDict
+
+    def string_to_dict(self, string):
+        newDict = json.loads(string)
+        type(f'string_to_dict Type: {newDict}')
+        return newDict
+

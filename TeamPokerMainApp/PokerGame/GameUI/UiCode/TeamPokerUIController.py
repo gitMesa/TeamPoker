@@ -1,4 +1,5 @@
 from TeamPokerMainApp.PokerGame.GameUI.UiCode.TeamPokerUI import *
+from PyQt5.Qt import QDoubleValidator, QIntValidator
 import socket
 
 PAGE_MAIN = 0
@@ -21,6 +22,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_play_arena_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
         self.line_host_game_ip.setText(self.get_ip())
         self.line_host_game_port.setText(str(5555))
+        self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
 
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -36,6 +38,34 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def showMainWindow(self):
         self.show()
+
+    def goToPlayingArena(self):
+        self.stackedWidget.setCurrentIndex(PAGE_PLAYING_ARENA)
+
+    def setUiEgoPlayerCards(self, card_number, card_code):
+        qtIcon = QtGui.QIcon(QtGui.QPixmap(f'url(:/cards/cards_jpeg/{card_code}.jpg)'))
+        if card_number is 1:
+            self.playerEGO_card1.setIcon(qtIcon)
+        elif card_number is 2:
+            self.playerEGO_card2.setIcon(qtIcon)
+
+    def setUiPlayerMoneyCurrency(self, player, ammount):
+        eval(f'self.player{player}_money_available.setText(ammount)')
+
+    def setUiPlayerName(self, player, name):
+        eval(f'self.player{player}_name.setText(name)')
+
+    def setUiPlayerIcons(self, player, icon_name):
+        playerIcon = QtGui.QIcon(QtGui.QPixmap(f'url(:/user_icons/user_icons/icons8-{icon_name}-70.png)'))
+        eval(f'self.player{player}_icon.setIcon(playerIcon)')
+
+    def setUiDealerIcons(self, player, dealer_icon_name):
+        # dealer_icon_name should be 'dealer'/'small_blind'/'big_blind'
+        if len(dealer_icon_name) > 0:
+            dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(f'url(:/other_icons/other_icons/icon_{dealer_icon_name}.png)'))
+        else:
+            dealer_blind_icon = ''  # if player is none of the above
+        eval(f'self.player{player}_dealer.setIcon(dealer_blind_icon)')
 
     def getGameName(self):
         return self.line_game_name.text()
@@ -53,16 +83,19 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         return int(self.line_join_game_port.text())
 
     def getStartingAmmount(self):
-        return float(self.line_starting_ammount.text())
+        if len(self.line_starting_ammount.text()) > 0:
+            return float(self.line_starting_ammount.text())
+        else:
+            return 0
 
     def getCurrency(self):
         return self.line_currency.text()
 
     def getSmallBlind(self):
-        return float(self.spinbox_small_blind.text())
+        return float(self.spinbox_small_blind.value())
 
     def getBigBlind(self):
-        return float(self.spinbox_big_blind.text())
+        return float(self.spinbox_big_blind.value())
 
     def getBlindInterval(self):
         return self.combobox_blind_raise_interval.currentText()
@@ -72,3 +105,6 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def connectButtonJoinGame(self, callback_function):
         self.buttonJoinAGame.clicked.connect(callback_function)
+
+    def connectButtonDevStartDealer(self, callback_function):
+        self.button_start_dealing.clicked.connect(callback_function)

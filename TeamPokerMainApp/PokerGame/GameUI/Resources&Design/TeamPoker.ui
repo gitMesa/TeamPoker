@@ -33,7 +33,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1312,6 +1312,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1384,6 +1390,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1396,6 +1408,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1443,6 +1461,12 @@
                        </property>
                        <property name="text">
                         <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
@@ -1499,6 +1523,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1568,6 +1598,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1580,6 +1616,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1616,6 +1658,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>40</width>
+                     <height>40</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1744,6 +1792,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -1782,6 +1836,12 @@
                        <property name="text">
                         <string/>
                        </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
+                       </property>
                       </widget>
                      </item>
                     </layout>
@@ -1812,6 +1872,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1824,6 +1890,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1889,6 +1961,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -1962,6 +2040,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -1974,6 +2058,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2021,6 +2111,12 @@
                        </property>
                        <property name="text">
                         <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
@@ -2070,6 +2166,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
+              </property>
              </widget>
             </item>
            </layout>
@@ -2087,6 +2189,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -2099,6 +2207,12 @@
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -2113,6 +2227,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -2126,6 +2246,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -2138,6 +2264,12 @@
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>70</width>
+                <height>105</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -2241,6 +2373,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -2279,6 +2417,12 @@
                        <property name="text">
                         <string/>
                        </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
+                       </property>
                       </widget>
                      </item>
                     </layout>
@@ -2309,6 +2453,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -2321,6 +2471,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2402,6 +2558,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -2474,6 +2636,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -2486,6 +2654,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2533,6 +2707,12 @@
                        </property>
                        <property name="text">
                         <string/>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
@@ -2721,6 +2901,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>70</width>
+                     <height>70</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -2759,6 +2945,12 @@
                        <property name="text">
                         <string/>
                        </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>40</width>
+                         <height>40</height>
+                        </size>
+                       </property>
                       </widget>
                      </item>
                     </layout>
@@ -2789,6 +2981,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -2801,6 +2999,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>50</width>
+                     <height>85</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2904,6 +3108,12 @@
                  <property name="text">
                   <string/>
                  </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>40</width>
+                   <height>40</height>
+                  </size>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -2950,6 +3160,12 @@
                      </property>
                      <property name="text">
                       <string/>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>70</width>
+                       <height>70</height>
+                      </size>
                      </property>
                     </widget>
                    </item>
@@ -3044,6 +3260,12 @@
                    <property name="text">
                     <string/>
                    </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>90</width>
+                     <height>125</height>
+                    </size>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -3056,6 +3278,12 @@
                    </property>
                    <property name="text">
                     <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>90</width>
+                     <height>125</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -3352,6 +3580,19 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_82">
+          <item>
+           <widget class="QPushButton" name="button_start_dealing">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>dev start dealing</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QPushButton" name="button_play_arena_to_main_page">
             <property name="maximumSize">

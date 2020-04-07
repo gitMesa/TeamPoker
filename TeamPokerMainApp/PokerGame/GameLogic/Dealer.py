@@ -6,10 +6,10 @@ import numpy as np
 
 class DealerClass(HandEvaluatorClass, CardDeckClass):
 
-    def __init__(self, game_rules):
-        self.game_rules = game_rules
+    def __init__(self, game_rules, network_packet):
         self.init_deck()
-        self.table_info = COMMUNICATION_PACKET
+        self.game_rules = game_rules
+        self.table_info = network_packet
         self.clear_cards_on_table_and_pot()
 
     def getTableInfo(self):
@@ -31,9 +31,9 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
     def clear_cards_on_table_and_pot(self):
         self.table_info["TableCards"] = [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD]
         self.table_info["TablePot"] = 0.0
-        for player in range(NO_OF_CLIENTS):
+        for player in range(1, NO_OF_CLIENTS):
             playerData = list(self.table_info["Players"][player])
-            playerData[5] = [NO_CARD, NO_CARD]
+            playerData[COMM_PACKET_player_cards] = [NO_CARD, NO_CARD]
             self.table_info["Players"][player] = tuple(playerData)
 
     def card_round_flop(self):

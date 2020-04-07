@@ -9,6 +9,9 @@ STATUS_EMPTY_SEAT = 0
 STATUS_SIT_OUT = 1
 STATUS_PLAYING = 2
 
+GAME_STATUS_NEW_ROUND_READY = 0
+GAME_STATUS_EVALUATE_HANDS = 1
+
 ################################
 #    Server/Client Stuff Def   #
 ################################
@@ -17,6 +20,14 @@ SERVER = 0
 CLIENT = 1
 NO_OF_CLIENTS = 7  # server + 7 = 8
 BUFFERSIZE = 2048
+
+COMM_PACKET_status = 0
+COMM_PACKET_name = 1
+COMM_PACKET_icon_id = 2
+COMM_PACKET_action_id = 3
+COMM_PACKET_money_available = 4
+COMM_PACKET_dealer_icon = 5
+COMM_PACKET_player_cards = 6
 
 ################################
 #    Deck Stuff Definitions    #
@@ -36,7 +47,8 @@ J_NUMBER = 11
 
 CARD_SIGNS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A']
 CARD_SIGNS_INDEX = [2, 3, 4, 5, 6, 7, 8, 9, 10, J_NUMBER, Q_NUMBER, K_NUMBER, A_NUMBER]
-CARD_SUITS = ['♡', '♤', '♧', '♢']
+#CARD_SUITS = ['♡', '♤', '♧', '♢']
+CARD_SUITS = ['H', 'S', 'C', 'D']
 CARD_SUITS_TEXT = ['heart', 'spade', 'club', 'diamond']
 
 CARD_INDEX_TURN = 3

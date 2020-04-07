@@ -16,7 +16,7 @@ class CardDeckClass:
                 i += 1
 
         print(self.deckDefinition)
-        print(self.deckDefinitionEvaluation)
+        # print(self.deckDefinitionEvaluation)
 
     # create an array of 52 cards(as indexes) and shuffle it
     def shuffle_deck(self):
