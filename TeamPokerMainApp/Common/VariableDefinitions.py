@@ -5,9 +5,12 @@ NUMBER_INDEX_TUPLE = 0
 COLOR_INDEX_TUPLE = 1
 NO_CARD = 99
 
-STATUS_EMPTY_SEAT = 0
-STATUS_SIT_OUT = 1
-STATUS_PLAYING = 2
+STATUS_CONNECTED = 0
+STATUS_DISCONNECTED = 1
+STATUS_CONNECTION_LOST = 2
+STATUS_EMPTY_SEAT = 3
+STATUS_SIT_OUT = 4
+STATUS_PLAYING = 5
 
 GAME_STATUS_NEW_ROUND_READY = 0
 GAME_STATUS_EVALUATE_HANDS = 1
@@ -16,18 +19,25 @@ GAME_STATUS_EVALUATE_HANDS = 1
 #    Server/Client Stuff Def   #
 ################################
 
-SERVER = 0
-CLIENT = 1
-NO_OF_CLIENTS = 7  # server + 7 = 8
+DEALER = 0
+PLAYER = 1
+MAX_CLIENTS = 7  # server + 7 = 8
 BUFFERSIZE = 2048
 
-COMM_PACKET_status = 0
-COMM_PACKET_name = 1
-COMM_PACKET_icon_id = 2
-COMM_PACKET_action_id = 3
-COMM_PACKET_money_available = 4
-COMM_PACKET_dealer_icon = 5
-COMM_PACKET_player_cards = 6
+# Thread safe definition
+GAME_DATA_IN_USE = 0
+
+# Indexes for field location within the player information.
+PACKET_table_spot = 0  # this will hold values from 2 to 8
+PACKET_status = 1
+PACKET_name = 2
+PACKET_icon = 3
+PACKET_action_id = 4
+PACKET_money_available = 5
+PACKET_dealer_icon = 6
+PACKET_player_cards = 7
+
+
 
 ################################
 #    Deck Stuff Definitions    #

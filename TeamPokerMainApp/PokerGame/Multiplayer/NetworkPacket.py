@@ -1,36 +1,27 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
+from PyQt5.Qt import QMutex
 
-########################################
-#    Communication Packet Definition   #
-########################################
+class NetworkPacket:
 
+    def __init__(self):
 
-class NetworkPacketClass:
+        self.mutex = QMutex()
 
-    # Defined in VariableDefinitions.py
-    # COMM_PACKET_status = 0
-    # COMM_PACKET_name = 1
-    # COMM_PACKET_icon_id = 2
-    # COMM_PACKET_action_id = 3
-    # COMM_PACKET_money_available = 4
-    # COMM_PACKET_dealer_icon = 5
-    # COMM_PACKET_player_cards = 6
+        self.PLAYER_DATA_FIELDS = list((int(0), STATUS_EMPTY_SEAT, str(""), str(""), int(0), float(0.0), str(""), [NO_CARD, NO_CARD]))
 
-    COMMUNICATION_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
-                                       "BurnedCards": int,
-                                       "TablePot": float
-                                       },
-                            "Players": {
-                                1: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                2: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                3: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                4: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                5: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                6: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                7: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                                8: (STATUS_EMPTY_SEAT, str, int, int, float, str, [NO_CARD, NO_CARD]),
-                            }
-                            }
+        self.GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
+                                            "BurnedCards": int(0),
+                                            "TablePot": float(0.0)},
+                                 "Players": {1: list.copy(self.PLAYER_DATA_FIELDS),
+                                             2: list.copy(self.PLAYER_DATA_FIELDS),
+                                             3: list.copy(self.PLAYER_DATA_FIELDS),
+                                             4: list.copy(self.PLAYER_DATA_FIELDS),
+                                             5: list.copy(self.PLAYER_DATA_FIELDS),
+                                             6: list.copy(self.PLAYER_DATA_FIELDS),
+                                             7: list.copy(self.PLAYER_DATA_FIELDS),
+                                             8: list.copy(self.PLAYER_DATA_FIELDS),
+                                             }
+                                 }
 
-    def getCommunicationPacket(self):
-        return self.COMMUNICATION_PACKET
+    def get_copy_of_game_data(self):
+        pass

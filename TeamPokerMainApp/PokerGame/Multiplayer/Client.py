@@ -1,6 +1,5 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
 import socket
-import json
 
 
 class ClientClass:
@@ -10,38 +9,31 @@ class ClientClass:
         self.addr = (ip, port)
 
     def connect_to_server_and_get_player_position(self):
-        return self.connect()
-
-    def connect(self):
         try:
             self.client.connect(self.addr)
             handshake_reply = self.client.recv(BUFFERSIZE).decode()
-            print(f'Connected to the server, my player index is: {handshake_reply}')
+            print(f'CLIENT: Server Connection Established. My player index is: {handshake_reply}')
             return handshake_reply
         except Exception as e:
-            print(e)
+            print(f'connect_to_server_and_get_player_position -> {e}')
 
-    def send_and_receive_update(self, data):
+    def send_client_data_and_receive_dealer_data(self, data):
         try:
-            self.client.sendall(self.dict_to_string(data).encode())
+            self.client.sendall(str(data).encode())
             recvd = self.client.recv(BUFFERSIZE).decode()
-            print(f'received back from server {type(recvd)}')
-            return self.string_to_dict(recvd)
+            return str(recvd)
         except socket.error as e:
-            print(e)
+            print(f'send_client_data_and_receive_dealer_data -> {e}')
 
     def send_dealer_update_to_server(self, data):
         try:
+            # print(f'CLIENT-SIDE: {type(data)} -> {data}')
             self.client.sendall(self.dict_to_string(data).encode())
         except socket.error as e:
-            print(e)
+            print(f'send_dealer_update_to_server -> {e}')
 
     def dict_to_string(self, dict):
-        newDict = json.dumps(dict)
-        type(newDict)
-        return newDict
+        return str(dict)
 
     def string_to_dict(self, string):
-        newDict = json.loads(string)
-        type(newDict)
-        return newDict
+        return eval(string)

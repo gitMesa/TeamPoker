@@ -33,7 +33,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -186,6 +186,12 @@
                  <height>70</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>90</width>
+                 <height>70</height>
+                </size>
+               </property>
                <property name="iconSize">
                 <size>
                  <width>70</width>
@@ -194,7 +200,7 @@
                </property>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-baby-yoda-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -203,7 +209,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-darth-vader-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -212,7 +218,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-deadpool-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -221,7 +227,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-futurama-bender-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -230,7 +236,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-futurama-fry-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -239,7 +245,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-futurama-leela-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -248,7 +254,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-futurama-zoidberg-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -257,7 +263,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-futurama-professor-farnsworth-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -266,7 +272,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-green-arrow-dc-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -275,7 +281,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-green-lantern-dc-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -284,7 +290,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-harley-quinn-dc-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -293,7 +299,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-iron-man-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -302,7 +308,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-joker-dc-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -311,7 +317,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-magneto-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -320,7 +326,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-nightwing-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -329,7 +335,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-ninja-turtle-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -338,7 +344,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-penguin-dc-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -347,7 +353,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-popeye-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -356,7 +362,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-rick-sanchez-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -365,7 +371,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-stormtrooper-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -374,7 +380,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-thanos-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -383,7 +389,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-walter-white-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -392,7 +398,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-yoda-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -401,7 +407,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-cyborg-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -410,7 +416,7 @@
                </item>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>icons8-catwoman-70.png</string>
                 </property>
                 <property name="icon">
                  <iconset resource="pixels.qrc">
@@ -438,7 +444,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit">
+                <widget class="QLineEdit" name="line_user_name">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -3581,7 +3587,27 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_82">
           <item>
-           <widget class="QPushButton" name="button_start_dealing">
+           <spacer name="horizontalSpacer_50">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Dev Stuff:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_dev_start_dealing">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -3594,7 +3620,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="button_play_arena_to_main_page">
+           <widget class="QPushButton" name="button_dev_play_arena_to_main_page">
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -3605,6 +3631,33 @@
              <string>dev go to main</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Dealer status:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_dev_dealer_status">
+            <property name="text">
+             <string>STATUS</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_49">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>

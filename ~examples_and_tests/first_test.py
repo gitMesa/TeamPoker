@@ -1,6 +1,6 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
 from TeamPokerMainApp.Player.PlayerProfile import PlayerProfile
-from TeamPokerMainApp.PokerGame.DeckLogic.CardDeck import CardDeck
+from TeamPokerMainApp.PokerGame.GameLogic.CardDeck import CardDeck
 from TeamPokerMainApp.PokerGame.GameLogic.Dealer import Dealer
 from TeamPokerMainApp.PokerGame.GameLogic.HandEvaluator import HandEvaluator
 import numpy as np

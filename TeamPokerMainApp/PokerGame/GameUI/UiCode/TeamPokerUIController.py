@@ -19,7 +19,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_test_play_arena.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_PLAYING_ARENA))
         self.button_client_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
         self.button_host_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
-        self.button_play_arena_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
+        self.button_dev_play_arena_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
         self.line_host_game_ip.setText(self.get_ip())
         self.line_host_game_port.setText(str(5555))
         self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
@@ -41,6 +41,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def goToPlayingArena(self):
         self.stackedWidget.setCurrentIndex(PAGE_PLAYING_ARENA)
+
+    # ##### SETTERS ################################################################################################
 
     def setUiEgoPlayerCards(self, card_number, card_code):
         qtIcon = QtGui.QIcon(QtGui.QPixmap(f'url(:/cards/cards_jpeg/{card_code}.jpg)'))
@@ -66,6 +68,14 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             dealer_blind_icon = ''  # if player is none of the above
         eval(f'self.player{player}_dealer.setIcon(dealer_blind_icon)')
+
+    # ##### GETTERS ################################################################################################
+
+    def getUserName(self):
+        return self.line_user_name.text()
+
+    def getIconID(self):
+        return self.icon_selection_combobox.currentText()
 
     def getGameName(self):
         return self.line_game_name.text()
@@ -107,4 +117,4 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.buttonJoinAGame.clicked.connect(callback_function)
 
     def connectButtonDevStartDealer(self, callback_function):
-        self.button_start_dealing.clicked.connect(callback_function)
+        self.button_dev_start_dealing.clicked.connect(callback_function)

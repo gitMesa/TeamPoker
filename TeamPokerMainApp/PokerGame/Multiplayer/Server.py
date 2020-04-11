@@ -1,84 +1,67 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
 from _thread import *
 import socket
-import json
-
-# server = "192.168.0.114"
-# port = 5555
 
 
 class MultiplayerServerClass:
 
-    def __init__(self, ip, port, packet):
-        self.serverData = packet
+    def __init__(self, ip, port):
+        self.conn_player_number = 0
+        self.conn_players_status = [0 for x in range(MAX_CLIENTS)]
+        self.conn_players_adresses = [0 for x in range(MAX_CLIENTS)]
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.s.bind((ip, port))
         except socket.error as e:
             str(e)
-        self.s.listen(NO_OF_CLIENTS)
+        self.s.listen(MAX_CLIENTS)
         print("Server Started... Waiting for a connection")
-        start_new_thread(self.start_server_listening_loop, ())
+        start_new_thread(self.server_listening_for_new_connections_loop, ())
 
-    def start_server_listening_loop(self):
-        currentPlayer = 0
+    def server_listening_for_new_connections_loop(self):
         while True:
             conn, addr = self.s.accept()
-            print("Connected to:", addr)
-            start_new_thread(self.threaded_client_comm, (conn, currentPlayer))
-            currentPlayer += 1
+            # save the connected player info
+            self.conn_players_adresses[self.conn_player_number] = addr
+            self.conn_players_status[self.conn_player_number] = STATUS_CONNECTED
+            if self.conn_player_number == 0:
+                print(f'SERVER: Dealer Connection Established. {self.conn_players_adresses[DEALER]} is the Dealer')
+            else:
+                print(f'SERVER: Client Connection Established. Client from {self.conn_players_adresses[self.conn_player_number]} is Player {self.conn_players_status[self.conn_player_number]}')
+            # normally the player 0 will be the dealer that the server-mode created, which handles connection a bit differently.
+            start_new_thread(self.server_communication_loop, (conn, self.conn_player_number))
+            self.conn_player_number += 1
 
-    def threaded_client_comm(self, conn, playerNumber):
+    def server_communication_loop(self, conn, clientNo):
         # Handshake Sent Message:
-        conn.send(str(playerNumber).encode())
+        conn.send(str(clientNo).encode())
+        tries = 0
         while True:
-            triesToWaitForDisconnection = 0
             try:
-                # Client sent new data
-                # this is done with byte-like data
-                clientData = self.string_to_dict(conn.recv(BUFFERSIZE).decode())
-                print(f"Server Received from Player{playerNumber}: {clientData}")
+                # Client sent new data this is done with byte-like data
+                receivedData = conn.recv(BUFFERSIZE).decode()
+                # print(f'SERVER: {type(receivedData)} -> {receivedData}')
 
-                if not clientData:
-                    if triesToWaitForDisconnection > 50:
-                        print("Disconnected")
-                        break
-                    triesToWaitForDisconnection += 1
+                if not receivedData:
+                    # print(f"SERVER: No data received from Client{clientNo}@{self.conn_players_adresses}. Waiting {tries}/50 tries.")
+                    # tries += 1
+                    # if tries > 50:
+                    #     self.conn_players_status[clientNo] = STATUS_DISCONNECTED
+                    #     break
+                    pass
                 else:
-                    #self.update_network_data_from_players(clientData, playerNumber)
-                    triesToWaitForDisconnection = 0
-                print(f"Server sending update to Player{playerNumber}.")
-                conn.sendall(self.dict_to_string(self.serverData).encode())
+                    tries = 0
+                    # if the one that is sending the message to the server is the Dealer, forward the message to the connected Clients
+                    if clientNo == DEALER:
+                        for player in range(1, self.conn_player_number):
+                            if self.conn_players_status[clientNo] == STATUS_CONNECTED:
+                                print(f"SERVER: Sending dealer update to C{player}.")
+                                conn.sendto(receivedData.encode(), self.conn_players_adresses[player])
+                    # if the one who is sending the message to the server is a Client, forward that message to the Dealer
+                    else:
+                        conn.sendto(receivedData.encode(), self.conn_players_adresses[DEALER])
             except Exception as e:
-                print(f"threaded_client_comm: {e}")
+                print(f"ERROR: server_communication_loop: {e}")
                 break
         print("Lost connection")
         conn.close()
-
-    def update_network_data_from_players(self, clientData, player):
-        if player > 0:
-            # (status, name, iconID, money_available, actionID, [NO_CARD, NO_CARD]
-            oldData = list(self.serverData["Players"][player])
-            for i in range(5):  # first 5 elements of the tuple get updated by the players
-                oldData[i] = clientData[i]
-            self.serverData["Players"][player] = tuple(oldData)
-
-    def update_network_data_from_dealer(self, array_table_cards, int_burned_cards, float_table_pot, dict_player_cards):
-        self.serverData["TableCards"] = array_table_cards
-        self.serverData["BurnedCards"] = int_burned_cards
-        self.serverData["TablePot"] = float_table_pot
-        for player in range(NO_OF_CLIENTS):
-            oldData = list(self.serverData["Players"][player])
-            oldData[player][6] = dict_player_cards[player]
-            self.serverData["Players"][player] = tuple(oldData)
-
-    def dict_to_string(self, dict):
-        newDict = json.dumps(dict)
-        type(f'dict_to_string Type: {newDict}')
-        return newDict
-
-    def string_to_dict(self, string):
-        newDict = json.loads(string)
-        type(f'string_to_dict Type: {newDict}')
-        return newDict
-
