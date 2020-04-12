@@ -13,31 +13,36 @@ STATUS_SIT_OUT = 4
 STATUS_PLAYING = 5
 
 GAME_STATUS_NEW_ROUND_READY = 0
-GAME_STATUS_EVALUATE_HANDS = 1
+GAME_STATUS_PLAYER_DECIDING = 1
+GAME_STATUS_EVALUATE_HANDS = 9
 
 ################################
 #    Server/Client Stuff Def   #
 ################################
 
 DEALER = 0
-PLAYER = 1
-MAX_CLIENTS = 7  # server + 7 = 8
+MAX_CLIENTS = 8  # Host(Dealer+Client) + 7 other players = 8 total players
+MESSAGE_DISCONNECTED = '!DISCONNECTED'
+MESSAGE_CONNECTED = '!CONNECTED'
 BUFFERSIZE = 2048
+FORMAT = 'utf-8'
 
-# Thread safe definition
-GAME_DATA_IN_USE = 0
+# Player field decided by the Player
+PINFO_tableSpot = 0
+PINFO_status = 1
+PINFO_name = 2
+PINFO_icon = 3
+PINFO_actionID = 4
 
-# Indexes for field location within the player information.
-PACKET_table_spot = 0  # this will hold values from 2 to 8
-PACKET_status = 1
-PACKET_name = 2
-PACKET_icon = 3
-PACKET_action_id = 4
-PACKET_money_available = 5
-PACKET_dealer_icon = 6
-PACKET_player_cards = 7
+# Player fields decided by the Dealer
+PGAME_moneyAvailable = 0
+PGAME_dealerIcon = 1
+PGAME_playerCards = 2
 
-
+ACTION_FOLD = 0
+ACTION_CALL = 1
+ACTION_RAISE = 2
+ACTION_SIT_OUT = 3
 
 ################################
 #    Deck Stuff Definitions    #

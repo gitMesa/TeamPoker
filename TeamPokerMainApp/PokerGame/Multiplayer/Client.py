@@ -1,4 +1,5 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
+from TeamPokerMainApp.Common.MethodDefinitions import *
 import socket
 
 
@@ -8,32 +9,23 @@ class ClientClass:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.addr = (ip, port)
 
-    def connect_to_server_and_get_player_position(self):
+    def connect_to_server_and_get_position(self):
         try:
             self.client.connect(self.addr)
             handshake_reply = self.client.recv(BUFFERSIZE).decode()
-            print(f'CLIENT: Server Connection Established. My player index is: {handshake_reply}')
             return handshake_reply
         except Exception as e:
-            print(f'connect_to_server_and_get_player_position -> {e}')
+            print(f'connect_to_server_and_get_position -> {e}')
 
-    def send_client_data_and_receive_dealer_data(self, data):
+    # Dealer is the first to send a update.
+    # When dealer sends update, users will listen to it, and responde with their update.
+    # Which then goes back into the Dealer Listening part and cycle repeats.
+
+    def client_communicate_with_server(self, own_data):
         try:
-            self.client.sendall(str(data).encode())
-            recvd = self.client.recv(BUFFERSIZE).decode()
-            return str(recvd)
+            self.client.sendall(dict_to_string(own_data).encode(FORMAT))
+            server_data = self.client.recv(BUFFERSIZE).decode(FORMAT)
+            return string_to_dict(server_data)
         except socket.error as e:
-            print(f'send_client_data_and_receive_dealer_data -> {e}')
+            print(f'client_communicate_with_server -> {e}')
 
-    def send_dealer_update_to_server(self, data):
-        try:
-            # print(f'CLIENT-SIDE: {type(data)} -> {data}')
-            self.client.sendall(self.dict_to_string(data).encode())
-        except socket.error as e:
-            print(f'send_dealer_update_to_server -> {e}')
-
-    def dict_to_string(self, dict):
-        return str(dict)
-
-    def string_to_dict(self, string):
-        return eval(string)

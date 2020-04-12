@@ -6,6 +6,12 @@
     <file>other_icons/main_logo.png</file>
   </qresource>
   <qresource prefix="cards">
+    <file>cards_jpeg/99_blue.jpg</file>
+    <file>cards_jpeg/99_gray.jpg</file>
+    <file>cards_jpeg/99_green.jpg</file>
+    <file>cards_jpeg/99_purple.jpg</file>
+    <file>cards_jpeg/99_red.jpg</file>
+    <file>cards_jpeg/99_yellow.jpg</file>
     <file>cards_jpeg/2C.jpg</file>
     <file>cards_jpeg/2D.jpg</file>
     <file>cards_jpeg/2H.jpg</file>
@@ -54,7 +60,6 @@
     <file>cards_jpeg/KD.jpg</file>
     <file>cards_jpeg/KH.jpg</file>
     <file>cards_jpeg/KS.jpg</file>
-    <file>cards_jpeg/purple_back.jpg</file>
     <file>cards_jpeg/QC.jpg</file>
     <file>cards_jpeg/QD.jpg</file>
     <file>cards_jpeg/QH.jpg</file>

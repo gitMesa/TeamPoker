@@ -28,5 +28,5 @@ for file in os.listdir(os.getcwd()):
             shutil.copy(file, path_three_folder_up)
         else:
             print(f'Moving file {file}')
-            shutil.copy(file, path_one_folder_up + '\\UiCode\\')
+            shutil.copy(file, path_one_folder_up)
         os.remove(file)
