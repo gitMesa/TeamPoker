@@ -31,7 +31,7 @@ from PyQt5.Qt import QTimer
 class PokerGameClass:
 
     def __init__(self):
-        self.game_status = GAME_STATUS_NEW_ROUND_READY
+        self.game_status = GAME_STATUS_WAITING_FOR_PLAYERS
         self._win = TeamPokerUIControllerClass()
         self._packet = NetworkPacketClass()
         self.game_data = self._packet.get_game_data()
@@ -44,7 +44,7 @@ class PokerGameClass:
     def initConnectButtons(self):
         self._win.connectStartHostingGameServer(self.start_poker_server)
         self._win.connectStartJoiningAGameServer(self.join_poker_server)
-        self._win.connectButtonDevStartDealer(self.dealer_evaluate_next_game_step)
+        self._win.connectButtonDevStartDealer(self.force_new_round)
 
 ################################################################################################
 # 1. Network Stuff (Client & Server):
@@ -90,63 +90,43 @@ class PokerGameClass:
         self.game_data["PlayersInfo"][self.client_index][PINFO_icon] = self._win.getIconID()
         self.game_data["PlayersInfo"][self.client_index][PINFO_name] = self._win.getUserName()
         self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYING
-
-        if self.client_index == DEALER:
-            self.dealer_server_communication_loop()
-        elif self.client_index > DEALER:
-            self.client_server_communication_loop()
-
-    def dealer_server_communication_loop(self):
-        self.dealer_update_timer = QTimer(self._win)
-        self.dealer_update_timer.start(500)
-        self.dealer_update_timer.timeout.connect(self.dealer_server_comm_action)
+        self.client_server_communication_loop()
 
     def client_server_communication_loop(self):
-        self.client_update_timer = QTimer(self._win)
-        self.client_update_timer.start(900)
-        self.client_update_timer.timeout.connect(self.client_server_comm_action)
-
-    def dealer_server_comm_action(self):
-        if self._srv.conn_player_number >= 2:
-            try:
-                client_data = self._client.get_reply_from_server()
-                print(f'DEALER received Client{client_data["Sender"]} data. ')
-                self.dealer_evaluate_user_data(data=client_data)
-                self.dealer_evaluate_next_game_step()
-                self.game_data["Sender"] = DEALER
-                self._client.send_message_to_server(self.game_data)
-            except Exception as e:
-                print(f'dealer_server_comm_action -> {e}')
+        self.dealer_update_timer = QTimer(self._win)
+        self.dealer_update_timer.start(300)
+        self.dealer_update_timer.timeout.connect(self.client_server_comm_action)
 
     def client_server_comm_action(self):
-        self.game_data["Sender"] = self.client_index
-        # first update the game_data from our own UI actions, settings, etc.
+        # update the game_data with own ui info (mainly new actions, decisions by the player)
         self.client_update_game_data_from_own_ui()
-        # send the game_data to the dealer, and receive his update
+
+        # Send your user update.
+        # and get the update from all other clients, and dealer, centralized by the server.
+        server_data = self._client.client_communicate_with_server(self.game_data)
+
+        # update our own UI based on the data received from the server (cards, other players, etc.)
         try:
-            self._client.send_message_to_server(self.game_data)
-            dealer_data = self._client.get_reply_from_server()
-            print(f'C{self.client_index} sent update to server, received dealer C{dealer_data["Sender"]} data.')
-            # update our own UI based on the data received from the dealer (cards, other players, etc.)
-            self.client_update_data_and_ui_based_on_dealer_update(dealer_data)
+            self.client_update_game_data_from_server_data(server_data)
+            self.client_update_ui()
         except Exception as e:
-            print(f'send_client_update_to_server -> {e}')
+            print(f'client_server_comm_action -> client_update_data_and_ui_based_on_server_update -> {e}')
 
-######################################################################################################
-# 2. Other Server-Client Logic:
-######################################################################################################
-
+        if self.client_index == DEALER:
+            try:
+                # copy the player info
+                self.game_data["PlayersInfo"] = server_data["PlayersInfo"]
+                self.dealer_evaluate_next_game_step()
+            except Exception as e:
+                print(f'client_server_comm_action -> dealer stuff failed -> {e}')
 
 ######################################################################################################
 # 3. Dealer Logic:
 ######################################################################################################
 
-    def dealer_evaluate_user_data(self, data):
-        sender = self.game_data["Sender"]
-        self.game_data["PlayersInfo"][sender] = data["PlayersInfo"][sender]
-
     def dealer_evaluate_next_game_step(self):
-        if self.count_number_of_playing_players() > 1 and self.game_status is GAME_STATUS_NEW_ROUND_READY:
+        # if self.count_number_of_playing_players() > 1 and self.game_status is GAME_STATUS_NEW_ROUND_READY:
+        if self.game_status is GAME_STATUS_NEW_ROUND_READY:
             self.game_status = GAME_STATUS_PLAYER_DECIDING
             self._dealer.new_poker_round()
 
@@ -161,10 +141,33 @@ class PokerGameClass:
         self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_CALL
         self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYING
 
-    def client_update_data_and_ui_based_on_dealer_update(self, dealer_data):
-        if dealer_data["Sender"] == DEALER:
-            self.game_data["Dealer"] = dealer_data["Dealer"]
-            self.game_data["PlayersGame"] = dealer_data["PlayersGame"]
+    def client_update_game_data_from_server_data(self, server_data):
+        self.game_data["Dealer"] = server_data["Dealer"]
+        self.game_data["PlayersGame"] = server_data["PlayersGame"]
+        # update the PlayersInfo for every other player.
+        for player in range(MAX_CLIENTS):
+            if player != self.client_index:
+                self.game_data["PlayersInfo"][player] = server_data["PlayersInfo"][player]
+
+    def client_update_ui(self):
+        for player in range(MAX_CLIENTS):
+            ui_pos = 1  # TODO: Fix table positioning to show corectly on all clients... maybe using ["PlayersInfo"][client_index][PINFO_tableSpot]
+            if self.game_data["PlayersInfo"][player][PINFO_status] is not STATUS_EMPTY_SEAT and player != self.client_index:
+                self._win.setUiPlayerName(ui_pos=ui_pos, name=self.game_data["PlayersInfo"][player][PINFO_name])
+                self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.game_data["PlayersInfo"][player][PINFO_icon])
+                self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, ammount=self.game_data["PlayersGame"][player][PGAME_moneyAvailable])
+                self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name=self.game_data["PlayersGame"][player][PGAME_dealerIcon])
+                self._win.setUiPlayerActions(ui_pos=ui_pos, action=self.game_data["PlayersInfo"][player][PINFO_actionID])
+                self._win.setUiOtherPlayersCards(ui_pos)  #TODO: Show actual cards at end of round
+                ui_pos += 1
+        # update cards on table
+        table_cards = self.game_data["Dealer"]["TableCards"]
+        for card in range(NUMBER_OF_CARDS_ON_TABLE):
+            self._win.setUiTableCard(card_number=card, card_code=table_cards[card])
+        # update cards in hand
+        player_cards = self.game_data["PlayersGame"][self.client_index][PGAME_playerCards]  # returns array with card codes
+        for card in range(NUMBER_OF_CARDS_IN_HAND):
+            self._win.setUiEgoPlayerCards(card_number=card, card_code=player_cards[card])
 
 ######################################################################################################
 # 5. Other Logic:
@@ -217,3 +220,7 @@ class PokerGameClass:
         self._win.line_currency.setText('EUR')
         self._win.line_join_game_ip.setText(self._win.line_host_game_ip.text())
         self._win.line_join_game_port.setText(self._win.line_host_game_port.text())
+
+    def force_new_round(self):
+        self.game_status = GAME_STATUS_NEW_ROUND_READY
+        print(f'DEV: Force new round! game_status = {self.game_status}')

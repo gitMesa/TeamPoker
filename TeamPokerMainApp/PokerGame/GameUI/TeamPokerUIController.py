@@ -48,13 +48,24 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def setUiEgoPlayerCards(self, card_number, card_code):
         if card_code == 99:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f'url(:/cards/cards_jpeg/{card_code}_red.jpg)'))
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}_red.jpg'))
         else:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f'url(:/cards/cards_jpeg/{card_code}.jpg)'))
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}.jpg'))
         if card_number is 0:
             self.player0_card1.setIcon(qtIcon)
         elif card_number is 1:
             self.player0_card2.setIcon(qtIcon)
+
+    def setUiTableCard(self, card_number, card_code):
+        if card_code == 99:
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}_red.jpg'))
+        else:
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}.jpg'))
+        eval(f"self.cards_tableCard{card_number}.setIcon(qtIcon)")
+
+    def setUiOtherPlayersCards(self, ui_pos):
+        eval(f"self.player{ui_pos}_card1.setIcon(QtGui.QIcon(QtGui.QPixmap(':/cards/cards_jpeg/99_red.jpg')))")
+        eval(f"self.player{ui_pos}_card2.setIcon(QtGui.QIcon(QtGui.QPixmap(':/cards/cards_jpeg/99_red.jpg')))")
 
     def setUiPlayerMoneyCurrency(self, ui_pos, ammount):
         eval(f'self.player{ui_pos}_money_available.setText(str(ammount))')
@@ -66,12 +77,15 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         playerIcon = QtGui.QIcon(QtGui.QPixmap(f":/user_icons/user_icons/{icon_name}"))
         eval(f'self.player{ui_pos}_icon.setIcon(playerIcon)')
 
+    def setUiPlayerActions(self, ui_pos, action):
+        eval(f'self.player{ui_pos}_action.setText(str(action))')
+
     def setUiDealerIcons(self, ui_pos, dealer_icon_name):
-        # dealer_icon_name should be 'dealer'/'small_blind'/'big_blind'
+        # dealer_icon_name should be ''/'dealer'/'small_blind'/'big_blind'
         if len(dealer_icon_name) > 0:
-            dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(f'url(:/other_icons/other_icons/icon_{dealer_icon_name}.png)'))
+            dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(f':/other_icons/other_icons/icon_{dealer_icon_name}.png'))
         else:
-            dealer_blind_icon = ''  # if player is none of the above
+            dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(''))  # if player is none of the above
         eval(f'self.player{ui_pos}_dealer.setIcon(dealer_blind_icon)')
 
     # ##### GETTERS ################################################################################################

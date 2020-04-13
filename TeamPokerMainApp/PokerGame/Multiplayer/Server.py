@@ -27,14 +27,14 @@ class MultiplayerServerClass:
         while True:
             conn, addr = self.s.accept()
             self.conn_players_adresses[self.conn_player_number] = addr  # save the connected player info
-            print(f'SERVER: New Connection Established. Client (C{self.conn_player_number}) from {self.conn_players_adresses[DEALER]} is the DEALER.')
+            print(f'SERVER: New Connection Established. Client (C{self.conn_player_number}) from {self.conn_players_adresses[DEALER]}.')
             thread = threading.Thread(target=self.main_communication_loop, args=(conn, self.conn_player_number))
             thread.start()
             self.conn_player_number += 1
             print(f'SERVER: Active connections: {self.conn_player_number}. ')
 
     def main_communication_loop(self, conn, client_number):
-        conn.send(str(MESSAGE_CONNECTED).encode(FORMAT))
+        conn.send(str(client_number).encode(FORMAT))
         while True:
             try:
                 # GET Client Data
@@ -57,6 +57,7 @@ class MultiplayerServerClass:
                         # Unlock the server_data_dict for other threads.
                         self.mutex.unlock()
                         break
+                print(f'SERVER: Communication update finished for C{client_number}.')
                 conn.sendall(server_data.encode(FORMAT))
             except socket.error as e:
                 print(f'SERVER: main_communication_loop -> {e}')
