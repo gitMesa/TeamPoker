@@ -54,7 +54,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         # Dealer / Figure Small / Big Blinds.
 
     def find_playing_players_and_setup_dealer_and_first_blinds(self):
-        playing_players = []  # Empty array of 1 dimension
+        playing_players = []  # Empty list
         for player in range(MAX_CLIENTS):
             if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_G_PLAYING:
                 # add them to the list of currently playing players
@@ -74,6 +74,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         else:
             self.dealer_status_text = "Game doesn't have enough players to start a game."
             # the statuses are already set to NONE so no modification of statuses is needed
+        print(f'Number of playing players: {len(playing_players)}')
         return playing_players
 
     def clear_cards_on_table_and_pot(self):
