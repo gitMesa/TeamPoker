@@ -60,4 +60,7 @@ def main_dealer_loop (starting_player):
                 if game_data["PlayersInfo"][current_player][PINFO_actionID] == ACTION_RAISE:
                     raise_value = RaiseValue   # ToDo : connect this to UI
                     bet_value = raise_value
-                    DealerFunction.player_bet_money(current_player, bet_value)
+                    DealerFunction.player_bet_money(current_player, bet_value) #asd
+
+
+                    if else
