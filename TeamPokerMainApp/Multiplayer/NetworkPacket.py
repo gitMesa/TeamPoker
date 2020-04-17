@@ -52,3 +52,35 @@ class NetworkPacketClass:
 
     def get_game_data(self):
         return self.GAME_DATA_PACKET
+
+    ################################################################################################################################
+    # For testing purposes.
+    ################################################################################################################################
+
+    @staticmethod
+    def get_game_data_for_testing(starting_money):
+        PLAYER_INFO_FIELDS = list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL))
+        PLAYER_GAME_FIELDS = list((float(starting_money), int(0), str(""), str(""), [NO_CARD, NO_CARD]))
+        GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
+                                       "BurnedCards": int(0),
+                                       "TablePot": float(0.0)},
+                            "PlayersInfo": {0: list.copy(PLAYER_INFO_FIELDS),  # this will be the host-dealer-client
+                                            1: list.copy(PLAYER_INFO_FIELDS),
+                                            2: list.copy(PLAYER_INFO_FIELDS),
+                                            3: list.copy(PLAYER_INFO_FIELDS),
+                                            4: list.copy(PLAYER_INFO_FIELDS),
+                                            5: list.copy(PLAYER_INFO_FIELDS),
+                                            6: list.copy(PLAYER_INFO_FIELDS),
+                                            7: list.copy(PLAYER_INFO_FIELDS)
+                                            },
+                            "PlayersGame": {0: list.copy(PLAYER_GAME_FIELDS),  # this will be the host-dealer-client
+                                            1: list.copy(PLAYER_GAME_FIELDS),
+                                            2: list.copy(PLAYER_GAME_FIELDS),
+                                            3: list.copy(PLAYER_GAME_FIELDS),
+                                            4: list.copy(PLAYER_GAME_FIELDS),
+                                            5: list.copy(PLAYER_GAME_FIELDS),
+                                            6: list.copy(PLAYER_GAME_FIELDS),
+                                            7: list.copy(PLAYER_GAME_FIELDS)
+                                            }
+                            }
+        return GAME_DATA_PACKET

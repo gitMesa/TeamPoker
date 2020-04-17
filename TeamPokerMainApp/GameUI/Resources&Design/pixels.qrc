@@ -3,7 +3,16 @@
     <file>other_icons/icon_big_blind.png</file>
     <file>other_icons/icon_dealer.png</file>
     <file>other_icons/icon_small_blind.png</file>
-    <file>other_icons/main_logo.png</file>
+  </qresource>
+  <qresource prefix="ui_icons">
+    <file>ui_icons/icon_money.png</file>
+    <file>ui_icons/icons_ip.png</file>
+    <file>ui_icons/icon_big_blind.png</file>
+    <file>ui_icons/icon_currency.png</file>
+    <file>ui_icons/icon_joker.png</file>
+    <file>ui_icons/icon_small_blind.png</file>
+    <file>ui_icons/icon_time_to_pay.png</file>
+    <file>ui_icons/main_logo.png</file>
   </qresource>
   <qresource prefix="cards">
     <file>cards_jpeg/99_blue.jpg</file>

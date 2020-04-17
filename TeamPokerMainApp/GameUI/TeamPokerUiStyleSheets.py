@@ -12,13 +12,40 @@ Light primary color:    #534bae
 Unselected text color: #5d99c6
 */
 
-QWidget#gamePlayPage
+QWidget#widget_table
+{background: qradialgradient(spread:pad, cx:0.48, cy:0.498, radius:0.458, fx:0.48, fy:0.498, stop:0.111111 rgba(15, 155, 15, 239), stop:0.631258 rgba(6, 23, 0, 246), stop:0.847375 rgba(6, 23, 0, 255));}
+QWidget#widget_current_user
+{background: qlineargradient(spread:pad, x1:0.477273, y1:0, x2:1, y2:1, stop:0 rgba(35, 7, 77, 255), stop:1 rgba(204, 83, 51, 255));}
+
+QWidget#pageMain,
+QWidget#pageJoinGame,
+QWidget#pageHostGame
 {
-background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(57, 90, 58, 255), stop:0.35 rgba(71, 113, 72, 255), stop:1 rgba(89, 141, 90, 255));
+background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(51, 51, 51, 255), stop:1 rgba(221, 24, 24, 255))
 }
 
 QLabel{color: white;}
+QCheckBox{color:white;}
+QRadioButton{color:white;}
+QGroupBox{color:white;}
 
+QPushButton{border: 0px; color: white;}
+
+QPushButton#buttonHostAGame,
+QPushButton#buttonJoinAGame
+{border-style: outset;
+border-width: 1px;
+border-radius: 5px;
+border-color: white;
+color: white;}
+
+QPushButton#buttonHostAGame:hover,
+QPushButton#buttonJoinAGame:hover
+{border-style: outset;
+border-width: 1px;
+border-radius: 5px;
+border-color: #2193b0;
+color: #2193b0;}
 
 /* Hide Icons */
 QPushButton#player0_icon,

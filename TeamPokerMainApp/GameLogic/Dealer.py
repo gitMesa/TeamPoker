@@ -14,6 +14,7 @@ import numpy as np
 #                       player0
 ###################################################################
 
+
 class DealerClass(HandEvaluatorClass, CardDeckClass):
 
     def __init__(self, game_rules, game_data):

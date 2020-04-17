@@ -1,13 +1,14 @@
 from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
 from TeamPokerMainApp.GameLogic.Dealer import DealerClass
 
-net_packet = NetworkPacketClass()
-game_data = net_packet.get_game_data()
-
 # (StartingMoney, Currency, SmallBlind, BigBlind, BlindIntervalRaise)
 game_rules = (float(10.0), 'RON', float(0.25), float(0.50), '10min')
 
+# Get the packet which describes the players information & data
+player_game_data = NetworkPacketClass.get_game_data_for_testing(game_rules[0])
 
+##################################################################
+#   Start testing the Dealer
 ##################################################################
 #                       player4
 #     player3                             player5
@@ -16,12 +17,7 @@ game_rules = (float(10.0), 'RON', float(0.25), float(0.50), '10min')
 #
 #     player1                             player7
 #                       player0
-###################################################################
+##################################################################
 
-
-##############################################################
-# Start testing the Dealer
-##############################################################
-
-testDealer = DealerClass(game_rules=game_rules, game_data=game_data)
+testDealer = DealerClass(game_rules=game_rules, game_data=player_game_data)
 
