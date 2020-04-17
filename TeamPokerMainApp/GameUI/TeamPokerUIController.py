@@ -25,6 +25,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
         self.line_host_game_ip.setText(self.get_ip())
         self.line_host_game_port.setText(str(5555))
+        self.combobox_icon_selection.parentWidget().setWindowOpacity(0)
+
 
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
