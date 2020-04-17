@@ -37,3 +37,6 @@ class CardDeckClass:
             prnt += self.get_card_name_from_card_number(i)
             prnt += ' '
         print(prnt)
+
+    def print_actual_card(self, card1, card2, Player):
+        print(f"Player{Player} cards:{self.get_card_name_from_card_number(card1)} {self.get_card_name_from_card_number(card2)}")

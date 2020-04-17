@@ -29,7 +29,8 @@ class NetworkPacketClass:
 
         self.GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
                                             "BurnedCards": int(0),
-                                            "TablePot": float(0.0)},
+                                            "TablePot": float(0.0),
+                                            "BetValue": float(0.0)},
                                  "PlayersInfo": {0: list.copy(self.PLAYER_INFO_FIELDS),  # this will be the host-dealer-client
                                                  1: list.copy(self.PLAYER_INFO_FIELDS),
                                                  2: list.copy(self.PLAYER_INFO_FIELDS),
@@ -62,7 +63,8 @@ class NetworkPacketClass:
 
         GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
                                        "BurnedCards": int(0),
-                                       "TablePot": float(0.0)},
+                                       "TablePot": float(0.0),
+                                       "BetValue": float(0.0)},
                             # PINFO_tableSpot = 0
                             # PINFO_status = 1
                             # PINFO_name = 2
@@ -72,9 +74,9 @@ class NetworkPacketClass:
                                             1: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
                                             2: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
                                             3: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            4: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            5: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            6: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            4: list((int(0), STATUS_G_NONE, str(""), str(""), ACTION_CALL)),
+                                            5: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_RAISE)),
+                                            6: list((int(0), STATUS_G_NONE, str(""), str(""), ACTION_CALL)),
                                             7: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL))
                                             },
                             # PGAME_moneyAvailable = 0
