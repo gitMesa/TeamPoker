@@ -1,6 +1,6 @@
-from TeamPokerMainApp.PokerGame.Multiplayer.NetworkPacket import NetworkPacketClass
-from TeamPokerMainApp.PokerGame.Multiplayer.Server import MultiplayerServerClass
-from TeamPokerMainApp.PokerGame.Multiplayer.Client import ClientClass
+from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
+from TeamPokerMainApp.Multiplayer.Server import MultiplayerServerClass
+from TeamPokerMainApp.Multiplayer.Client import ClientClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 import threading
 import socket

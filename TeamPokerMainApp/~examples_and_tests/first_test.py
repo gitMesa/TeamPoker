@@ -1,8 +1,8 @@
 from TeamPokerMainApp.Common.VariableDefinitions import *
 from TeamPokerMainApp.Player.PlayerProfile import PlayerProfile
-from TeamPokerMainApp.PokerGame.GameLogic.CardDeck import CardDeck
-from TeamPokerMainApp.PokerGame.GameLogic.Dealer import Dealer
-from TeamPokerMainApp.PokerGame.GameLogic.HandEvaluator import HandEvaluator
+from TeamPokerMainApp.GameLogic.CardDeck import CardDeck
+from TeamPokerMainApp.GameLogic.Dealer import Dealer
+from TeamPokerMainApp.GameLogic.HandEvaluator import HandEvaluator
 import numpy as np
 
 
@@ -41,7 +41,7 @@ class PokerGame:
         # start giving cards to players
         for card in range(NUMBER_OF_CARDS_IN_HAND):
             for player in range(self.maximumPlayers):
-                if eval(f'self._player{player}.getPlayingStatus()') is STATUS_PLAYING:
+                if eval(f'self._player{player}.getPlayingStatus()') is STATUS_G_PLAYING:
                     eval(f'self._player{player}.setCardsInPlayerHand(card, self.get_top_card())')
 
     def card_round_flop(self):

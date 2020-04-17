@@ -1,4 +1,4 @@
-from TeamPokerMainApp.PokerGame.PokerGame import PokerGameClass
+from TeamPokerMainApp.PokerGame import PokerGameClass
 from PyQt5.QtWidgets import QApplication
 import sys
 
