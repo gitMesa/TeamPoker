@@ -20,9 +20,7 @@ QWidget#widget_current_user
 QWidget#pageMain,
 QWidget#pageJoinGame,
 QWidget#pageHostGame
-{
-background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(51, 51, 51, 255), stop:1 rgba(221, 24, 24, 255))
-}
+{background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(51, 51, 51, 255), stop:1 rgba(221, 24, 24, 255));}
 
 QLabel{color: white;}
 QCheckBox{color:white;}
@@ -95,6 +93,54 @@ border: 0px;
 padding: 0px;
 margin: 0px;
 }
+
+
+QComboBox#combobox_icon_selection{
+    background: transparent;
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;}
+   
+QComboBox#combobox_icon_selection::drop-down{
+   image: url(:/ui_icons/ui_icons/icon_expand.png);
+   subcontrol-position: right;}
+
+QComboBox#combobox_icon_selection QListView::item:hover {
+   background: transparent;
+}
+
+QComboBox#combobox_icon_selection QAbstractItemView {
+   background: transparent;
+   border: 0px;
+   border-color: transparent;
+}
+
+QComboBox#combobox_icon_selection QScrollBar:vertical{
+   border: 1px solid black;
+   background: white;
+   width: 10px;
+   margin: 0px 0px 0px 0px;
+}
+
+QComboBox#combobox_icon_selection QScrollBar::handle:vertical{
+   background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(218, 68, 83, 255), stop:1 rgba(137, 33, 107, 255));
+   min-height: 0px;
+}
+
+QComboBox#combobox_icon_selection QScrollBar::add-line:vertical{
+   background: white;
+   height: 0px;
+   subcontrol-position: bottom;
+   subcontrol-origin: margin;
+}
+
+QComboBox#combobox_icon_selection QScrollBar::sub-line:vertical{
+   background: white;
+   height: 0px;
+   subcontrol-position: top;
+   subcontrol-origin: margin;
+}
+
 
 """
 

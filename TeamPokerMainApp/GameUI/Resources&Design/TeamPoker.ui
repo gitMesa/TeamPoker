@@ -36,7 +36,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="pageMain">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -180,6 +180,9 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
@@ -194,360 +197,356 @@
            </spacer>
           </item>
           <item>
-           <widget class="QWidget" name="widget" native="true">
-            <property name="font">
-             <font>
-              <family>Bahnschrift SemiLight</family>
-              <pointsize>10</pointsize>
-             </font>
+           <widget class="QWidget" name="verticalWidget" native="true">
+            <property name="maximumSize">
+             <size>
+              <width>250</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <property name="spacing">
-              <number>15</number>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="topMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
              </property>
              <item>
-              <widget class="QComboBox" name="icon_selection_combobox">
+              <spacer name="verticalSpacer_21">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget" native="true">
+               <property name="font">
+                <font>
+                 <family>Bahnschrift SemiLight</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>15</number>
+                </property>
+                <item>
+                 <widget class="QComboBox" name="combobox_icon_selection">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>90</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>icons8-baby-yoda-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-darth-vader-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-deadpool-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-futurama-bender-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-futurama-fry-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-futurama-leela-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-futurama-zoidberg-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-futurama-professor-farnsworth-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-green-arrow-dc-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-green-lantern-dc-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-harley-quinn-dc-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-iron-man-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-joker-dc-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-magneto-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-magneto-70.png</normaloff>:/user_icons/user_icons/icons8-magneto-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-nightwing-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-ninja-turtle-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-penguin-dc-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-popeye-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-popeye-70.png</normaloff>:/user_icons/user_icons/icons8-popeye-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-rick-sanchez-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-stormtrooper-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-thanos-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-thanos-70.png</normaloff>:/user_icons/user_icons/icons8-thanos-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-walter-white-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-yoda-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-yoda-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-cyborg-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</iconset>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>icons8-catwoman-70.png</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="pixels.qrc">
+                     <normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</iconset>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="line_user_name">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
-                 <height>70</height>
+                 <width>0</width>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>90</width>
-                 <height>70</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
-               <property name="iconSize">
-                <size>
-                 <width>70</width>
-                 <height>70</height>
-                </size>
+               <property name="font">
+                <font>
+                 <family>Bahnschrift SemiLight</family>
+                 <pointsize>12</pointsize>
+                </font>
                </property>
-               <item>
-                <property name="text">
-                 <string>icons8-baby-yoda-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-baby-yoda-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-darth-vader-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</normaloff>:/user_icons/user_icons/icons8-darth-vader-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-deadpool-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</normaloff>:/user_icons/user_icons/icons8-deadpool-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-futurama-bender-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-bender-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-futurama-fry-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-fry-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-futurama-leela-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-leela-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-futurama-zoidberg-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-zoidberg-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-futurama-professor-farnsworth-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</normaloff>:/user_icons/user_icons/icons8-futurama-professor-farnsworth-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-green-arrow-dc-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-arrow-dc-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-green-lantern-dc-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</normaloff>:/user_icons/user_icons/icons8-green-lantern-dc-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-harley-quinn-dc-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</normaloff>:/user_icons/user_icons/icons8-harley-quinn-dc-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-iron-man-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</normaloff>:/user_icons/user_icons/icons8-iron-man-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-joker-dc-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</normaloff>:/user_icons/user_icons/icons8-joker-dc-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-magneto-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-magneto-70.png</normaloff>:/user_icons/user_icons/icons8-magneto-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-nightwing-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</normaloff>:/user_icons/user_icons/icons8-nightwing-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-ninja-turtle-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</normaloff>:/user_icons/user_icons/icons8-ninja-turtle-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-penguin-dc-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</normaloff>:/user_icons/user_icons/icons8-penguin-dc-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-popeye-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-popeye-70.png</normaloff>:/user_icons/user_icons/icons8-popeye-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-rick-sanchez-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</normaloff>:/user_icons/user_icons/icons8-rick-sanchez-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-stormtrooper-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</normaloff>:/user_icons/user_icons/icons8-stormtrooper-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-thanos-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-thanos-70.png</normaloff>:/user_icons/user_icons/icons8-thanos-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-walter-white-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</normaloff>:/user_icons/user_icons/icons8-walter-white-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-yoda-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-yoda-70.png</normaloff>:/user_icons/user_icons/icons8-yoda-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-cyborg-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</normaloff>:/user_icons/user_icons/icons8-cyborg-70.png</iconset>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>icons8-catwoman-70.png</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="pixels.qrc">
-                  <normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</normaloff>:/user_icons/user_icons/icons8-catwoman-70.png</iconset>
-                </property>
-               </item>
+               <property name="inputMask">
+                <string/>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="placeholderText">
+                <string>Players Name</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_22">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <spacer name="verticalSpacer_21">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Minimum</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupbox_players_name">
-              <property name="title">
-               <string/>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_11">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLineEdit" name="line_user_name">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>250</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Bahnschrift SemiLight</family>
-                   <pointsize>12</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Players Name</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_22">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Minimum</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
@@ -687,6 +686,9 @@
                 <pointsize>11</pointsize>
                </font>
               </property>
+              <property name="frame">
+               <bool>false</bool>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -726,6 +728,9 @@
                 <pointsize>11</pointsize>
                </font>
               </property>
+              <property name="frame">
+               <bool>false</bool>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -760,6 +765,9 @@
                 <family>Bahnschrift SemiLight</family>
                 <pointsize>11</pointsize>
                </font>
+              </property>
+              <property name="frame">
+               <bool>false</bool>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -851,6 +859,9 @@
                  <pointsize>11</pointsize>
                 </font>
                </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -897,6 +908,9 @@
                </property>
                <property name="maxLength">
                 <number>3</number>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -986,6 +1000,9 @@
                  <pointsize>11</pointsize>
                 </font>
                </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -1038,6 +1055,9 @@
                  <family>Bahnschrift SemiLight</family>
                  <pointsize>11</pointsize>
                 </font>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1410,6 +1430,9 @@
                 <pointsize>11</pointsize>
                </font>
               </property>
+              <property name="frame">
+               <bool>false</bool>
+              </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
@@ -1444,6 +1467,9 @@
                 <family>Bahnschrift SemiLight</family>
                 <pointsize>11</pointsize>
                </font>
+              </property>
+              <property name="frame">
+               <bool>false</bool>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
