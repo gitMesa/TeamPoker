@@ -54,11 +54,11 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         # Dealer / Figure Small / Big Blinds.
 
     def find_playing_players_and_setup_dealer_and_first_blinds(self):
-        playing_players = np.empty(1)  # Empty array of 1 dimension
+        playing_players = []  # Empty array of 1 dimension
         for player in range(MAX_CLIENTS):
             if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_G_PLAYING:
                 # add them to the list of currently playing players
-                np.append(playing_players, player)
+                playing_players.append(player)
                 # and reset all their dealer / blind statuses
                 self.game_data["PlayersGame"][player][PGAME_dealerStatus] = STATUS_G_NONE
                 self.game_data["PlayersGame"][player][PGAME_blindStatus] = STATUS_G_NONE
