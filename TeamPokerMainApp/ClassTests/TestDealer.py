@@ -1,14 +1,10 @@
-from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
-from TeamPokerMainApp.GameLogic.Dealer import DealerClass
-from TeamPokerMainApp.Common.VariableDefinitions import *
 
 # (StartingMoney, Currency, SmallBlind, BigBlind, BlindIntervalRaise)
 game_rules = (float(10.0), 'RON', float(0.25), float(0.50), '10min')
 
 # Get the packet which describes the players information & data
-game_data = NetworkPacketClass.get_game_data_for_testing(game_rules[0])
+player_game_data = NetworkPacketClass.get_game_data_for_testing(game_rules[0])
 
-RaiseValue = float(2.0)
 ##################################################################
 #   Start testing the Dealer
 ##################################################################
@@ -20,13 +16,17 @@ RaiseValue = float(2.0)
 #     player1                             player7
 #                       player0
 ##################################################################
+
 DealerFunction = DealerClass(game_rules=game_rules, game_data=game_data)
 
 DealerFunction.start_new_poker_round()
 playing_players = DealerFunction.find_playing_players_and_setup_dealer_and_first_blinds()
 playing_order = playing_players
 
-print(game_data)
+testDealer = DealerClass(game_rules=game_rules, game_data=player_game_data)
+
+testDealer.start_new_poker_round()
+
 
 take_big_blind = True
 take_small_blind = True

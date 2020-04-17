@@ -105,9 +105,8 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         self.deck = np.delete(self.deck, CARD_INDEX_TOP_CARD)
         return topCard
 
-    def player_bet_money(self, player, ammount):
+    def add_money_to_pot(self, ammount):
         self.game_data["Dealer"]["TablePot"] += float(ammount)
-        self.game_data["PlayersGame"][player][PGAME_moneyAvailable] -= float(ammount)
 
     def add_card_on_table(self, card_number_on_table, card_index_from_deck):
         self.game_data["Dealer"]["TableCards"][card_number_on_table] = card_index_from_deck
@@ -120,5 +119,4 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
     def evaluate_hands(self):
         #TODO: victor leaga magia :)
         pass
-
 
