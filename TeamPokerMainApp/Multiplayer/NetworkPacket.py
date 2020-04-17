@@ -23,7 +23,7 @@ class NetworkPacketClass:
         # PGAME_blindIcon = 4
         # PGAME_playerCards = 5
 
-        self.PLAYER_GAME_FIELDS = list((float(0.0), int(0), str(""), str(""), [NO_CARD, NO_CARD]))
+        self.PLAYER_GAME_FIELDS = list((float(0.0), int(0), str(""), int(0), str(""), [NO_CARD, NO_CARD]))
 
         # The complete network packet definition
 
@@ -60,7 +60,7 @@ class NetworkPacketClass:
     @staticmethod
     def get_game_data_for_testing(starting_money):
         PLAYER_INFO_FIELDS = list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL))
-        PLAYER_GAME_FIELDS = list((float(starting_money), int(0), str(""), str(""), [NO_CARD, NO_CARD]))
+        PLAYER_GAME_FIELDS = list((float(starting_money), int(0), str(""), int(0), str(""), [NO_CARD, NO_CARD]))
         GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
                                        "BurnedCards": int(0),
                                        "TablePot": float(0.0)},

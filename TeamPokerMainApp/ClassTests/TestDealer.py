@@ -21,3 +21,8 @@ player_game_data = NetworkPacketClass.get_game_data_for_testing(game_rules[0])
 
 testDealer = DealerClass(game_rules=game_rules, game_data=player_game_data)
 
+testDealer.start_new_poker_round()
+
+
+
+
