@@ -13,7 +13,7 @@ class NetworkPacketClass:
         # PINFO_icon = 3
         # PINFO_actionID = 4
 
-        self.PLAYER_INFO_FIELDS = list((int(0), STATUS_G_PLAYING, str(""), str(""), int(0)))
+        self.PLAYER_INFO_FIELDS = list((int(0), int(0), str(""), str(""), int(0)))
 
         # >>>>>>> Player fields decided by the Dealer. <<<<<<<<<
         # PGAME_moneyAvailable = 0
@@ -27,7 +27,8 @@ class NetworkPacketClass:
 
         # The complete network packet definition
 
-        self.GAME_DATA_PACKET = {"Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
+        self.GAME_DATA_PACKET = {"NextDecision": int(0),
+                                 "Dealer": {"TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD],
                                             "BurnedCards": int(0),
                                             "TablePot": float(0.0)},
                                  "PlayersInfo": {0: list.copy(self.PLAYER_INFO_FIELDS),  # this will be the host-dealer-client
@@ -68,14 +69,14 @@ class NetworkPacketClass:
                             # PINFO_name = 2
                             # PINFO_icon = 3
                             # PINFO_actionID = 4
-                            "PlayersInfo": {0: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            1: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            2: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            3: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            4: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            5: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            6: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL)),
-                                            7: list((int(0), STATUS_G_PLAYING, str(""), str(""), ACTION_CALL))
+                            "PlayersInfo": {0: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            1: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            2: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            3: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            4: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            5: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            6: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL)),
+                                            7: list((int(0), STATUS_PLAYING, str(""), str(""), ACTION_CALL))
                                             },
                             # PGAME_moneyAvailable = 0
                             # PGAME_dealerStatus = 1

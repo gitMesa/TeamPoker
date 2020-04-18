@@ -1,5 +1,6 @@
 from TeamPokerMainApp.GameUI.TeamPokerUiStyleSheets import *
 from TeamPokerMainApp.GameUI.TeamPokerUI import *
+from PyQt5.QtWidgets import QActionGroup
 from PyQt5.Qt import QDoubleValidator
 import socket
 
@@ -18,15 +19,12 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.stackedWidget.setCurrentIndex(PAGE_MAIN)
         self.buttonHostAGame.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_HOST_A_GAME))
         self.buttonJoinAGame.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_JOIN_A_GAME))
-        self.button_test_play_arena.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_PLAYING_ARENA))
         self.button_client_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
         self.button_host_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
-        self.button_dev_play_arena_to_main_page.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_MAIN))
         self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
+        self.setServerControls(False)
         self.line_host_game_ip.setText(self.get_ip())
         self.line_host_game_port.setText(str(5555))
-        self.combobox_icon_selection.parentWidget().setWindowOpacity(0)
-
 
     def get_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -47,6 +45,32 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.stackedWidget.setCurrentIndex(PAGE_PLAYING_ARENA)
 
     # ##### SETTERS ################################################################################################
+
+    def setServerControls(self, bool):
+        self.tab_server_settings.setEnabled(bool)
+        self.button_serverStartGame.setEnabled(bool)
+        self.button_serverPauseGame.setEnabled(bool)
+        self.button_serverEndGame.setEnabled(bool)
+
+    def setActionButtonsCheckedBool(self, call_bool, raise_bool, fold_Bool):
+        self.action_call.setChecked(call_bool)
+        self.action_raise.setChecked(raise_bool)
+        self.action_fold.setChecked(fold_Bool)
+
+    def setActionButtonsEnabled(self, bool):
+        self.action_call.setEnabled(bool)
+        self.action_raise.setEnabled(bool)
+        self.action_fold.setEnabled(bool)
+
+    def setActionCallMoneyAmmount(self, ammount, currency):
+        self.action_call.setText(f'Call {ammount} {currency}')
+
+    def setActionRaiseMoneyAmmount(self, ammount, currency):
+        self.action_raise.setText(f'Raise {ammount} {currency}')
+
+    def setRaiseScrollBarValues(self, min, max):
+        self.horizontalSlider.setMinimum(min)
+        self.horizontalSlider.setMaximum(max)
 
     def setUiEgoPlayerCards(self, card_number, card_code):
         if card_code == 99:
@@ -90,16 +114,28 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(''))  # if player is none of the above
         eval(f'self.player{ui_pos}_dealer.setIcon(dealer_blind_icon)')
 
+    def updateSitOutOrPlayingText(self):
+        if self.action_sit_out.isChecked():
+            self.action_sit_out.setText('Sitting Out')
+        else:
+            self.action_sit_out.setText('Sit Out Next Turn')
+
     # ##### GETTERS ################################################################################################
 
-    def getUserAction(self):
-        return None
+    def getActionCall(self):
+        return self.action_call.isChecked()
+
+    def getActionRaise(self):
+        return self.action_raise.isChecked()
+
+    def getActionFold(self):
+        return self.action_fold.isChecked()
 
     def getUserName(self):
         return self.line_user_name.text()
 
     def getIconID(self):
-        iconID = self.icon_selection_combobox.currentText()
+        iconID = self.combobox_icon_selection.currentText()
         return iconID
 
     def getGameName(self):
@@ -135,11 +171,31 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def getBlindInterval(self):
         return self.combobox_blind_raise_interval.currentText()
 
+    def getActionSitOutOrPlaying(self):
+        return self.action_sit_out.isChecked()
+
+    # ##### CONNECTs ################################################################################################
+
     def connectStartHostingGameServer(self, callback_function):
         self.buttonStartHostingAGame.clicked.connect(callback_function)
 
     def connectStartJoiningAGameServer(self, callback_function):
         self.buttonStartJoiningAGame.clicked.connect(callback_function)
 
-    def connectButtonDevStartDealer(self, callback_function):
-        self.button_dev_start_dealing.clicked.connect(callback_function)
+    def connectButtonServerStartGame(self, callback_function):
+        self.button_serverStartGame.clicked.connect(callback_function)
+
+    def connectButtonServerPauseGame(self, callback_function):
+        self.button_serverPauseGame.clicked.connect(callback_function)
+
+    def connectButtonServerEndGame(self, callback_function):
+        self.button_serverEndGame.clicked.connect(callback_function)
+
+    def connectActionSitOut(self, callback_function):
+        self.action_sit_out.clicked.connect(callback_function)
+
+    def connectRaiseSliderMove(self, callback_function):
+        self.horizontalSlider.sliderReleased.connect(callback_function)
+
+    def connectClientActionChanged(self, callback_function):
+        self.poker_actions.triggered.connect(callback_function)

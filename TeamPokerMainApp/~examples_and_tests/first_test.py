@@ -41,7 +41,7 @@ class PokerGame:
         # start giving cards to players
         for card in range(NUMBER_OF_CARDS_IN_HAND):
             for player in range(self.maximumPlayers):
-                if eval(f'self._player{player}.getPlayingStatus()') is STATUS_G_PLAYING:
+                if eval(f'self._player{player}.getPlayingStatus()') is STATUS_PLAYING:
                     eval(f'self._player{player}.setCardsInPlayerHand(card, self.get_top_card())')
 
     def card_round_flop(self):

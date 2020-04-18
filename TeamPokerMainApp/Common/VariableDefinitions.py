@@ -1,35 +1,36 @@
-################################
-#   Other Random Definitions   #
-################################
-NUMBER_INDEX_TUPLE = 0
-COLOR_INDEX_TUPLE = 1
+# When you don't have cards you don't play... :)
 NO_CARD = 99
 
 # Table Status
-STATUS_T_EMPTY_SEAT = 0
-STATUS_T_CONNECTED = 1
-STATUS_T_DISCONNECTED = 2
-STATUS_T_CONNECTION_LOST = 3
-STATUS_T_SIT_OUT_TURN = 4
+STATUS_EMPTY_SEAT = 0
+STATUS_CONNECTED = 1
+STATUS_DISCONNECTED = 2
+STATUS_CONNECTION_LOST = 3
 
-# Game Status
-STATUS_G_PLAYING = 5
-STATUS_G_DEALER = 6
-STATUS_G_SMALL_BLIND = 7
-STATUS_G_BIG_BLIND = 8
-STATUS_G_NONE = 9
+STATUS_SIT_OUT_TURN = 4
+STATUS_PLAYING = 5
+STATUS_is_DEALER = 6
+STATUS_is_SMALL_BLIND = 7
+STATUS_is_BIG_BLIND = 8
+STATUS_is_NORMAL_PLAYER = 9
 
 # Dealer Status
-STATUS_D_WAITING_FOR_PLAYERS = 10
-STATUS_D_GAME_STATUS_NEW_ROUND_READY = 11
-STATUS_D_GAME_STATUS_PLAYER_DECIDING = 12
-STATUS_D_GAME_STATUS_EVALUATE_HANDS = 13
+STATUS_GAME_PLAYING = 10
+STATUS_GAME_PAUSED = 11
+STATUS_GAME_ENDING = 12
 
-################################
-#    Server/Client Stuff Def   #
-################################
+# Player Numbers
+PLAYER0 = 0
+PLAYER1 = 1
+PLAYER2 = 2
+PLAYER3 = 3
+PLAYER4 = 4
+PLAYER5 = 5
+PLAYER6 = 6
+PLAYER7 = 7
+DEALER = 10
 
-DEALER = 0
+# Other Definitions
 MAX_CLIENTS = 8  # Host(Dealer+Client) + 7 other players = 8 total players
 MESSAGE_DISCONNECTED = '!DISCONNECTED'
 BUFFERSIZE = 2048
@@ -85,6 +86,8 @@ CARD_INDEX_TOP_CARD = 0
 #####################################
 #    Hand Evaluation Definitions    #
 #####################################
+NUMBER_INDEX_TUPLE = 0
+COLOR_INDEX_TUPLE = 1
 
 SMALL_STRAIGHT = [2, 3, 4, 5, 14]
 NUMBER_OF_CARDS_FOR_QUADS = 4

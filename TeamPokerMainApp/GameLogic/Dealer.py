@@ -56,21 +56,21 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
     def find_playing_players_and_setup_dealer_and_first_blinds(self):
         playing_players = []  # Empty list
         for player in range(MAX_CLIENTS):
-            if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_G_PLAYING:
+            if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_PLAYING:
                 # add them to the list of currently playing players
                 playing_players.append(player)
                 # and reset all their dealer / blind statuses
-                self.game_data["PlayersGame"][player][PGAME_dealerStatus] = STATUS_G_NONE
-                self.game_data["PlayersGame"][player][PGAME_blindStatus] = STATUS_G_NONE
+                self.game_data["PlayersGame"][player][PGAME_dealerStatus] = STATUS_is_NORMAL_PLAYER
+                self.game_data["PlayersGame"][player][PGAME_blindStatus] = STATUS_is_NORMAL_PLAYER
         # Dealer Small Big
         if len(playing_players) >= 3:
-            self.game_data["PlayersGame"][playing_players[0]][PGAME_dealerStatus] = STATUS_G_DEALER
-            self.game_data["PlayersGame"][playing_players[1]][PGAME_blindStatus] = STATUS_G_SMALL_BLIND
-            self.game_data["PlayersGame"][playing_players[2]][PGAME_blindStatus] = STATUS_G_BIG_BLIND
+            self.game_data["PlayersGame"][playing_players[0]][PGAME_dealerStatus] = STATUS_is_DEALER
+            self.game_data["PlayersGame"][playing_players[1]][PGAME_blindStatus] = STATUS_is_SMALL_BLIND
+            self.game_data["PlayersGame"][playing_players[2]][PGAME_blindStatus] = STATUS_is_BIG_BLIND
         elif len(playing_players) == 2:
-            self.game_data["PlayersGame"][playing_players[0]][PGAME_dealerStatus] = STATUS_G_DEALER
-            self.game_data["PlayersGame"][playing_players[1]][PGAME_blindStatus] = STATUS_G_SMALL_BLIND
-            self.game_data["PlayersGame"][playing_players[0]][PGAME_blindStatus] = STATUS_G_BIG_BLIND
+            self.game_data["PlayersGame"][playing_players[0]][PGAME_dealerStatus] = STATUS_is_DEALER
+            self.game_data["PlayersGame"][playing_players[1]][PGAME_blindStatus] = STATUS_is_SMALL_BLIND
+            self.game_data["PlayersGame"][playing_players[0]][PGAME_blindStatus] = STATUS_is_BIG_BLIND
         else:
             self.dealer_status_text = "Game doesn't have enough players to start a game."
             # the statuses are already set to NONE so no modification of statuses is needed
