@@ -196,6 +196,3 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def connectRaiseSliderMove(self, callback_function):
         self.horizontalSlider.sliderReleased.connect(callback_function)
-
-    def connectClientActionChanged(self, callback_function):
-        self.poker_actions.triggered.connect(callback_function)

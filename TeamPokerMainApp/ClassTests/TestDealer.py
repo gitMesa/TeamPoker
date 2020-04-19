@@ -41,7 +41,7 @@ class TestDealerClass:
     def main_dealer_loop (self):
         for current_player in self.playing_order:
             bet_value = self.game_data["Dealer"]["BetValue"]
-            if game_data["PlayersInfo"][current_player][PINFO_status] == STATUS_PLAYING:
+            if game_data["PlayersInfo"][current_player][PINFO_status] == STATUS_PLAYER_PLAYING:
 
                 cards = self.game_data["PlayersGame"][current_player][PGAME_playerCards]
                 self.DealerFunction.print_actual_card(cards[0], cards[1], current_player)

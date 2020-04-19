@@ -34,7 +34,7 @@ class PokerGameClass:
         self._win = TeamPokerUIControllerClass()
         self._packet = NetworkPacketClass()
         self.game_data = self._packet.get_game_data()
-        self.game_status = STATUS_D_PAUSED
+        self.game_status = STATUS_GAME_PAUSED
         self.initConnectUiElements()
         self.setDevQuickLaunchSettings()
 
@@ -49,7 +49,6 @@ class PokerGameClass:
         self._win.connectButtonServerEndGame(self.dealer_end_game)
         self._win.connectActionSitOut(self.set_action_sit_out_or_playing)
         self._win.connectRaiseSliderMove(self.set_raise_button_text)
-        self._win.connectClientActionChanged(self.get_new_player_action)
 
 ################################################################################################
 # 1. Network Stuff (Client & Server):
@@ -95,7 +94,7 @@ class PokerGameClass:
         self.game_data["PlayersInfo"][self.client_index][PINFO_tableSpot] = self.client_index  # TODO: Allow players to select own table spots
         self.game_data["PlayersInfo"][self.client_index][PINFO_icon] = self._win.getIconID()
         self.game_data["PlayersInfo"][self.client_index][PINFO_name] = self._win.getUserName()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYING  #TODO: Verify that players selected a seat, and wants to play
+        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING  #TODO: Verify that players selected a seat, and wants to play
         self.client_server_communication_loop()
 
     def client_server_communication_loop(self):
@@ -131,11 +130,20 @@ class PokerGameClass:
 ######################################################################################################
 
     def dealer_evaluate_next_game_step(self):
-        #TODO: Link Miro Stuff
-        pass
+        if self.are_enough_players_playing():
+            self._dealer.dealer_evaluate_next_step()
+        else:
+            self.dealer_pause_game()
+
+    def are_enough_players_playing(self):
+        number = 0
+        for player in range(MAX_CLIENTS):
+            if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_PLAYER_PLAYING:
+                number += 1
+        return number >= 2
 
     def dealer_start_game(self):
-        self.game_status = STATUS_PLAYING
+        self.game_status = STATUS_PLAYER_PLAYING
 
     def dealer_pause_game(self):
         self.game_status = STATUS_GAME_PAUSED
@@ -152,7 +160,7 @@ class PokerGameClass:
         self.game_data["PlayersInfo"][self.client_index][PINFO_name] = self._win.getUserName()
         self.game_data["PlayersInfo"][self.client_index][PINFO_icon] = self._win.getIconID()
         self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_CALL
-        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYING  # TODO: Link to player action.
+        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING  # TODO: Link to player action.
 
     def client_update_game_data_from_server_data(self, server_data):
         self.game_data["Dealer"] = server_data["Dealer"]
@@ -200,10 +208,10 @@ class PokerGameClass:
         # Checked = Sitting out
         # Unchecked = Playing
         if self._win.getActionSitOutOrPlaying():
-            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_SIT_OUT_TURN
+            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_SIT_OUT_TURN
             self._win.setActionButtonsEnabled(False)
         else:
-            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYING
+            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING
             self._win.setActionButtonsEnabled(True)
 
     def get_new_player_action(self):
