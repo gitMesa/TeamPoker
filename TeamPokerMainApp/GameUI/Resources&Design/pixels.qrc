@@ -17,6 +17,9 @@
     <file>ui_icons/main_logo.png</file>
   </qresource>
   <qresource prefix="cards">
+    <file>cards_jpeg/burned_1.jpg</file>
+    <file>cards_jpeg/burned_2.jpg</file>
+    <file>cards_jpeg/burned_3.jpg</file>
     <file>cards_jpeg/99_blue.jpg</file>
     <file>cards_jpeg/99_gray.jpg</file>
     <file>cards_jpeg/99_green.jpg</file>

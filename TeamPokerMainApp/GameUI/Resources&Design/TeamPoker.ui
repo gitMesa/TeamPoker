@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1260</width>
-    <height>897</height>
+    <width>1274</width>
+    <height>954</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1700,7 +1700,7 @@
               <widget class="QWidget" name="player4" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -1813,8 +1813,8 @@
                      <widget class="QPushButton" name="player3_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -1832,8 +1832,8 @@
                      <widget class="QPushButton" name="player3_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -1936,7 +1936,7 @@
               <widget class="QWidget" name="player5" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>330</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -1946,31 +1946,6 @@
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_32">
                     <item>
-                     <widget class="QPushButton" name="player4_icon">
-                      <property name="minimumSize">
-                       <size>
-                        <width>70</width>
-                        <height>70</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>70</width>
-                        <height>70</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>70</width>
-                        <height>70</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
                      <layout class="QVBoxLayout" name="verticalLayout_18">
                       <property name="spacing">
                        <number>0</number>
@@ -1978,17 +1953,40 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
                         <item>
-                         <widget class="QLabel" name="player4_name">
-                          <property name="font">
-                           <font>
-                            <family>Bahnschrift SemiBold</family>
-                            <pointsize>11</pointsize>
-                            <weight>75</weight>
-                            <bold>true</bold>
-                           </font>
+                         <spacer name="horizontalSpacer_39">
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="sizeHint" stdset="0">
+                           <size>
+                            <width>40</width>
+                            <height>20</height>
+                           </size>
+                          </property>
+                         </spacer>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="player4_icon">
+                          <property name="minimumSize">
+                           <size>
+                            <width>70</width>
+                            <height>70</height>
+                           </size>
+                          </property>
+                          <property name="maximumSize">
+                           <size>
+                            <width>70</width>
+                            <height>70</height>
+                           </size>
                           </property>
                           <property name="text">
-                           <string>TextLabel</string>
+                           <string/>
+                          </property>
+                          <property name="iconSize">
+                           <size>
+                            <width>70</width>
+                            <height>70</height>
+                           </size>
                           </property>
                          </widget>
                         </item>
@@ -2008,36 +2006,34 @@
                        </layout>
                       </item>
                       <item>
-                       <layout class="QHBoxLayout" name="horizontalLayout_34">
-                        <item>
-                         <widget class="QLabel" name="player4_money_available">
-                          <property name="font">
-                           <font>
-                            <family>Bahnschrift SemiBold</family>
-                            <pointsize>12</pointsize>
-                            <weight>75</weight>
-                            <bold>true</bold>
-                           </font>
-                          </property>
-                          <property name="text">
-                           <string>0.00</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <spacer name="horizontalSpacer_39">
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="sizeHint" stdset="0">
-                           <size>
-                            <width>40</width>
-                            <height>20</height>
-                           </size>
-                          </property>
-                         </spacer>
-                        </item>
-                       </layout>
+                       <widget class="QLabel" name="player4_name">
+                        <property name="font">
+                         <font>
+                          <family>Bahnschrift SemiBold</family>
+                          <pointsize>11</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="player4_money_available">
+                        <property name="font">
+                         <font>
+                          <family>Bahnschrift SemiBold</family>
+                          <pointsize>12</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;0.00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>
@@ -2045,8 +2041,8 @@
                      <widget class="QPushButton" name="player4_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2064,8 +2060,8 @@
                      <widget class="QPushButton" name="player4_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2173,7 +2169,7 @@
               <widget class="QWidget" name="player6" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2351,8 +2347,8 @@
                      <widget class="QPushButton" name="player5_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2370,8 +2366,8 @@
                      <widget class="QPushButton" name="player5_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2424,6 +2420,21 @@
             </spacer>
            </item>
            <item>
+            <widget class="QLabel" name="label_game_status_text">
+             <property name="font">
+              <font>
+               <family>Bahnschrift SemiBold</family>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <layout class="QHBoxLayout" name="horizontalLayout_16">
              <property name="spacing">
               <number>15</number>
@@ -2438,7 +2449,7 @@
               <widget class="QWidget" name="widget_2" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2551,8 +2562,8 @@
                      <widget class="QPushButton" name="player2_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2570,8 +2581,8 @@
                      <widget class="QPushButton" name="player2_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -2689,6 +2700,9 @@
                    <height>105</height>
                   </size>
                  </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -2708,8 +2722,8 @@
                 <widget class="QPushButton" name="cards_tableCard0">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                  <property name="text">
@@ -2717,8 +2731,8 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                 </widget>
@@ -2727,8 +2741,8 @@
                 <widget class="QPushButton" name="cards_tableCard1">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                  <property name="text">
@@ -2736,8 +2750,8 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                 </widget>
@@ -2746,8 +2760,8 @@
                 <widget class="QPushButton" name="cards_tableCard2">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                  <property name="text">
@@ -2755,8 +2769,8 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                 </widget>
@@ -2765,8 +2779,8 @@
                 <widget class="QPushButton" name="cards_tableCard3">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                  <property name="text">
@@ -2774,8 +2788,8 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                 </widget>
@@ -2784,8 +2798,8 @@
                 <widget class="QPushButton" name="cards_tableCard4">
                  <property name="minimumSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                  <property name="text">
@@ -2793,8 +2807,8 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>70</width>
-                   <height>105</height>
+                   <width>100</width>
+                   <height>150</height>
                   </size>
                  </property>
                 </widget>
@@ -2818,7 +2832,7 @@
               <widget class="QWidget" name="player7" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -2996,8 +3010,8 @@
                      <widget class="QPushButton" name="player6_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3015,8 +3029,8 @@
                      <widget class="QPushButton" name="player6_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3036,51 +3050,6 @@
                 </item>
                </layout>
               </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_46">
-             <item>
-              <spacer name="horizontalSpacer_26">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_game_status_text">
-               <property name="font">
-                <font>
-                 <family>Bahnschrift SemiBold</family>
-                 <pointsize>12</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_27">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -3119,7 +3088,7 @@
               <widget class="QWidget" name="widget_4" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -3232,8 +3201,8 @@
                      <widget class="QPushButton" name="player1_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3251,8 +3220,8 @@
                      <widget class="QPushButton" name="player1_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3369,7 +3338,7 @@
                    <property name="font">
                     <font>
                      <family>Bahnschrift SemiBold</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>12</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
@@ -3384,32 +3353,13 @@
                    <property name="font">
                     <font>
                      <family>Bahnschrift SemiBold</family>
-                     <pointsize>11</pointsize>
+                     <pointsize>18</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
                    <property name="text">
                     <string>TextLabel</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="icon_potSize">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>60</width>
-                     <height>60</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string/>
                    </property>
                   </widget>
                  </item>
@@ -3447,7 +3397,7 @@
               <widget class="QWidget" name="player8" native="true">
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -3625,8 +3575,8 @@
                      <widget class="QPushButton" name="player7_card1">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3644,8 +3594,8 @@
                      <widget class="QPushButton" name="player7_card2">
                       <property name="minimumSize">
                        <size>
-                        <width>50</width>
-                        <height>85</height>
+                        <width>75</width>
+                        <height>115</height>
                        </size>
                       </property>
                       <property name="text">
@@ -3727,7 +3677,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -3832,14 +3782,14 @@
             <widget class="QWidget" name="widget_3" native="true">
              <property name="minimumSize">
               <size>
-               <width>300</width>
-               <height>200</height>
+               <width>0</width>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>300</width>
-               <height>200</height>
+               <width>16777215</width>
+               <height>16777215</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -3947,94 +3897,34 @@
                    </layout>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_37">
-                    <item>
-                     <spacer name="horizontalSpacer_22">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="player0_name">
-                      <property name="font">
-                       <font>
-                        <family>Bahnschrift SemiBold</family>
-                        <pointsize>11</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>TextLabel</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_42">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
+                   <widget class="QLabel" name="player0_name">
+                    <property name="font">
+                     <font>
+                      <family>Bahnschrift SemiBold</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                   </widget>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_43">
-                    <item>
-                     <spacer name="horizontalSpacer_25">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="player0_money_available">
-                      <property name="font">
-                       <font>
-                        <family>Bahnschrift SemiBold</family>
-                        <pointsize>12</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>0.00</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_44">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
+                   <widget class="QLabel" name="player0_money_available">
+                    <property name="font">
+                     <font>
+                      <family>Bahnschrift SemiBold</family>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;0.00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </item>
@@ -4044,8 +3934,8 @@
                    <widget class="QPushButton" name="player0_card1">
                     <property name="minimumSize">
                      <size>
-                      <width>90</width>
-                      <height>125</height>
+                      <width>100</width>
+                      <height>150</height>
                      </size>
                     </property>
                     <property name="text">
@@ -4063,8 +3953,8 @@
                    <widget class="QPushButton" name="player0_card2">
                     <property name="minimumSize">
                      <size>
-                      <width>90</width>
-                      <height>125</height>
+                      <width>100</width>
+                      <height>150</height>
                      </size>
                     </property>
                     <property name="text">
@@ -4350,7 +4240,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="action_sit_out">
+               <widget class="QPushButton" name="action_play_or_sit_out">
                 <property name="minimumSize">
                  <size>
                   <width>150</width>
@@ -4370,9 +4260,12 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Sit Out Next Turn</string>
+                 <string>Play</string>
                 </property>
                 <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>

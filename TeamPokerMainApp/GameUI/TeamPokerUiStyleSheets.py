@@ -27,14 +27,14 @@ QCheckBox{color:white;}
 QRadioButton{color:white;}
 QGroupBox{color:white;}
 
-QPushButton{border: 0px; color: white;}
+/* QPushButton{border: 0px; color: white;} */
 
 QPushButton#buttonHostAGame,
 QPushButton#buttonJoinAGame,
 QPushButton#buttonStartHostingAGame,
 QPushButton#button_host_to_main_page,
 QPushButton#buttonStartJoiningAGame,
-QPushButton#button_client_to_main_page,
+QPushButton#button_client_to_main_page /*,
 QPushButton#button_serverStartGame,
 QPushButton#button_serverPauseGame,
 QPushButton#button_serverEndGame,
@@ -42,7 +42,7 @@ QPushButton#action_call,
 QPushButton#action_fold,
 QPushButton#action_raise,
 QPushButton#action_buy_in,
-QPushButton#action_sit_out
+QPushButton#action_sit_out*/
 {border-style: outset;
 border-width: 2px;
 border-radius: 5px;
@@ -54,7 +54,7 @@ QPushButton#buttonJoinAGame:hover,
 QPushButton#buttonStartHostingAGame:hover,
 QPushButton#button_host_to_main_page:hover,
 QPushButton#buttonStartJoiningAGame:hover,
-QPushButton#button_client_to_main_page:hover,
+QPushButton#button_client_to_main_page:hover /*,
 QPushButton#button_serverStartGame:hover,
 QPushButton#button_serverPauseGame:hover,
 QPushButton#button_serverEndGame:hover,
@@ -62,14 +62,14 @@ QPushButton#action_call:hover,
 QPushButton#action_fold:hover,
 QPushButton#action_raise:hover,
 QPushButton#action_buy_in:hover,
-QPushButton#action_sit_out:hover
+QPushButton#action_sit_out:hover */
 {border-style: outset;
 border-width: 2px;
 border-radius: 5px;
 border-color: #2193b0;
 color: #2193b0;}
 
-QPushButton#action_call:checked,
+/*QPushButton#action_call:checked,
 QPushButton#action_fold:checked,
 QPushButton#action_raise:checked,
 QPushButton#action_buy_in:checked,
@@ -79,7 +79,7 @@ border-style: outset;
 border-width: 2px;
 border-radius: 5px;
 border-color: #2193b0;
-color: #2193b0;}
+color: #2193b0;}*/
 
 /* Hide Icons */
 QPushButton#player0_icon,
@@ -117,11 +117,11 @@ QPushButton#player6_card2,
 QPushButton#player7_card1,
 QPushButton#player7_card2,
 
+QPushButton#cards_tableCard0,
 QPushButton#cards_tableCard1,
 QPushButton#cards_tableCard2,
 QPushButton#cards_tableCard3,
 QPushButton#cards_tableCard4,
-QPushButton#cards_tableCard5,
 QPushButton#cards_burnedCards,
 QPushButton#icon_potSize
 {

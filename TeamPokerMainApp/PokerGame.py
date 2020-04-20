@@ -1,6 +1,7 @@
 from TeamPokerMainApp.GameUI.TeamPokerUIController import TeamPokerUIControllerClass
 from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
 from TeamPokerMainApp.Multiplayer.Server import MultiplayerServerClass
+from TeamPokerMainApp.GameLogic.CardDeck import CardDeckClass
 from TeamPokerMainApp.Multiplayer.Client import ClientClass
 from TeamPokerMainApp.GameLogic.Dealer import DealerClass
 from TeamPokerMainApp.Common.MethodDefinitions import *
@@ -33,6 +34,7 @@ class PokerGameClass:
     def __init__(self):
         self._win = TeamPokerUIControllerClass()
         self._packet = NetworkPacketClass()
+        self._deck = CardDeckClass()
         self.game_data = self._packet.get_game_data()
         self.game_status = DEALER_thinks_GAME_is_PAUSED
         self.initConnectUiElements()
@@ -46,8 +48,8 @@ class PokerGameClass:
         self._win.connectStartHostingGameServer(self.start_poker_server)
         self._win.connectStartJoiningAGameServer(self.join_poker_server)
         self._win.connectButtonServerStartGame(self.dealer_start_game)
-        self._win.connectButtonServerPauseGame(self.dealer_pause_game)
-        self._win.connectButtonServerEndGame(self.dealer_end_game)
+        self._win.connectButtonServerPauseGame(lambda f: self._dealer.set_dealer_status(DEALER_thinks_GAME_is_PAUSED))
+        self._win.connectButtonServerEndGame(lambda f: self._dealer.set_dealer_status(DEALER_thinks_GAME_is_ENDING))
         self._win.connectActionSitOut(self.set_action_sit_out_or_playing)
         self._win.connectRaiseSliderMove(self.set_raise_button_text)
 
@@ -71,7 +73,7 @@ class PokerGameClass:
                 print(f'ERROR: start_poker_server MultiplayerServerClass -> {e}')
 
             try:
-                self._dealer = DealerClass(self.get_game_rules(), self._packet.get_game_data())
+                self._dealer = DealerClass(self.get_game_rules(), self._deck)
                 self.dealer_set_game_rules_to_network_packet()
             except Exception as e:
                 print(f'ERROR: start_poker_server DealerClass -> {e}')
@@ -123,7 +125,12 @@ class PokerGameClass:
             try:
                 # copy the player info
                 self.game_data["Player"] = server_data["Player"]
+                # send the data to the Dealer Class
+                self._dealer.set_data_to_dealer_game_data(self.game_data)
+                # call dealer class to do its magic
                 self.dealer_evaluate_next_game_step()
+                # get data back after analysis by dealer class
+                self.game_data = self._dealer.get_dealer_game_data()
             except Exception as e:
                 print(f'client_server_comm_action -> dealer_evaluate_next_game_step -> {e}')
 
@@ -132,9 +139,10 @@ class PokerGameClass:
 ######################################################################################################
 
     def dealer_evaluate_next_game_step(self):
+        self._dealer.set_dealer_status(DEALER_thinks_GAME_is_PLAYING)
         if not self.are_enough_players_playing():
-            self.dealer_pause_game()
-        self._dealer.dealer_evaluate_next_step()
+            self._dealer.set_dealer_status(DEALER_thinks_GAME_is_PAUSED)
+        self._dealer.dealer_evaluate_next_step()          # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< THIS IS WHAT YOU ARE LOOKING FOR
 
     def are_enough_players_playing(self):
         number = 0
@@ -151,17 +159,11 @@ class PokerGameClass:
     def dealer_start_game(self):
         self._dealer.dealer_start_the_game()
 
-    def dealer_pause_game(self):
-        self.game_status = DEALER_thinks_GAME_is_PAUSED
-
-    def dealer_end_game(self):
-        self.game_status = DEALER_thinks_GAME_is_ENDING
-
 ######################################################################################################
 # 4. Client Logic:
 ######################################################################################################
 
-    def client_init_game_data_from_own_ui(self):
+    def client_init_game_data_from_own_ui(self):  # INIT stuff only!!!!!
         self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index
         self.game_data["Player"][self.client_index]["Icon"] = self._win.getIconID()
         self.game_data["Player"][self.client_index]["Name"] = self._win.getUserName()
@@ -170,7 +172,10 @@ class PokerGameClass:
         # self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index  # TODO: Allow player to change spot on table?
         self.game_data["Player"][self.client_index]["ConnectionStatus"] = CONN_STATUS_CONNECTED
         self.game_data["Player"][self.client_index]["GameAction"] = self._win.getPlayerAction()
-        self.game_data["Player"][self.client_index]["GameStatus"] = self._win.getActionSitOutOrPlaying()
+        if self._win.getActionPlayOrSitOut():  # if checked we are sitting out
+            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_SIT_OUT_TURN
+        else:
+            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_PLAYING
 
     def client_update_own_ui_from_new_server_data(self):
         for player in range(MAX_CLIENTS):
@@ -189,20 +194,26 @@ class PokerGameClass:
         # update cards on table
         table_cards = self.game_data["Dealer"]["TableCards"]
         for card in range(NUMBER_OF_CARDS_ON_TABLE):
-            self._win.setUiTableCard(card_number=card, card_code=table_cards[card])
+            card_name = self._deck.get_card_name_from_card_number(table_cards[card])
+            self._win.setUiTableCard(card_number=card, card_name=card_name)
         # update cards in my hand
         player_cards = self.game_data["Player"][self.client_index]["PlayerCards"]  # returns array with card codes
         for card in range(NUMBER_OF_CARDS_IN_HAND):
-            self._win.setUiEgoPlayerCards(card_number=card, card_code=player_cards[card])
+            card_name = self._deck.get_card_name_from_card_number(player_cards[card])
+            self._win.setUiEgoPlayerCards(card_number=card, card_name=card_name)
+        # Update game status text.
+        self._win.setGameStatusText(text=self.game_data["Dealer"]["GameStatus"])
+        self._win.setNewPotValue(amount=self.game_data["Dealer"]["TablePot"], currency=self.game_data["Dealer"]["Currency"])
+        self._win.setUiBurnedCards(number_of_burned_cards=self.game_data["Dealer"]["BurnedCards"])
 
     def set_action_sit_out_or_playing(self):
         # Checked = Sitting out
         # Unchecked = Playing
-        if self._win.getActionSitOutOrPlaying():
-            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_SIT_OUT_TURN
+        if self._win.getActionPlayOrSitOut():
+            self._win.togglePlayOrSitOutButtonText()
             self._win.setActionButtonsEnabled(False)
         else:
-            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_PLAYING
+            self._win.togglePlayOrSitOutButtonText()
             self._win.setActionButtonsEnabled(True)
 
     def get_new_player_action(self):

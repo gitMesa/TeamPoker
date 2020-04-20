@@ -16,11 +16,11 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         super(TeamPokerUIControllerClass, self).__init__(parent)
         self.setupUi(self)
         self.setStyleSheet(WINDOW_STYLE)
-        self.stackedWidget.setCurrentIndex(PAGE_MAIN)
         self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
+        self.stackedWidget.setCurrentIndex(PAGE_MAIN)
         self.tabWidget_client_window.setCurrentIndex(0)
-        self.line_host_game_ip.setText(get_ip())
-        self.line_host_game_port.setText(str(5555))
+        self.line_host_game_ip.setText(get_ip())  # TODO: remove
+        self.line_host_game_port.setText(str(5555))  # TODO: remove
         self.setServerControls(False)
         self.init_connects()
 
@@ -81,21 +81,22 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         eval(f'self.player{pos}_status.setHidden(hidden)')
         eval(f'self.player{pos}_money_available.setHidden(hidden)')
 
-    def setUiEgoPlayerCards(self, card_number, card_code):
-        if card_code == 99:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}_red.jpg'))
-        else:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}.jpg'))
+    def setUiEgoPlayerCards(self, card_number, card_name):
+        qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_name}.jpg'))
         if card_number is 0:
             self.player0_card1.setIcon(qtIcon)
         elif card_number is 1:
             self.player0_card2.setIcon(qtIcon)
 
-    def setUiTableCard(self, card_number, card_code):
-        if card_code == 99:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}_red.jpg'))
+    def setUiBurnedCards(self, number_of_burned_cards):
+        if number_of_burned_cards > 0:
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/burned_{number_of_burned_cards}.jpg'))
+            self.cards_burnedCards.setIcon(qtIcon)
         else:
-            qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_code}.jpg'))
+            self.cards_burnedCards.setIcon(QtGui.QIcon(QtGui.QPixmap('')))
+
+    def setUiTableCard(self, card_number, card_name):
+        qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_name}.jpg'))
         eval(f"self.cards_tableCard{card_number}.setIcon(qtIcon)")
 
     def setUiOtherPlayersCards(self, ui_pos):
@@ -124,11 +125,11 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(''))  # if player is none of the above
         eval(f'self.player{ui_pos}_dealer.setIcon(dealer_blind_icon)')
 
-    def updateSitOutOrPlayingText(self):
-        if self.action_sit_out.isChecked():
-            self.action_sit_out.setText('Sitting Out')
+    def togglePlayOrSitOutButtonText(self):
+        if self.action_play_or_sit_out.isChecked():
+            self.action_play_or_sit_out.setText('Resume Playing')
         else:
-            self.action_sit_out.setText('Sit Out Next Turn')
+            self.action_play_or_sit_out.setText('Sit Out Next Turn')
 
     # ##### GETTERS ################################################################################################
 
@@ -137,9 +138,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def getPlayerPlayingOrSittingOut(self):
         if self.action_sit_out.isChecked():
-            return STATUS_PLAYER_SIT_OUT_TURN
+            return GAME_STATUS_PLAYER_SIT_OUT_TURN
         else:
-            return STATUS_PLAYER_PLAYING
+            return GAME_STATUS_PLAYER_PLAYING
 
     def getUserName(self):
         return self.line_user_name.text()
@@ -181,8 +182,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def getBlindInterval(self):
         return self.combobox_blind_raise_interval.currentText()
 
-    def getActionSitOutOrPlaying(self):
-        return self.action_sit_out.isChecked()
+    def getActionPlayOrSitOut(self):
+        return self.action_play_or_sit_out.isChecked()
 
     # ##### CONNECTs ################################################################################################
 
@@ -202,7 +203,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_serverEndGame.clicked.connect(callback_function)
 
     def connectActionSitOut(self, callback_function):
-        self.action_sit_out.clicked.connect(callback_function)
+        self.action_play_or_sit_out.clicked.connect(callback_function)
 
     def connectRaiseSliderMove(self, callback_function):
         self.horizontalSlider.sliderReleased.connect(callback_function)

@@ -76,4 +76,3 @@ def transform_into_string(dictionary):
 
 def transform_into_data(string):
     return eval(string)
-

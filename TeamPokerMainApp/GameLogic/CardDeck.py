@@ -26,7 +26,11 @@ class CardDeckClass:
 
     # get the card name/color based on input index
     def get_card_name_from_card_number(self, index):
-        return self.deckDefinition[index]
+        if index is NO_CARD:
+            name = NO_CARD_IMAGE
+        else:
+            name = self.deckDefinition[index]
+        return name
 
     def get_card_number_from_card_id(self, index):
         return self.deckDefinitionEvaluation[index]

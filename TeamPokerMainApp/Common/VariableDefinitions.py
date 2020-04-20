@@ -1,5 +1,6 @@
 # When you don't have cards you don't play... :)
 NO_CARD = 99
+NO_CARD_IMAGE = '99_red'
 
 # Table Status
 CONN_STATUS_EMPTY_SEAT = 0

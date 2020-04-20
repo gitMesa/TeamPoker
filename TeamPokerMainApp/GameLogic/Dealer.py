@@ -1,6 +1,5 @@
 from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
 from TeamPokerMainApp.GameLogic.HandEvaluator import HandEvaluatorClass
-from TeamPokerMainApp.GameLogic.CardDeck import CardDeckClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 import numpy as np
 
@@ -15,20 +14,17 @@ import numpy as np
 ###################################################################
 
 
-class DealerClass(HandEvaluatorClass, CardDeckClass):
+class DealerClass(HandEvaluatorClass):
 
-    def __init__(self, game_rules, game_data):
+    def __init__(self, game_rules, deck_instance):
         self._packet = NetworkPacketClass()
+        self._deck = deck_instance
+        self._deck.init_deck()
         self.game_rules = game_rules
-        self.game_data = game_data
+        self.game_data = dict()
         self.dealer_step = DEALER_WAITING_FOR_GAME_START
-
-        self.init_deck()
-        self.set_game_rules()
-        self.clear_cards_on_table_and_pot()
-
+        self.dealer_status = DEALER_thinks_GAME_is_PAUSED
         self.game_status_text = ''
-        self.first_start = True
 
     def get_dealer_game_data(self):
         return self.game_data
@@ -41,101 +37,99 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
     #################################################################################
 
     def dealer_evaluate_next_step(self):
-        if self.dealer_step is DEALER_WAITING_FOR_GAME_START:
-            self.set_status_message_and_update_history('Waiting for game to start!')
-        elif self.dealer_step is DEALER_NEW_GAME:
-            self.set_status_message_and_update_history('New game started!')
-            self.round = ROUND_PRE_FLOP
-            self.clear_cards_on_table_and_pot()
-            self.deck = self.shuffle_deck()
-            self.print_shuffled_deck(self.deck)  # TODO: remove
-            self.player_order = self.find_playing_players_and_setup_dealer_and_first_blinds()
-            self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
+        if self.dealer_status is DEALER_thinks_GAME_is_PLAYING:
 
-        elif self.dealer_step is DEALER_WAIT_FOR_PLAYER_ACTION:
-            bet_value = self.game_data["Dealer"]["BetValue"]
-            currency = self.game_data["Dealer"]["Currency"]
-            player = self.game_data["Dealer"]["NextDecision"]
-            playerName = self.game_data["Player"][player]["Name"]
+            if self.dealer_step is DEALER_WAITING_FOR_GAME_START:
+                self.set_status_message_and_update_history('Waiting for game to start!')
 
-            if self.game_data["PlayersInfo"][player]["GameAction"] == ACTION_UNDECIDED:
-                self.set_status_message_and_update_history(f'Waiting for {playerName} to decide...')
+            elif self.dealer_step is DEALER_NEW_GAME:
+                self.set_status_message_and_update_history('New game started!')
+                self.round = ROUND_PRE_FLOP
+                self.clear_cards_on_table_and_pot()
+                self.deck = self._deck.shuffle_deck()
+                self._deck.print_shuffled_deck(self.deck)  # TODO: remove
+                self.player_order = self.find_playing_players_and_setup_dealer_and_first_blinds()
+                self.game_data["Dealer"]["BetValue"] = self.game_data["Dealer"]["BigBlind"]
+                # Give cards to playing players
+                for card_index in range(NUMBER_OF_CARDS_IN_HAND):
+                    for player in self.player_order:
+                        self.game_data["Player"][player]["PlayerCards"][card_index] = self.get_top_card()
+                self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
 
-            # If the decision is to CALL
-            if self.game_data["PlayersInfo"][player]["GameAction"] == ACTION_CALL:
-                # Check if the player has enough money to do a minimum call
-                if self.game_data["Player"][player]["MoneyAvailable"] < bet_value:
-                    money_left = self.game_data["Player"][player]["MoneyAvailable"]
-                    self.player_bet_money(player, money_left)
-                    self.set_status_message_and_update_history(f'{playerName} went All In with {money_left} {currency}')
+            elif self.dealer_step is DEALER_WAIT_FOR_PLAYER_ACTION:
+                bet_value = self.game_data["Dealer"]["BetValue"]
+                currency = self.game_data["Dealer"]["Currency"]
+                player = self.game_data["Dealer"]["NextDecision"]
+                playerName = self.game_data["Player"][player]["Name"]
+                if self.game_data["Player"][player]["GameAction"] == ACTION_UNDECIDED:
+                    self.set_status_message_and_update_history(f'Waiting for {playerName} to decide...')
+                # If the decision is to CALL
+                if self.game_data["Player"][player]["GameAction"] == ACTION_CALL:
+                    # Check if the player has enough money to do a minimum call
+                    if self.game_data["Player"][player]["MoneyAvailable"] < bet_value:
+                        money_left = self.game_data["Player"][player]["MoneyAvailable"]
+                        self.player_bet_money(player, money_left)
+                        self.set_status_message_and_update_history(f'{playerName} went All In with {money_left} {currency}')
+                    else:
+                        self.player_bet_money(player, bet_value)
+                        self.set_status_message_and_update_history(f'{playerName} Call {bet_value} {currency}')
+
+                    # If the current player is the last to call, go to the next round
+                    if self.player_order.index(player) == self.player_order[-1]:
+                        self.dealer_step = DEALER_HANDLE_NEXT_ROUND
+                        self.game_data["Dealer"]["Dealer"]["NextDecision"] = self.player_order[0]
+                    else:
+                        # otherwise increment the next decision to the next playing player
+                        self.game_data["Dealer"]["NextDecision"] = self.player_order.index(player) + 1
+                    print(f"Player{player} ACTION_CALL.")
+
+                if self.game_data["Player"][player]["GameAction"] == ACTION_RAISE:
+                    # Get the amount the player raised to
+                    raise_value = self.game_data["Player"][player]["BetAmount"]
+                    # Reset that amount to 0
+                    self.game_data["Player"][player]["BetAmount"] = 0.0
+                    # Bet that amount
+                    self.player_bet_money(player, raise_value)
+                    # Roll the playing order again because everyone else needs to take a decision again.
+                    for i in range(self.player_order.index(player)):
+                        self.player_order.append(self.player_order[0])
+                        self.player_order.remove(self.player_order[0])
+                    # The first player in the new rolled order will be the one that raised, so the next decision comes to the second player.
+                    self.game_data["Dealer"]["NextDecision"] = self.player_order[1]
+
+            elif self.dealer_step is DEALER_HANDLE_NEXT_ROUND:
+                if self.round is ROUND_PRE_FLOP:
+                    self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
+                    self.round = ROUND_FLOP
+                    self.set_status_message_and_update_history(f'FLOP Round.')
+                    self.card_round_flop()
+                elif self.round is ROUND_FLOP:
+                    self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
+                    self.round = ROUND_TURN
+                    self.set_status_message_and_update_history(f'TURN Round.')
+                    self.card_round_turn()
+                elif self.round is ROUND_TURN:
+                    self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
+                    self.round = ROUND_RIVER
+                    self.set_status_message_and_update_history(f'RIVER Round.')
+                    self.card_round_river()
                 else:
-                    self.player_bet_money(player, bet_value)
-                    self.set_status_message_and_update_history(f'{playerName} Call {bet_value} {currency}')
-                # If the current player is the last to call, go to the next round
-                if self.player_order.index(player) == self.player_order[-1]:
-                    self.dealer_step = DEALER_HANDLE_NEXT_ROUND
-                    self.game_data["Dealer"]["Dealer"]["NextDecision"] = self.player_order[0]
-                else:
-                    # otherwise increment the next decision to the next playing player
-                    self.game_data["Dealer"]["NextDecision"] = self.player_order.index(player) + 1
-
-                print(f"Player{player} ACTION_CALL.")
-
-            if self.game_data["PlayersInfo"][player]["GameAction"] == ACTION_RAISE:
-                # Get the amount the player raised to
-                raise_value = self.game_data["PlayersInfo"][player]["BetAmount"]
-                # Reset that amount to 0
-                self.game_data["PlayersInfo"][player]["BetAmount"] = 0.0
-                # Bet that amount
-                self.player_bet_money(player, raise_value)
-                # Roll the playing order again because everyone else needs to take a decision again.
-                for i in range(self.player_order.index(player)):
-                    self.player_order.append(self.player_order[0])
-                    self.player_order.remove(self.player_order[0])
-                # The first player in the new rolled order will be the one that raised, so the next decision comes to the second player.
-                self.game_data["Dealer"]["NextDecision"] = self.player_order[1]
-
-        elif self.dealer_step is DEALER_HANDLE_NEXT_ROUND:
-            if self.round is ROUND_PRE_FLOP:
-                self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
-                self.round = ROUND_FLOP
-                self.set_status_message_and_update_history(f'FLOP Round.')
-                self.card_round_flop()
-            elif self.round is ROUND_FLOP:
-                self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
-                self.round = ROUND_TURN
-                self.set_status_message_and_update_history(f'TURN Round.')
-                self.card_round_turn()
-            elif self.round is ROUND_TURN:
-                self.dealer_step = DEALER_WAIT_FOR_PLAYER_ACTION
-                self.round = ROUND_RIVER
-                self.set_status_message_and_update_history(f'RIVER Round.')
-                self.card_round_river()
-            else:
-                self.round = ROUND_END
-                self.set_status_message_and_update_history(f'Betting Ended. Evaluating Hands.')
-                self.evaluate_hands()
-                self.dealer_end_game()
-                # TODO: do finish game stuff
-
-    def start_new_poker_round(self):
-        # Get New Card Deck
-        self.deck = self.shuffle_deck()
-        self.print_shuffled_deck(self.deck)
-        # Clear the Table
-        self.clear_cards_on_table_and_pot()
-        # Figure out which player is the dealer, small blind, big blind...
-        playing_players = self.find_playing_players_and_setup_dealer_and_first_blinds()
-        # Give cards to playing players
-        for card_index in range(NUMBER_OF_CARDS_IN_HAND):
-            for player in playing_players:
-                self.game_data["Player"][player]["PlayerCards"][card_index] = self.get_top_card()
-        # Dealer / Figure Small / Big Blinds.
+                    self.round = ROUND_END
+                    self.set_status_message_and_update_history(f'Betting Ended. Evaluating Hands.')
+                    self.evaluate_hands()
+                    self.dealer_end_game()
+                    # TODO: do finish game stuff
+        elif self.dealer_status is DEALER_thinks_GAME_is_PAUSED:
+            self.set_status_message_and_update_history('Game is Paused!')
+        elif self.dealer_status is DEALER_thinks_GAME_is_ENDING:
+            self.set_status_message_and_update_history('Game has Ended!')
+        else:
+            print('ERROR: dealer_evaluate_next_step @ dealer_status')
 
     def find_playing_players_and_setup_dealer_and_first_blinds(self):
         playing_players = []  # Empty list
         for player in range(MAX_CLIENTS):
-            if self.game_data["PlayersInfo"][player]["GameStatus"] is GAME_STATUS_PLAYER_PLAYING:
+            if self.game_data["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_PLAYING:
                 # add them to the list of currently playing players
                 playing_players.append(player)
                 # and reset all their dealer / blind statuses
@@ -162,6 +156,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         return playing_players
 
     def dealer_start_the_game(self):
+        self.dealer_status = DEALER_thinks_GAME_is_PLAYING
         self.dealer_step = DEALER_NEW_GAME
 
     def set_status_message_and_update_history(self, status_message):
@@ -210,6 +205,9 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         # game_rules = (starting_ammount, currency, small_blind, big_blind, blind_interval)
         for player in range(0, MAX_CLIENTS):
             self.game_data["Player"][player]["MoneyAvailable"] = self.game_rules[0]
+
+    def set_dealer_status(self, status):
+        self.dealer_status = status
 
     def dealer_end_game(self):
         pass

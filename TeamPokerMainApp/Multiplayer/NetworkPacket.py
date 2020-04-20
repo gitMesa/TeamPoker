@@ -9,7 +9,7 @@ class NetworkPacketClass:
                               "Icon": str(""),
                               "TableSpot": int(0),
                               "ConnectionStatus": CONN_STATUS_EMPTY_SEAT,
-                              "GameStatus": GAME_STATUS_PLAYER_PLAYING,
+                              "GameStatus": GAME_STATUS_PLAYER_SIT_OUT_TURN,
                               "GameAction": ACTION_UNDECIDED,
                               "DealerStatus": TABLE_STATUS_is_NORMAL_PLAYER,
                               "DealerIcon": str(""),
