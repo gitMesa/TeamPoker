@@ -15,7 +15,7 @@ class CardDeckClass:
                 self.deckDefinitionEvaluation[i] = (CARD_SIGNS_INDEX[card], CARD_SUITS_TEXT[color])
                 i += 1
 
-        print(self.deckDefinition)
+        # print(self.deckDefinition)
         # print(self.deckDefinitionEvaluation)
 
     # create an array of 52 cards(as indexes) and shuffle it

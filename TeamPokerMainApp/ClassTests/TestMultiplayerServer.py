@@ -18,9 +18,9 @@ clientD = ClientClass(ip, port)
 client1 = ClientClass(ip, port)
 client2 = ClientClass(ip, port)
 
-clientDpos = int(clientD.connect_to_server_and_get_position())
-client1pos = int(client1.connect_to_server_and_get_position())
-client2pos = int(client2.connect_to_server_and_get_position())
+clientDpos = int(clientD.client_connect_to_server_and_get_position())
+client1pos = int(client1.client_connect_to_server_and_get_position())
+client2pos = int(client2.client_connect_to_server_and_get_position())
 
 print(f'Dealer {clientDpos} Client1 {client1pos} Client2 {client2pos}')
 
@@ -33,7 +33,7 @@ def dealer_loop():
     while True:
         dealer_data["Dealer"]["BurnedCards"] += int(1)
         dealer_data["Dealer"]["TablePot"] += float(0.5)
-        server_data = clientD.client_communicate_with_server(dealer_data)
+        server_data = clientD.client_send_message_to_server_return_reply(dealer_data)
         dealer_data["PlayersInfo"] = server_data["PlayersInfo"]
         print(f'Client Updates: {dealer_data["PlayersInfo"]}')
         time.sleep(0.5)
@@ -42,7 +42,7 @@ def dealer_loop():
 def client1_loop():
     while True:
         game_data1["PlayersInfo"][client1pos][PINFO_game_action] += 1
-        dealer_data = client1.client_communicate_with_server(game_data1)
+        dealer_data = client1.client_send_message_to_server_return_reply(game_data1)
         if dealer_data:
             game_data1["Dealer"]["BurnedCards"] = dealer_data["Dealer"]["BurnedCards"]
             print(f'CLIENT1: Update is done? -> {game_data1["Dealer"]["BurnedCards"]} == {dealer_data["Dealer"]["BurnedCards"]} > {game_data1["Dealer"]["BurnedCards"] == dealer_data["Dealer"]["BurnedCards"]}')
@@ -52,7 +52,7 @@ def client1_loop():
 def client2_loop():
     while True:
         game_data2["PlayersInfo"][client2pos][PINFO_game_action] += 1
-        dealer_data = client2.client_communicate_with_server(game_data2)
+        dealer_data = client2.client_send_message_to_server_return_reply(game_data2)
         if dealer_data:
             game_data2["Dealer"]["BurnedCards"] = dealer_data["Dealer"]["BurnedCards"]
             print(f'CLIENT1: Update is done? -> {game_data2["Dealer"]["BurnedCards"]} == {dealer_data["Dealer"]["BurnedCards"]} > {game_data2["Dealer"]["BurnedCards"] == dealer_data["Dealer"]["BurnedCards"]}')

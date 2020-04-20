@@ -113,8 +113,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         playerIcon = QtGui.QIcon(QtGui.QPixmap(f":/user_icons/user_icons/{icon_name}"))
         eval(f'self.player{ui_pos}_icon.setIcon(playerIcon)')
 
-    def setUiPlayerActions(self, ui_pos, action_text):
-        eval(f'self.player{ui_pos}_action.setText(str(action_text))')
+    def setUiPlayerActions(self, ui_pos, status_text):
+        eval(f'self.player{ui_pos}_status.setText(str(status_text))')
 
     def setUiDealerIcons(self, ui_pos, dealer_icon_name):
         # dealer_icon_name should be ''/'dealer'/'small_blind'/'big_blind'

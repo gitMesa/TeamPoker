@@ -96,7 +96,7 @@ class PokerGameClass:
 
     def start_network_client(self, ip, port):
         self._client = ClientClass(ip=ip, port=port)
-        self.client_index = int(self._client.connect_to_server_and_get_position())
+        self.client_index = int(self._client.client_connect_to_server_and_get_position())
         self.table_spots = self.get_table_spots_from_client_index_point_of_view()
         self.client_init_game_data_from_own_ui()
         self.client_server_communication_loop()
@@ -111,7 +111,7 @@ class PokerGameClass:
         self.client_update_game_data_from_own_ui()
         # Send your user update.
         # and get the update from all other clients, and dealer, centralized by the server.
-        server_data = self._client.client_communicate_with_server(self.game_data)
+        server_data = self._client.client_send_message_to_server_return_reply(self.game_data)
         # update our own UI based on the data received from the server (cards, other players, etc.)
         try:
             # Update local data with server data.
@@ -168,6 +168,7 @@ class PokerGameClass:
 
     def client_update_game_data_from_own_ui(self):
         # self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index  # TODO: Allow player to change spot on table?
+        self.game_data["Player"][self.client_index]["ConnectionStatus"] = CONN_STATUS_CONNECTED
         self.game_data["Player"][self.client_index]["GameAction"] = self._win.getPlayerAction()
         self.game_data["Player"][self.client_index]["GameStatus"] = self._win.getActionSitOutOrPlaying()
 
@@ -219,15 +220,15 @@ class PokerGameClass:
         gameAction = self.game_data["Player"][player]["GameAction"]
         betAmount = self.game_data["Player"][player]["BetAmount"]
         if self.game_data["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_SIT_OUT_TURN:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Sitting Out!')
+            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Sitting Out!')
         elif gameAction == ACTION_CALL:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Called {betAmount}')
+            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Called {betAmount}')
         elif gameAction == ACTION_RAISE:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Raised {betAmount}')
+            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Raised {betAmount}')
         elif gameAction == ACTION_FOLD:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Fold!')
+            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Fold!')
         else:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Deciding...')
+            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Deciding...')
 
     def set_ui_player_money_and_currency(self, ui_pos, player):
         moneyAvailable = self.game_data["Player"][player]["MoneyAvailable"]
@@ -268,19 +269,16 @@ class PokerGameClass:
         bigBlind = self._win.getBigBlind()
         blindInterval = self._win.getBlindInterval()
         tpl = (startingMoney, currency, smallBlind, bigBlind, blindInterval)
-        print(f'Game rules: {tpl}')
         return tpl
 
     def check_if_all_host_server_fields_have_input(self):
         rtrn = False
-        print(self._win.getStartingAmmount())
         if self._win.getStartingAmmount() > 0 and len(self._win.getCurrency()) > 0 and self._win.getSmallBlind() > 0 and self._win.getBigBlind() > 0:
             rtrn = True
         return rtrn
 
     def check_if_all_join_server_fields_have_input(self):
         rtrn = False
-        print(self._win.getStartingAmmount())
         if self._win.getStartingAmmount() > 0 and len(self._win.getCurrency()) > 0 and self._win.getSmallBlind() > 0 and self._win.getBigBlind() > 0:
             rtrn = True
         return rtrn

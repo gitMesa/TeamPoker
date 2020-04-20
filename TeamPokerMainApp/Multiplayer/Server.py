@@ -1,6 +1,6 @@
 from TeamPokerMainApp.Multiplayer.NetworkPacket import *
-from TeamPokerMainApp.Common.VariableDefinitions import *
 from TeamPokerMainApp.Common.MethodDefinitions import *
+from TeamPokerMainApp.Common.VariableDefinitions import *
 from PyQt5.Qt import QMutex
 import threading
 import socket
@@ -35,36 +35,50 @@ class MultiplayerServerClass:
             print(f'SERVER: Active connections: {self.conn_player_number}. ')
 
     def main_communication_loop(self, conn, client_number):
-        conn.send(str(client_number).encode(FORMAT))
-        while True:
+        # Handshake message
+        send_simple_message(conn, client_number)
+        connected = True
+        while connected:
             try:
-                # GET Client Data
-                client_data = conn.recv(BUFFERSIZE).decode(FORMAT)
-                print(f'Received string length as {len(client_data)}')
-                client_data_dict = string_to_dict(client_data)
+                # We send 2 messages between client-server.
+                # First we find the size of the dictionary we want to send, and tell the server to receive that size.
+                # Second we send the dictionary in string format.
+                client_data = receive_message_with_size_confirmation(conn)
+                client_data_dict = transform_into_data(client_data)
 
                 # GET Server Data (Thread-Safe)
                 while True:
                     if self.mutex.tryLock():
-                        # Update server data from client data
-                        if client_number == DEALER:
-                            # If i'm the dealer, update everything inside.
-                            self.server_data_dict["Dealer"] = client_data_dict["Dealer"]
-                            self.server_data_dict["Player"] = client_data_dict["Player"]
+                        # Check if player wants to disconnect!
+                        if client_data_dict == MESSAGE_DISCONNECTED:
+                            self.server_data_dict["Player"][client_number]["ConnectionStatus"] = CONN_STATUS_DISCONNECTED
+                            connected = False
+                            conn.close()
+                            if client_number == DEALER:
+                                # It means that the Client0 (one with dealer logic) disconnected. So shut down the server.
+                                self.s.shutdown(socket.SHUT_RDWR)
+                                self.s.close()
+                                print('SERVER: Client0 Disconnected. Shutting down server.')
                         else:
-                            # If i'm just a player, update only my PlayersInfo
-                            self.server_data_dict["Player"][client_number] = client_data_dict["Player"][client_number]
+                            # Update server data from client data
+                            if client_number == DEALER:
+                                # If i'm the dealer, update everything inside.
+                                self.server_data_dict["Dealer"] = client_data_dict["Dealer"]
+                                self.server_data_dict["Player"] = client_data_dict["Player"]
+                            else:
+                                # If i'm just a player, update only my PlayersInfo
+                                self.server_data_dict["Player"][client_number] = client_data_dict["Player"][client_number]
                         # Send the updated info back to the client:
-                        server_data = dict_to_string(self.server_data_dict)
+                        server_reply = transform_into_string(self.server_data_dict)
                         # Unlock the server_data_dict for other threads.
                         self.mutex.unlock()
                         break
+                if connected:
+                    send_message_with_size_confirmation(conn, server_reply)
                 print(f'SERVER: Communication update finished for C{client_number}.')
-                conn.sendall(server_data.encode(FORMAT))
             except socket.error as e:
                 print(f'SERVER: main_communication_loop -> {e}')
-                conn.send(MESSAGE_DISCONNECTED.encode(FORMAT))
+                send_message_with_size_confirmation(conn, MESSAGE_DISCONNECTED)
                 self.conn_player_number -= 1
                 conn.close()
                 break
-

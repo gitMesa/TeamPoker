@@ -44,6 +44,7 @@ MAX_CLIENTS = 8  # Host(Dealer+Client) + 7 other players = 8 total players
 MESSAGE_DISCONNECTED = '!DISCONNECTED'
 COMMUNCATION_TIME = 300  # miliseconds
 BUFFERSIZE = 10240
+HEADER = 64
 FORMAT = 'utf-8'
 
 ################################

@@ -1,5 +1,5 @@
 
 
-test = [True, True, True]
+msg = "(0, 0, 1)"
 
-print(test.index(False))
+print(type(eval(msg)))

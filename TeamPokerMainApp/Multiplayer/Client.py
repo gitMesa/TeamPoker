@@ -9,23 +9,22 @@ class ClientClass:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.addr = (ip, port)
 
-    def connect_to_server_and_get_position(self):
-        try:
+    def client_connect_to_server_and_get_position(self):
+        try:  # Handshake message
             self.client.connect(self.addr)
-            handshake_reply = self.client.recv(BUFFERSIZE).decode()
-            return handshake_reply
+            client_index = receive_simple_message(self.client)
+            return client_index
         except Exception as e:
-            print(f'connect_to_server_and_get_position -> {e}')
+            print(f'client_connect_to_server_and_get_position -> {e}')
 
-    # Dealer is the first to send a update.
-    # When dealer sends update, users will listen to it, and responde with their update.
-    # Which then goes back into the Dealer Listening part and cycle repeats.
-
-    def client_communicate_with_server(self, own_data):
+    def client_send_message_to_server_return_reply(self, message):
         try:
-            self.client.sendall(dict_to_string(own_data).encode(FORMAT))
-            server_data = self.client.recv(BUFFERSIZE).decode(FORMAT)
-            return string_to_dict(server_data)
+            # Send the message with confirmation to the server
+            send_message_with_size_confirmation(self.client, message)
+            # Receive the reply with confirmation from the server
+            reply = receive_message_with_size_confirmation(self.client)
+            return transform_into_data(reply)
+
         except socket.error as e:
-            print(f'client_communicate_with_server -> {e}')
+            print(f'client_send_message_to_server_return_reply -> {e}')
 
