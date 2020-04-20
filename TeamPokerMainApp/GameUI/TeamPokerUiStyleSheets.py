@@ -34,7 +34,15 @@ QPushButton#buttonJoinAGame,
 QPushButton#buttonStartHostingAGame,
 QPushButton#button_host_to_main_page,
 QPushButton#buttonStartJoiningAGame,
-QPushButton#button_client_to_main_page
+QPushButton#button_client_to_main_page,
+QPushButton#button_serverStartGame,
+QPushButton#button_serverPauseGame,
+QPushButton#button_serverEndGame,
+QPushButton#action_call,
+QPushButton#action_fold,
+QPushButton#action_raise,
+QPushButton#action_buy_in,
+QPushButton#action_sit_out
 {border-style: outset;
 border-width: 2px;
 border-radius: 5px;
@@ -46,8 +54,28 @@ QPushButton#buttonJoinAGame:hover,
 QPushButton#buttonStartHostingAGame:hover,
 QPushButton#button_host_to_main_page:hover,
 QPushButton#buttonStartJoiningAGame:hover,
-QPushButton#button_client_to_main_page:hover
+QPushButton#button_client_to_main_page:hover,
+QPushButton#button_serverStartGame:hover,
+QPushButton#button_serverPauseGame:hover,
+QPushButton#button_serverEndGame:hover,
+QPushButton#action_call:hover,
+QPushButton#action_fold:hover,
+QPushButton#action_raise:hover,
+QPushButton#action_buy_in:hover,
+QPushButton#action_sit_out:hover
 {border-style: outset;
+border-width: 2px;
+border-radius: 5px;
+border-color: #2193b0;
+color: #2193b0;}
+
+QPushButton#action_call:checked,
+QPushButton#action_fold:checked,
+QPushButton#action_raise:checked,
+QPushButton#action_buy_in:checked,
+QPushButton#action_sit_out:checked
+{font-weight: bold;
+border-style: outset;
 border-width: 2px;
 border-radius: 5px;
 border-color: #2193b0;

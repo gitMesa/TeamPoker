@@ -34,8 +34,9 @@ class PokerGameClass:
         self._win = TeamPokerUIControllerClass()
         self._packet = NetworkPacketClass()
         self.game_data = self._packet.get_game_data()
-        self.game_status = STATUS_GAME_PAUSED
+        self.game_status = DEALER_thinks_GAME_is_PAUSED
         self.initConnectUiElements()
+        self.initOtherStuff()
         self.setDevQuickLaunchSettings()
 
     def show_main_window(self):
@@ -50,6 +51,10 @@ class PokerGameClass:
         self._win.connectActionSitOut(self.set_action_sit_out_or_playing)
         self._win.connectRaiseSliderMove(self.set_raise_button_text)
 
+    def initOtherStuff(self):
+        for player in range(MAX_CLIENTS):
+            self._win.setUiHiddenPlayer(player, True)
+
 ################################################################################################
 # 1. Network Stuff (Client & Server):
 #   Shall set up rules for the game. Small/Big Blind, Buy-In Rules, etc.
@@ -60,22 +65,24 @@ class PokerGameClass:
 
     def start_poker_server(self):
         if self.check_if_all_host_server_fields_have_input():
-            self._win.setWindowTitle(self._win.getGameName())
             try:
                 self._srv = MultiplayerServerClass(ip=self._win.getHostAGameIpAdress(), port=self._win.getHostAGamePortNumber())
             except Exception as e:
                 print(f'ERROR: start_poker_server MultiplayerServerClass -> {e}')
+
             try:
                 self._dealer = DealerClass(self.get_game_rules(), self._packet.get_game_data())
+                self.dealer_set_game_rules_to_network_packet()
             except Exception as e:
                 print(f'ERROR: start_poker_server DealerClass -> {e}')
+
             try:
                 self.start_network_client(ip=self._win.getHostAGameIpAdress(), port=self._win.getHostAGamePortNumber())
             except Exception as e:
                 print(f'ERROR: start_poker_server -> start_network_client as DEALER -> {e}')
+
             self._win.goToPlayingArena()
             self._win.setServerControls(True)
-            self.update_self_ui()
         else:
             showCustomizedInfoWindow('Please fill all information!')
 
@@ -84,146 +91,148 @@ class PokerGameClass:
             try:
                 self.start_network_client(ip=self._win.getJoinAGameIpAdress(), port=self._win.getJoinAGamePortNumber())
             except Exception as e:
-                print(f'ERROR: start_network_client -> start_network_client PLAYER -> {e}')
+                print(f'ERROR: join_poker_server -> start_network_client PLAYER -> {e}')
             self._win.goToPlayingArena()
 
     def start_network_client(self, ip, port):
         self._client = ClientClass(ip=ip, port=port)
         self.client_index = int(self._client.connect_to_server_and_get_position())
         self.table_spots = self.get_table_spots_from_client_index_point_of_view()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_tableSpot] = self.client_index  # TODO: Allow players to select own table spots
-        self.game_data["PlayersInfo"][self.client_index][PINFO_icon] = self._win.getIconID()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_name] = self._win.getUserName()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING  #TODO: Verify that players selected a seat, and wants to play
+        self.client_init_game_data_from_own_ui()
         self.client_server_communication_loop()
 
     def client_server_communication_loop(self):
-        self.dealer_update_timer = QTimer(self._win)
-        self.dealer_update_timer.start(300)
-        self.dealer_update_timer.timeout.connect(self.client_server_comm_action)
+        self.communication_timer = QTimer(self._win)
+        self.communication_timer.start(COMMUNCATION_TIME)
+        self.communication_timer.timeout.connect(self.client_server_comm_action)
 
     def client_server_comm_action(self):
         # update the game_data with own ui info (mainly new actions, decisions by the player)
         self.client_update_game_data_from_own_ui()
-
         # Send your user update.
         # and get the update from all other clients, and dealer, centralized by the server.
         server_data = self._client.client_communicate_with_server(self.game_data)
-
         # update our own UI based on the data received from the server (cards, other players, etc.)
         try:
-            self.client_update_game_data_from_server_data(server_data)
-            self.client_update_ui()
+            # Update local data with server data.
+            self.game_data = server_data
+            self.client_update_own_ui_from_new_server_data()
         except Exception as e:
-            print(f'client_server_comm_action -> client_update_data_and_ui_based_on_server_update -> {e}')
-
+            print(f'client_server_comm_action -> client_update_own_ui_from_new_server_data -> {e}')
         if self.client_index == DEALER:
             try:
                 # copy the player info
-                self.game_data["PlayersInfo"] = server_data["PlayersInfo"]
+                self.game_data["Player"] = server_data["Player"]
                 self.dealer_evaluate_next_game_step()
             except Exception as e:
-                print(f'client_server_comm_action -> dealer stuff failed -> {e}')
+                print(f'client_server_comm_action -> dealer_evaluate_next_game_step -> {e}')
 
 ######################################################################################################
 # 3. Dealer Logic:
 ######################################################################################################
 
     def dealer_evaluate_next_game_step(self):
-        if self.are_enough_players_playing():
-            self._dealer.dealer_evaluate_next_step()
-        else:
+        if not self.are_enough_players_playing():
             self.dealer_pause_game()
+        self._dealer.dealer_evaluate_next_step()
 
     def are_enough_players_playing(self):
         number = 0
         for player in range(MAX_CLIENTS):
-            if self.game_data["PlayersInfo"][player][PINFO_status] is STATUS_PLAYER_PLAYING:
+            if self.game_data["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_PLAYING:
                 number += 1
         return number >= 2
 
+    def dealer_set_game_rules_to_network_packet(self):
+        self.game_data["Dealer"]["GameName"] = self._win.getGameName()
+        self.game_data["Dealer"]["Currency"] = self.get_game_rules()[1]
+        self.game_data["Dealer"]["BigBlind"] = self.get_game_rules()[3]
+
     def dealer_start_game(self):
-        self.game_status = STATUS_PLAYER_PLAYING
+        self._dealer.dealer_start_the_game()
 
     def dealer_pause_game(self):
-        self.game_status = STATUS_GAME_PAUSED
+        self.game_status = DEALER_thinks_GAME_is_PAUSED
 
     def dealer_end_game(self):
-        self.game_status = STATUS_GAME_ENDING
+        self.game_status = DEALER_thinks_GAME_is_ENDING
 
 ######################################################################################################
 # 4. Client Logic:
 ######################################################################################################
 
+    def client_init_game_data_from_own_ui(self):
+        self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index
+        self.game_data["Player"][self.client_index]["Icon"] = self._win.getIconID()
+        self.game_data["Player"][self.client_index]["Name"] = self._win.getUserName()
+
     def client_update_game_data_from_own_ui(self):
-        self.game_data["PlayersInfo"][self.client_index][PINFO_tableSpot] = self.client_index
-        self.game_data["PlayersInfo"][self.client_index][PINFO_name] = self._win.getUserName()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_icon] = self._win.getIconID()
-        self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_CALL
-        self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING  # TODO: Link to player action.
+        # self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index  # TODO: Allow player to change spot on table?
+        self.game_data["Player"][self.client_index]["GameAction"] = self._win.getPlayerAction()
+        self.game_data["Player"][self.client_index]["GameStatus"] = self._win.getActionSitOutOrPlaying()
 
-    def client_update_game_data_from_server_data(self, server_data):
-        self.game_data["Dealer"] = server_data["Dealer"]
-        self.game_data["PlayersGame"] = server_data["PlayersGame"]
+    def client_update_own_ui_from_new_server_data(self):
         for player in range(MAX_CLIENTS):
-            if player != self.client_index: # skip loading the data for myself because i already know
-                self.game_data["PlayersInfo"][player] = server_data["PlayersInfo"][player]
-
-    def client_update_ui(self):
-        ########################################################################################################################
-        # This needs to be shown from my point of view. So roll everyone around the table until i am sitting in the front seat.#
-        ########################################################################################################################
-        #   For example the normal table is indexed like this:    #             But from player2 point-of-view:                #
-        #                       player4                           #                       player6                              #
-        #     player3                             player5         #     player5                             player7            #
-        #  player2                                    player6     #  player4                                    player0        #
-        #     player1                             player7         #     player3                             player1            #
-        #                       player0                           #                       player2                              #
-        ########################################################################################################################
-        for player in range(MAX_CLIENTS):
-            if self.game_data["PlayersInfo"][player][PINFO_status] is not STATUS_EMPTY_SEAT and player != self.client_index:
+            if self.game_data["Player"][player]["ConnectionStatus"] is not CONN_STATUS_EMPTY_SEAT:
                 ui_pos = self.table_spots.index(player)
-                self._win.setUiPlayerName(ui_pos=ui_pos, name=self.game_data["PlayersInfo"][player][PINFO_name])
-                self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.game_data["PlayersInfo"][player][PINFO_icon])
-                self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, ammount=self.game_data["PlayersGame"][player][PGAME_moneyAvailable])
-                self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name=self.game_data["PlayersGame"][player][PGAME_dealerIcon])
-                self._win.setUiPlayerActions(ui_pos=ui_pos, action=self.game_data["PlayersInfo"][player][PINFO_actionID])
-                self._win.setUiOtherPlayersCards(ui_pos)  #TODO: Show actual cards at end of round
+                self._win.setUiHiddenPlayer(pos=ui_pos, hidden=False)  # Show the player table in UI
+                self._win.setUiPlayerName(ui_pos=ui_pos, name=self.game_data["Player"][player]["Name"])
+                self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.game_data["Player"][player]["Icon"])
+                self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name=self.game_data["Player"][player]["DealerIcon"])
+                self.set_ui_player_money_and_currency(ui_pos=ui_pos, player=player)
+                self.set_ui_player_status_text(ui_pos=ui_pos, player=player)
+                self._win.setUiOtherPlayersCards(ui_pos)  # TODO: Show actual cards at end of round
+            else:
+                ui_pos = self.table_spots.index(player)
+                self._win.setUiHiddenPlayer(pos=ui_pos, hidden=True)
         # update cards on table
         table_cards = self.game_data["Dealer"]["TableCards"]
         for card in range(NUMBER_OF_CARDS_ON_TABLE):
             self._win.setUiTableCard(card_number=card, card_code=table_cards[card])
         # update cards in my hand
-        player_cards = self.game_data["PlayersGame"][self.client_index][PGAME_playerCards]  # returns array with card codes
+        player_cards = self.game_data["Player"][self.client_index]["PlayerCards"]  # returns array with card codes
         for card in range(NUMBER_OF_CARDS_IN_HAND):
             self._win.setUiEgoPlayerCards(card_number=card, card_code=player_cards[card])
-
-    def update_self_ui(self):
-        pos = 0  # my own ui will be player0 always
-        self._win.setUiPlayerIcons(ui_pos=pos, icon_name=self._win.getIconID())
-        self._win.setUiPlayerMoneyCurrency(ui_pos=pos, ammount=self.game_data["PlayersGame"][self.client_index][PGAME_moneyAvailable])
-        self._win.setUiPlayerName(ui_pos=pos, name=self.game_data["PlayersInfo"][self.client_index][PINFO_name])
 
     def set_action_sit_out_or_playing(self):
         # Checked = Sitting out
         # Unchecked = Playing
         if self._win.getActionSitOutOrPlaying():
-            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_SIT_OUT_TURN
+            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_SIT_OUT_TURN
             self._win.setActionButtonsEnabled(False)
         else:
-            self.game_data["PlayersInfo"][self.client_index][PINFO_status] = STATUS_PLAYER_PLAYING
+            self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_PLAYING
             self._win.setActionButtonsEnabled(True)
 
     def get_new_player_action(self):
         if self._win.getActionCall():
-            self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_CALL
+            self.game_data["Player"][self.client_index]["GameAction"] = ACTION_CALL
         elif self._win.getActionRaise():
-            self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_RAISE
+            self.game_data["Player"][self.client_index]["GameAction"] = ACTION_RAISE
         elif self._win.getActionFold():
-            self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_FOLD
+            self.game_data["Player"][self.client_index]["GameAction"] = ACTION_FOLD
         else:
             # If player didn't choose nothing automatically fold ?
-            self.game_data["PlayersInfo"][self.client_index][PINFO_actionID] = ACTION_FOLD
+            self.game_data["Player"][self.client_index]["GameAction"] = ACTION_FOLD
+
+    def set_ui_player_status_text(self, ui_pos, player):
+        gameAction = self.game_data["Player"][player]["GameAction"]
+        betAmount = self.game_data["Player"][player]["BetAmount"]
+        if self.game_data["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_SIT_OUT_TURN:
+            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Sitting Out!')
+        elif gameAction == ACTION_CALL:
+            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Called {betAmount}')
+        elif gameAction == ACTION_RAISE:
+            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Raised {betAmount}')
+        elif gameAction == ACTION_FOLD:
+            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Fold!')
+        else:
+            self._win.setUiPlayerActions(ui_pos=ui_pos, action_text=f'Deciding...')
+
+    def set_ui_player_money_and_currency(self, ui_pos, player):
+        moneyAvailable = self.game_data["Player"][player]["MoneyAvailable"]
+        currency = self.game_data["Dealer"]["Currency"]
+        self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, amount=moneyAvailable, currency=currency)
 
     def set_minimum_maximum_slider_values(self):
         pass
@@ -236,6 +245,16 @@ class PokerGameClass:
 ######################################################################################################
 
     def get_table_spots_from_client_index_point_of_view(self):
+        ########################################################################################################################
+        # This needs to be shown from my point of view. So roll everyone around the table until i am sitting in the front seat.#
+        ########################################################################################################################
+        #   For example the normal table is indexed like this:    #             But from player2 point-of-view:                #
+        #                       player4                           #                       player6                              #
+        #     player3                             player5         #     player5                             player7            #
+        #  player2                                    player6     #  player4                                    player0        #
+        #     player1                             player7         #     player3                             player1            #
+        #                       player0                           #                       player2                              #
+        ########################################################################################################################
         table_spots = [0, 1, 2, 3, 4, 5, 6, 7]
         for i in range(table_spots.index(self.client_index)):
             table_spots.append(table_spots[0])
@@ -249,7 +268,7 @@ class PokerGameClass:
         bigBlind = self._win.getBigBlind()
         blindInterval = self._win.getBlindInterval()
         tpl = (startingMoney, currency, smallBlind, bigBlind, blindInterval)
-        print(tpl)
+        print(f'Game rules: {tpl}')
         return tpl
 
     def check_if_all_host_server_fields_have_input(self):

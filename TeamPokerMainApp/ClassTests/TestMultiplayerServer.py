@@ -41,7 +41,7 @@ def dealer_loop():
 
 def client1_loop():
     while True:
-        game_data1["PlayersInfo"][client1pos][PINFO_actionID] += 1
+        game_data1["PlayersInfo"][client1pos][PINFO_game_action] += 1
         dealer_data = client1.client_communicate_with_server(game_data1)
         if dealer_data:
             game_data1["Dealer"]["BurnedCards"] = dealer_data["Dealer"]["BurnedCards"]
@@ -51,7 +51,7 @@ def client1_loop():
 
 def client2_loop():
     while True:
-        game_data2["PlayersInfo"][client2pos][PINFO_actionID] += 1
+        game_data2["PlayersInfo"][client2pos][PINFO_game_action] += 1
         dealer_data = client2.client_communicate_with_server(game_data2)
         if dealer_data:
             game_data2["Dealer"]["BurnedCards"] = dealer_data["Dealer"]["BurnedCards"]

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1210</width>
+    <width>1260</width>
     <height>897</height>
    </rect>
   </property>
@@ -1743,6 +1743,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_49">
                         <item>
                          <widget class="QLabel" name="player3_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -1767,6 +1775,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_52">
                         <item>
                          <widget class="QLabel" name="player3_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -1849,7 +1865,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_76">
                         <item>
-                         <widget class="QLabel" name="player3_action">
+                         <widget class="QLabel" name="player3_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -1955,6 +1979,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_33">
                         <item>
                          <widget class="QLabel" name="player4_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -1979,6 +2011,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_34">
                         <item>
                          <widget class="QLabel" name="player4_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -2082,7 +2122,15 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="player4_action">
+                     <widget class="QLabel" name="player4_status">
+                      <property name="font">
+                       <font>
+                        <family>Bahnschrift SemiBold</family>
+                        <pointsize>10</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>TextLabel</string>
                       </property>
@@ -2156,6 +2204,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player5_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2180,6 +2236,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player5_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -2223,7 +2287,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_80">
                         <item>
-                         <widget class="QLabel" name="player5_action">
+                         <widget class="QLabel" name="player5_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2409,6 +2481,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_30">
                         <item>
                          <widget class="QLabel" name="player2_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2433,6 +2513,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_31">
                         <item>
                          <widget class="QLabel" name="player2_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -2515,7 +2603,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_64">
                         <item>
-                         <widget class="QLabel" name="player2_action">
+                         <widget class="QLabel" name="player2_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2753,6 +2849,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player6_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2777,6 +2881,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player6_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -2820,7 +2932,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_72">
                         <item>
-                         <widget class="QLabel" name="player6_action">
+                         <widget class="QLabel" name="player6_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -2935,7 +3055,15 @@
               </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="label_dealer_status_text">
+              <widget class="QLabel" name="label_game_status_text">
+               <property name="font">
+                <font>
+                 <family>Bahnschrift SemiBold</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
                 <string>TextLabel</string>
                </property>
@@ -3034,6 +3162,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_59">
                         <item>
                          <widget class="QLabel" name="player1_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -3058,6 +3194,14 @@
                        <layout class="QHBoxLayout" name="horizontalLayout_60">
                         <item>
                          <widget class="QLabel" name="player1_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -3140,7 +3284,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_78">
                         <item>
-                         <widget class="QLabel" name="player1_action">
+                         <widget class="QLabel" name="player1_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -3214,6 +3366,14 @@
                 <layout class="QHBoxLayout" name="horizontalLayout_47">
                  <item>
                   <widget class="QLabel" name="label_38">
+                   <property name="font">
+                    <font>
+                     <family>Bahnschrift SemiBold</family>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Current Pot:</string>
                    </property>
@@ -3221,6 +3381,14 @@
                  </item>
                  <item>
                   <widget class="QLabel" name="label_potValue">
+                   <property name="font">
+                    <font>
+                     <family>Bahnschrift SemiBold</family>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>TextLabel</string>
                    </property>
@@ -3310,6 +3478,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player7_name">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -3334,6 +3510,14 @@
                         </item>
                         <item>
                          <widget class="QLabel" name="player7_money_available">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>12</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>0.00</string>
                           </property>
@@ -3377,7 +3561,15 @@
                       <item>
                        <layout class="QHBoxLayout" name="horizontalLayout_74">
                         <item>
-                         <widget class="QLabel" name="player7_action">
+                         <widget class="QLabel" name="player7_status">
+                          <property name="font">
+                           <font>
+                            <family>Bahnschrift SemiBold</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
                           <property name="text">
                            <string>TextLabel</string>
                           </property>
@@ -3527,7 +3719,7 @@
             <number>5</number>
            </property>
            <item>
-            <widget class="QTabWidget" name="tabWidget">
+            <widget class="QTabWidget" name="tabWidget_client_window">
              <property name="minimumSize">
               <size>
                <width>450</width>
@@ -3535,7 +3727,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -3692,7 +3884,15 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="player0_action">
+                 <widget class="QLabel" name="player0_status">
+                  <property name="font">
+                   <font>
+                    <family>Bahnschrift SemiBold</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
                   <property name="text">
                    <string>TextLabel</string>
                   </property>
@@ -3763,6 +3963,14 @@
                     </item>
                     <item>
                      <widget class="QLabel" name="player0_name">
+                      <property name="font">
+                       <font>
+                        <family>Bahnschrift SemiBold</family>
+                        <pointsize>11</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>TextLabel</string>
                       </property>
@@ -3800,6 +4008,14 @@
                     </item>
                     <item>
                      <widget class="QLabel" name="player0_money_available">
+                      <property name="font">
+                       <font>
+                        <family>Bahnschrift SemiBold</family>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>0.00</string>
                       </property>
@@ -3918,6 +4134,12 @@
                   <height>50</height>
                  </size>
                 </property>
+                <property name="font">
+                 <font>
+                  <family>Bahnschrift Light</family>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Call</string>
                 </property>
@@ -3936,6 +4158,12 @@
                   <width>100</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Bahnschrift Light</family>
+                  <pointsize>12</pointsize>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Fold</string>
@@ -3990,6 +4218,12 @@
                   <width>100</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Bahnschrift Light</family>
+                  <pointsize>12</pointsize>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Raise</string>
@@ -4094,15 +4328,21 @@
                <widget class="QPushButton" name="action_buy_in">
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
+                  <width>150</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>150</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Bahnschrift Light</family>
+                  <pointsize>12</pointsize>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Buy-In</string>
@@ -4113,15 +4353,21 @@
                <widget class="QPushButton" name="action_sit_out">
                 <property name="minimumSize">
                  <size>
-                  <width>100</width>
+                  <width>150</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>100</width>
+                  <width>150</width>
                   <height>50</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Bahnschrift Light</family>
+                  <pointsize>12</pointsize>
+                 </font>
                 </property>
                 <property name="text">
                  <string>Sit Out Next Turn</string>

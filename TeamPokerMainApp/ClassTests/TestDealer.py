@@ -43,7 +43,7 @@ class TestDealerClass:
             bet_value = self.game_data["Dealer"]["BetValue"]
             if game_data["PlayersInfo"][current_player][PINFO_status] == STATUS_PLAYER_PLAYING:
 
-                cards = self.game_data["PlayersGame"][current_player][PGAME_playerCards]
+                cards = self.game_data["PlayersGame"][current_player]["PlayerCards"]
                 self.DealerFunction.print_actual_card(cards[0], cards[1], current_player)
 
                 if self.take_small_blind and self.game_data["PlayersGame"][current_player][PGAME_blindStatus] == STATUS_is_SMALL_BLIND:
@@ -57,7 +57,7 @@ class TestDealerClass:
                     print(f"Player{current_player} BIG_BLIND:{self.game_data}")
                     self.take_big_blind = False
 
-                if self.game_data["PlayersInfo"][current_player][PINFO_actionID] == ACTION_CALL:
+                if self.game_data["PlayersInfo"][current_player][PINFO_game_action] == ACTION_CALL:
                     if self.game_data["PlayersGame"][current_player][PGAME_moneyAvailable] < bet_value:
                         money_left = self.game_data["PlayersGame"][current_player][PGAME_moneyAvailable]
                         self.DealerFunction.player_bet_money(current_player, money_left)
@@ -65,9 +65,9 @@ class TestDealerClass:
                         self.DealerFunction.player_bet_money(current_player, bet_value)
                     print(f"Player{current_player} ACTION_CALL:{self.game_data}")
 
-                if self.game_data["PlayersInfo"][current_player][PINFO_actionID] == ACTION_RAISE:
+                if self.game_data["PlayersInfo"][current_player][PINFO_game_action] == ACTION_RAISE:
                     raise_value = self.RaiseValue   # ToDo : connect this to UI
-                    self.game_data["PlayersInfo"][current_player][PINFO_actionID] = ACTION_CALL # Todo: remove this in implementation
+                    self.game_data["PlayersInfo"][current_player][PINFO_game_action] = ACTION_CALL # Todo: remove this in implementation
                     bet_value = raise_value
                     self.DealerFunction.player_bet_money(current_player, bet_value)
                     print(f"Player{current_player} ACTION_RAISE:{self.game_data}")
