@@ -1,5 +1,4 @@
 
 
-msg = "(0, 0, 1)"
-
-print(type(eval(msg)))
+for player in range(1, 8):
+    print(player)

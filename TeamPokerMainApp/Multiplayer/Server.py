@@ -61,13 +61,9 @@ class MultiplayerServerClass:
                                 print('SERVER: Client0 Disconnected. Shutting down server.')
                         else:
                             # Update server data from client data
+                            self.server_data_dict["Player"][client_number] = client_data_dict["Player"][client_number]
                             if client_number == DEALER:
-                                # If i'm the dealer, update everything inside.
                                 self.server_data_dict["Dealer"] = client_data_dict["Dealer"]
-                                self.server_data_dict["Player"] = client_data_dict["Player"]
-                            else:
-                                # If i'm just a player, update only my PlayersInfo
-                                self.server_data_dict["Player"][client_number] = client_data_dict["Player"][client_number]
                         # Send the updated info back to the client:
                         server_reply = transform_into_string(self.server_data_dict)
                         # Unlock the server_data_dict for other threads.
