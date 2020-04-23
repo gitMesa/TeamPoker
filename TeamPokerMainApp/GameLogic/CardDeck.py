@@ -4,7 +4,7 @@ import numpy as np
 
 class CardDeckClass:
 
-    def init_deck(self):
+    def __init__(self):
         self.deckDefinition = dict()
         self.deckDefinitionEvaluation = dict()
 

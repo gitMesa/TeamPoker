@@ -19,7 +19,6 @@ class DealerClass(HandEvaluatorClass):
     def __init__(self, game_rules, deck_instance):
         self._packet = NetworkPacketClass()
         self._deck = deck_instance
-        self._deck.init_deck()
         self.game_rules = game_rules
         self.game_data = dict()
         self.dealer_step = DEALER_WAITING_FOR_GAME_START

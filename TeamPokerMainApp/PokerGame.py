@@ -122,17 +122,15 @@ class PokerGameClass:
         except Exception as e:
             print(f'client_server_comm_action -> client_update_own_ui_from_new_server_data -> {e}')
         if self.client_index == DEALER:
-            try:
-                # copy the player info
-                self.game_data["Player"] = server_data["Player"]
-                # send the data to the Dealer Class
-                self._dealer.set_data_to_dealer_game_data(self.game_data)
-                # call dealer class to do its magic
-                self.dealer_evaluate_next_game_step()
-                # get data back after analysis by dealer class
-                self.game_data = self._dealer.get_dealer_game_data()
-            except Exception as e:
-                print(f'client_server_comm_action -> dealer_evaluate_next_game_step -> {e}')
+            # copy the player info
+            self.game_data["Player"] = server_data["Player"]
+            # send the data to the Dealer Class
+            self._dealer.set_data_to_dealer_game_data(self.game_data)
+            # call dealer class to do its magic
+            self.dealer_evaluate_next_game_step()
+            # get data back after analysis by dealer class
+            self.game_data = self._dealer.get_dealer_game_data()
+
 
 ######################################################################################################
 # 3. Dealer Logic:

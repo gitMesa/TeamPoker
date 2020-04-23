@@ -60,9 +60,12 @@ class MultiplayerServerClass:
                                 self.s.close()
                                 print('SERVER: Client0 Disconnected. Shutting down server.')
                         else:
-                            # Update server data from client data
-                            self.server_data_dict["Player"][client_number] = client_data_dict["Player"][client_number]
+                            # Update the Player-Client fields.
+                            self.copy_client_player_fields_to_server_data(client_data_dict, client_number)
                             if client_number == DEALER:
+                                # Update the Player-Dealer fields.
+                                self.copy_dealer_player_fields_to_server_data(client_data_dict)
+                                # Update the Dealer fields.
                                 self.server_data_dict["Dealer"] = client_data_dict["Dealer"]
                         # Send the updated info back to the client:
                         server_reply = transform_into_string(self.server_data_dict)
@@ -78,3 +81,37 @@ class MultiplayerServerClass:
                 self.conn_player_number -= 1
                 conn.close()
                 break
+
+    # Client Updates only certain fields in the PLAYER dictionary, the others (like money available, cards) are edited by the dealer.
+    #
+    #        self.PLAYER_FIELDS = {"Name": str(""),
+    #                           "Icon": str(""),
+    #                           "TableSpot": int(0),
+    #                           "ConnectionStatus": CONN_STATUS_EMPTY_SEAT,
+    #                           "GameStatus": GAME_STATUS_PLAYER_SIT_OUT_TURN,
+    #                           "GameAction": ACTION_UNDECIDED,
+    #                           "DealerStatus": TABLE_STATUS_is_NORMAL_PLAYER,
+    #                           "DealerIcon": str(""),
+    #                           "BlindStatus": TABLE_STATUS_is_NORMAL_PLAYER,
+    #                           "BlindIcon": str(""),
+    #                           "BetAmount": float(0.0),
+    #                           "MoneyAvailable": float(0.0),
+    #                           "PlayerCards": [NO_CARD, NO_CARD]}
+
+    def copy_client_player_fields_to_server_data(self, client_data, client_number):
+        self.server_data_dict["Player"][client_number]["Name"] = client_data["Player"][client_number]["Name"]
+        self.server_data_dict["Player"][client_number]["Icon"] = client_data["Player"][client_number]["Icon"]
+        self.server_data_dict["Player"][client_number]["TableSpot"] = client_data["Player"][client_number]["TableSpot"]
+        self.server_data_dict["Player"][client_number]["ConnectionStatus"] = client_data["Player"][client_number]["ConnectionStatus"]
+        self.server_data_dict["Player"][client_number]["GameStatus"] = client_data["Player"][client_number]["GameStatus"]
+        self.server_data_dict["Player"][client_number]["GameAction"] = client_data["Player"][client_number]["GameAction"]
+
+    def copy_dealer_player_fields_to_server_data(self, client_data):
+        for player in range(MAX_CLIENTS):
+            if self.server_data_dict["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_PLAYING:
+                self.server_data_dict["Player"][player]["DealerStatus"] = client_data["Player"][player]["DealerStatus"]
+                self.server_data_dict["Player"][player]["DealerIcon"] = client_data["Player"][player]["DealerIcon"]
+                self.server_data_dict["Player"][player]["BlindStatus"] = client_data["Player"][player]["BlindStatus"]
+                self.server_data_dict["Player"][player]["BetAmount"] = client_data["Player"][player]["BetAmount"]
+                self.server_data_dict["Player"][player]["MoneyAvailable"] = client_data["Player"][player]["MoneyAvailable"]
+                self.server_data_dict["Player"][player]["PlayerCards"] = client_data["Player"][player]["PlayerCards"]
