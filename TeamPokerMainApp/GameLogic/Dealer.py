@@ -3,16 +3,6 @@ from TeamPokerMainApp.GameLogic.HandEvaluator import HandEvaluatorClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 import numpy as np
 
-##################################################################
-#                       player4
-#     player3                             player5
-#
-#  player2                                    player6
-#
-#     player1                             player7
-#                       player0
-###################################################################
-
 
 class DealerClass(HandEvaluatorClass):
 
@@ -48,6 +38,7 @@ class DealerClass(HandEvaluatorClass):
                 self.deck = self._deck.shuffle_deck()
                 self._deck.print_shuffled_deck(self.deck)  # TODO: remove
                 self.player_order = self.find_playing_players_and_setup_dealer_and_first_blinds()
+                print(f'Playing Order {self.player_order} - Next Decision {self.game_data["Dealer"]["NextDecision"]}')
                 self.game_data["Dealer"]["BetValue"] = self.game_data["Dealer"]["BigBlind"]
                 # Give cards to playing players
                 for card_index in range(NUMBER_OF_CARDS_IN_HAND):
@@ -81,6 +72,8 @@ class DealerClass(HandEvaluatorClass):
                         # otherwise increment the next decision to the next playing player
                         self.game_data["Dealer"]["NextDecision"] = self.player_order.index(player) + 1
                     print(f"Player{player} ACTION_CALL.")
+                    # Reset Player Action
+                    self.reset_player_action(player)
 
                 if self.game_data["Player"][player]["GameAction"] == ACTION_RAISE:
                     # Get the amount the player raised to
@@ -95,6 +88,8 @@ class DealerClass(HandEvaluatorClass):
                         self.player_order.remove(self.player_order[0])
                     # The first player in the new rolled order will be the one that raised, so the next decision comes to the second player.
                     self.game_data["Dealer"]["NextDecision"] = self.player_order[1]
+                    # Reset Player Action
+                    self.reset_player_action(player)
 
             elif self.dealer_step is DEALER_HANDLE_NEXT_ROUND:
                 if self.round is ROUND_PRE_FLOP:
@@ -207,6 +202,9 @@ class DealerClass(HandEvaluatorClass):
 
     def set_dealer_status(self, status):
         self.dealer_status = status
+
+    def reset_player_action(self, player):
+        self.game_data["Player"][player]["GameAction"] = ACTION_UNDECIDED
 
     def dealer_end_game(self):
         pass

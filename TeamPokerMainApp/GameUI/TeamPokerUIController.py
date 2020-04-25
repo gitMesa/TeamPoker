@@ -55,6 +55,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.action_raise.setChecked(raise_bool)
         self.action_fold.setChecked(fold_bool)
 
+    def reset_player_action_array(self):
+        self.set_player_action_array(False, False, False, True)
+
     def setActionButtonsEnabled(self, bool):
         self.action_call.setEnabled(bool)
         self.action_raise.setEnabled(bool)
@@ -97,6 +100,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def setUiTableCard(self, card_number, card_name):
         qtIcon = QtGui.QIcon(QtGui.QPixmap(f':/cards/cards_jpeg/{card_name}.jpg'))
+        if '99' in card_name:
+            qtIcon = QtGui.QIcon(QtGui.QPixmap(''))
         eval(f"self.cards_tableCard{card_number}.setIcon(qtIcon)")
 
     def setUiOtherPlayersCards(self, ui_pos):

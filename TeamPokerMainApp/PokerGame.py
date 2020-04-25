@@ -13,18 +13,16 @@ from PyQt5.Qt import QTimer
 # Purpose of this class is to connect the UI to the Game Logic part.
 # From the UI you can either create a Server or a Client
 #
-# 1. Mode Server:
-#   Shall set up rules for the game. Small/Big Blind, Buy-In Rules, etc.
-#   Shall create a 'Dealer' client, and a 'User' Client.
-#   Shall accept connections from other Clients.
-#   'Dealer Client' shall handle the table/dealer/pot/logic.
-#   Shall send cards to Players(other Clients).
-#   Shall receive actions from Players(other Clients).
+# 1.Start Server.
+#   Shall create a server with selected input (Starting Money, Currency, Etc.)
+#   Shall connect to said server and wait for enough players.
+#   Start game after enough players are connected.
+#   Server receives the input information and handles the game data.
 #
-# 2. Client Mode:
+# 2.Client:
 #   Shall connect to the server providing UserName and UserIcon?
-#   Shall receive from Server cards.
-#   Shall send to Server Actions.
+#   Shall receive from Server game data.
+#   Shall send to Server player data.
 #
 ###################################################################
 
@@ -140,7 +138,10 @@ class PokerGameClass:
         self._dealer.set_dealer_status(DEALER_thinks_GAME_is_PLAYING)
         if not self.are_enough_players_playing():
             self._dealer.set_dealer_status(DEALER_thinks_GAME_is_PAUSED)
-        self._dealer.dealer_evaluate_next_step()          # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< THIS IS WHAT YOU ARE LOOKING FOR
+        try:
+            self._dealer.dealer_evaluate_next_step()          # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< THIS IS WHAT YOU ARE LOOKING FOR
+        except Exception as e:
+            print(f'ERROR: PokerGame.py -> dealer_evaluate_next_step -> {e}')
 
     def are_enough_players_playing(self):
         number = 0
@@ -151,8 +152,8 @@ class PokerGameClass:
 
     def dealer_set_game_rules_to_network_packet(self):
         self.game_data["Dealer"]["GameName"] = self._win.getGameName()
-        self.game_data["Dealer"]["Currency"] = self.get_game_rules()[1]
-        self.game_data["Dealer"]["BigBlind"] = self.get_game_rules()[3]
+        self.game_data["Dealer"]["Currency"] = self.get_game_rules()[1]  # Magic Numero 1
+        self.game_data["Dealer"]["BigBlind"] = self.get_game_rules()[3]  # Magic Numero 2
 
     def dealer_start_game(self):
         self._dealer.dealer_start_the_game()
@@ -169,11 +170,19 @@ class PokerGameClass:
     def client_update_game_data_from_own_ui(self):
         # self.game_data["Player"][self.client_index]["TableSpot"] = self.client_index  # TODO: Allow player to change spot on table?
         self.game_data["Player"][self.client_index]["ConnectionStatus"] = CONN_STATUS_CONNECTED
-        self.game_data["Player"][self.client_index]["GameAction"] = self._win.getPlayerAction()
         if self._win.getActionPlayOrSitOut():  # if checked we are sitting out
             self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_SIT_OUT_TURN
         else:
             self.game_data["Player"][self.client_index]["GameStatus"] = GAME_STATUS_PLAYER_PLAYING
+            # If we are playing also check if it's our turn to take a decision:
+            if self.game_data["Dealer"]["NextDecision"] == self.client_index:
+                playerAction = self._win.getPlayerAction()
+                # if we decided copy the decision to the game_data
+                if playerAction is not ACTION_UNDECIDED:
+                    self.game_data["Player"][self.client_index]["GameAction"] = playerAction
+            else:
+                # if it's no longer our time to take a decision, reset the decision.
+                self._win.reset_player_action_array()
 
     def client_update_own_ui_from_new_server_data(self):
         for player in range(MAX_CLIENTS):
@@ -230,14 +239,15 @@ class PokerGameClass:
         betAmount = self.game_data["Player"][player]["BetAmount"]
         if self.game_data["Player"][player]["GameStatus"] is GAME_STATUS_PLAYER_SIT_OUT_TURN:
             self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Sitting Out!')
-        elif gameAction == ACTION_CALL:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Called {betAmount}')
-        elif gameAction == ACTION_RAISE:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Raised {betAmount}')
-        elif gameAction == ACTION_FOLD:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Fold!')
-        else:
-            self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Deciding...')
+        elif self.game_data["Dealer"]["NextDecision"] == player:
+            if gameAction == ACTION_CALL:
+                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Called {betAmount}')
+            elif gameAction == ACTION_RAISE:
+                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Raised {betAmount}')
+            elif gameAction == ACTION_FOLD:
+                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Fold!')
+            else:
+                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=f'Deciding...')
 
     def set_ui_player_money_and_currency(self, ui_pos, player):
         moneyAvailable = self.game_data["Player"][player]["MoneyAvailable"]
@@ -297,7 +307,7 @@ class PokerGameClass:
 ######################################################################################################
 
     def setDevQuickLaunchSettings(self):
-        self._win.line_user_name.setText('testUserName')
+        self._win.line_user_name.setText('serverUser')
         self._win.line_game_name.setText('SERVER Game')
         self._win.line_starting_ammount.setText('10.0')
         self._win.line_currency.setText('RON')
