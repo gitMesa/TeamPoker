@@ -123,7 +123,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         eval(f'self.player{ui_pos}_status.setText(str(status_text))')
 
     def setUiDealerIcons(self, ui_pos, dealer_icon_name):
-        # dealer_icon_name should be ''/'dealer'/'small_blind'/'big_blind'
+        # dealer_icon_name should be '' or 'dealer' or 'small_blind' or 'big_blind'
         if len(dealer_icon_name) > 0:
             dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(f':/other_icons/other_icons/icon_{dealer_icon_name}.png'))
         else:
@@ -143,9 +143,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def getPlayerPlayingOrSittingOut(self):
         if self.action_sit_out.isChecked():
-            return GAME_STATUS_PLAYER_SIT_OUT_TURN
+            return PLAYER_STATUS_player_sit_out_next_turn
         else:
-            return GAME_STATUS_PLAYER_PLAYING
+            return PLAYER_STATUS_player_is_playing
 
     def getUserName(self):
         return self.line_user_name.text()

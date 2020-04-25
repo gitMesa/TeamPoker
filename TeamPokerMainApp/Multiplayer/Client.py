@@ -1,4 +1,3 @@
-from TeamPokerMainApp.Common.VariableDefinitions import *
 from TeamPokerMainApp.Common.MethodDefinitions import *
 import socket
 

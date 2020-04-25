@@ -28,7 +28,7 @@ class TestDealerClass:
         self.DealerFunction = DealerClass(game_rules=game_rules, game_data=game_data)
 
         self.DealerFunction.start_new_poker_round()
-        self.playing_players = self.DealerFunction.find_playing_players_and_setup_dealer_and_first_blinds()
+        self.playing_players = self.DealerFunction.init_playing_players_and_setup_dealer_and_first_blinds()
         self.playing_order = self.playing_players
 
 

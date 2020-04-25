@@ -10,7 +10,7 @@ ip = socket.gethostbyname(socket.gethostname())
 port = 55555
 
 packet = NetworkPacketClass()
-GAME_DATA_PACKET = dict.copy(packet.get_game_data())
+GAME_DATA_PACKET = dict.copy(packet.get_network_packet_definition())
 
 srv = MultiplayerServerClass(ip, port)
 
