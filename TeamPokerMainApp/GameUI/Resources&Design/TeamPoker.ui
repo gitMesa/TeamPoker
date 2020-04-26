@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1274</width>
+    <width>1268</width>
     <height>954</height>
    </rect>
   </property>
@@ -40,7 +40,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageMain">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -993,11 +993,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QDoubleSpinBox" name="spinbox_small_blind">
+               <widget class="QLineEdit" name="line_small_blind">
                 <property name="minimumSize">
                  <size>
                   <width>60</width>
-                  <height>0</height>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -1012,26 +1012,17 @@
                   <pointsize>11</pointsize>
                  </font>
                 </property>
+                <property name="text">
+                 <string>0.25</string>
+                </property>
                 <property name="frame">
                  <bool>false</bool>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
-                <property name="specialValueText">
-                 <string/>
-                </property>
-                <property name="minimum">
-                 <double>0.250000000000000</double>
-                </property>
-                <property name="maximum">
-                 <double>100.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.250000000000000</double>
-                </property>
-                <property name="value">
-                 <double>0.250000000000000</double>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1081,7 +1072,7 @@
                  <double>200.000000000000000</double>
                 </property>
                 <property name="singleStep">
-                 <double>0.250000000000000</double>
+                 <double>0.500000000000000</double>
                 </property>
                 <property name="value">
                  <double>0.500000000000000</double>
@@ -3707,7 +3698,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="tab">
               <attribute name="title">
@@ -3732,12 +3723,24 @@
                  <property name="sizeAdjustPolicy">
                   <enum>QAbstractScrollArea::AdjustToContents</enum>
                  </property>
-                 <property name="showGrid">
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <property name="alternatingRowColors">
                   <bool>true</bool>
+                 </property>
+                 <property name="showGrid">
+                  <bool>false</bool>
                  </property>
                  <property name="rowCount">
                   <number>8</number>
                  </property>
+                 <attribute name="horizontalHeaderCascadingSectionResizes">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>23</number>
+                 </attribute>
                  <row/>
                  <row/>
                  <row/>
@@ -3863,7 +3866,7 @@
                 </spacer>
                </item>
                <item>
-                <widget class="QTableWidget" name="tableWidget">
+                <widget class="QTableWidget" name="table_player_server_statuses">
                  <property name="horizontalScrollBarPolicy">
                   <enum>Qt::ScrollBarAlwaysOff</enum>
                  </property>
@@ -3873,6 +3876,38 @@
                  <property name="editTriggers">
                   <set>QAbstractItemView::NoEditTriggers</set>
                  </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="showGrid">
+                  <bool>false</bool>
+                 </property>
+                 <property name="rowCount">
+                  <number>8</number>
+                 </property>
+                 <attribute name="horizontalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="horizontalHeaderHighlightSections">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>25</number>
+                 </attribute>
+                 <attribute name="verticalHeaderHighlightSections">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>20</number>
+                 </attribute>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
+                 <row/>
                  <column>
                   <property name="text">
                    <string>Name</string>
@@ -4283,9 +4318,6 @@
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <item>
-                  <widget class="QLineEdit" name="line_raise_ammount"/>
-                 </item>
                  <item>
                   <widget class="QSlider" name="horizontalSlider">
                    <property name="orientation">

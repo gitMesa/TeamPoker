@@ -13,6 +13,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         self.card_order = list()
 
     def dealer_evaluate_next_step(self):
+        self.dealer_figure_out_if_we_can_play()
         if self.game_data["Dealer"]["GameState"] is DEALER_thinks_GAME_is_PLAYING:
 
             if self.dealer_step is DEALER_INIT_GAME:
@@ -21,7 +22,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
             elif self.dealer_step is DEALER_NEW_GAME:
                 self.clear_cards_on_table_and_pot()
                 self.round = ROUND_PRE_FLOP
-                self.set_status_message_and_update_history('New round started!')
+                self.set_status_message_and_update_history('New game started!')
                 # Count the number of playing players. Get the playing order list.
                 # Setup dealer, small and big blinds, and the next decision maker.
                 self.player_decision_order, self.card_order = self.dealer_find_new_playing_players_and_setup_dealer_and_blinds()
@@ -36,7 +37,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
             elif self.dealer_step is DEALER_WAIT_FOR_PLAYER_ACTION:
                 # Get the info about who we should wait for
                 player = self.game_data["Dealer"]["NextDecision"]
-                player_name = self.game_data["Player"][player]["Name"]
+                player_name = self.game_data["PlayerClient"][player]["Name"]
                 min_bet_value = self.game_data["Dealer"]["MinAllowedBet"]
                 currency = self.game_data["Dealer"]["Currency"]
 
@@ -109,6 +110,22 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
             self.set_status_message_and_update_history('Game has Ended!')
         else:
             print('ERROR: dealer_evaluate_next_step @ dealer_status')
+
+    def dealer_figure_out_if_we_can_play(self):
+        # Count the number of players, and the number that are actually want to play this round.
+        players_connected_and_playing = 0
+        for player in range(MAX_CLIENTS):
+            if self.game_data["PlayerServer"][player]["ConnectionStatus"] is CONN_STATUS_CONNECTED:
+                if self.game_data["PlayerClient"][player]["PlayerStatus"] is PLAYER_STATUS_player_is_playing:
+                    players_connected_and_playing += 1
+        if players_connected_and_playing >= 2:
+            self.game_data["Dealer"]["GameState"] = DEALER_thinks_GAME_is_PLAYING
+        else:
+            self.game_data["Dealer"]["GameStatus"] = 'Not enough players want to play. Waiting...'
+            self.game_data["Dealer"]["GameState"] = DEALER_thinks_GAME_is_PAUSED
+
+        #TODO: Overwrite from Client0
+        # self.game_data["Dealer"]["GameState"] = self.game_data["PlayerClient"][CLIENT_SRV]["Client0ServerOverwrite"]
 
     def init_playing_players_and_setup_dealer_and_blinds(self):
         player_decision_order_list = []  # Empty list

@@ -1,8 +1,11 @@
 from TeamPokerMainApp.GameUI.TeamPokerUiStyleSheets import *
-from TeamPokerMainApp.Common.VariableDefinitions import *
 from TeamPokerMainApp.Common.MethodDefinitions import *
 from TeamPokerMainApp.GameUI.TeamPokerUI import *
-from PyQt5.Qt import QDoubleValidator
+from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.Qt import QDoubleValidator, QAbstractItemView
+from PyQt5.QtCore import Qt
+
 
 PAGE_MAIN = 0
 PAGE_HOST_A_GAME = 1
@@ -21,10 +24,14 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget_client_window.setCurrentIndex(0)
         self.line_host_game_ip.setText(get_ip())  # TODO: remove
         self.line_host_game_port.setText(str(5555))  # TODO: remove
+        self.table_money_stats.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_player_server_statuses.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.listView.setModel(QStandardItemModel())
         self.setServerControls(False)
         self.init_connects()
 
         self.player_action_array = [False, False, False, True]  # will hold which of the 3 actions player has selected (CALL, RAISE, FOLD, UNDECIDED)
+        self.history_rows = -1  # in order to put first row at index 0
 
     def init_connects(self):
         self.buttonHostAGame.clicked.connect(lambda f: self.stackedWidget.setCurrentIndex(PAGE_HOST_A_GAME))
@@ -34,6 +41,8 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.action_call.clicked.connect(lambda f: self.set_player_action_array(True, False, False, False))
         self.action_raise.clicked.connect(lambda f: self.set_player_action_array(False, True, False, False))
         self.action_fold.clicked.connect(lambda f: self.set_player_action_array(False, False, True, False))
+        self.action_play_or_sit_out.clicked.connect(self.togglePlayOrSitOutButtonText)
+        self.spinbox_big_blind.valueChanged.connect(self.setSmallBlindText)
 
     def showMainWindow(self):
         self.show()
@@ -69,13 +78,14 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def setNewPotValue(self, amount, currency):
         self.label_potValue.setText(f'{amount} {currency}')
 
-    def setActionCallMoneyAmmount(self, ammount, currency):
-        self.action_call.setText(f'Call {ammount} {currency}')
+    def setActionCallMoneyAmmount(self, amount, currency):
+        self.action_call.setText(f'Call {amount} {currency}')
 
-    def setActionRaiseMoneyAmmount(self, ammount, currency):
-        self.action_raise.setText(f'Raise {ammount} {currency}')
+    def setActionRaiseMoneyAmmount(self, amount, currency):
+        self.action_raise.setText(f'Raise {amount} {currency}')
 
-    def setRaiseScrollBarValues(self, min, max):
+    def setRaiseScrollBarValues(self, min, max, step):
+        self.horizontalSlider.setSingleStep(step)
         self.horizontalSlider.setMinimum(min)
         self.horizontalSlider.setMaximum(max)
 
@@ -130,6 +140,39 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             dealer_blind_icon = QtGui.QIcon(QtGui.QPixmap(''))  # if player is none of the above
         eval(f'self.player{ui_pos}_dealer.setIcon(dealer_blind_icon)')
 
+    def setUiPlayerConnStatuses(self, row, name, stat_text):
+        column_name, column_stat = 0, 1
+        self.table_player_server_statuses.setItem(row, column_name, QTableWidgetItem(name))
+        self.table_player_server_statuses.setItem(row, column_stat, QTableWidgetItem(stat_text))
+
+    def setUiPlayerMoneyStatuses(self, row, name, money_in, money_left):
+        col_name, col_money_in, col_money_left, col_delta = 0, 1, 2, 3
+        delta = money_in - money_left
+        # add text centered
+        item_name = QTableWidgetItem(name)
+        item_name.setTextAlignment(Qt.AlignHCenter)
+        self.table_money_stats.setItem(row, col_name, item_name)
+        # add text centered
+        item_money_in = QTableWidgetItem(str(float(money_in)))
+        item_money_in.setTextAlignment(Qt.AlignHCenter)
+        self.table_money_stats.setItem(row, col_money_in, item_money_in)
+        # add text centered
+        item_money_left = QTableWidgetItem(str(float(money_left)))
+        item_money_left.setTextAlignment(Qt.AlignHCenter)
+        self.table_money_stats.setItem(row, col_money_left, item_money_left)
+        # add text centered
+        item_delta = QTableWidgetItem(str(delta))
+        item_delta.setTextAlignment(Qt.AlignHCenter)
+        self.table_money_stats.setItem(row, col_delta, item_delta)
+
+    def setNewTextItemToUiTableHistory(self, text):
+        self.listView.model().appendRow(QStandardItem(text))
+        self.history_rows += 1
+
+    def setSmallBlindText(self):
+        bigblind = self.spinbox_big_blind.value()
+        self.line_small_blind.setText(str(float(bigblind)/2))
+
     def togglePlayOrSitOutButtonText(self):
         if self.action_play_or_sit_out.isChecked():
             self.action_play_or_sit_out.setText('Resume Playing')
@@ -138,14 +181,17 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # ##### GETTERS ################################################################################################
 
+    def getUiTableHistoryRowNumber(self):
+        return self.history_rows
+
+    def getUiTableHistoryLastRowText(self):
+        if self.history_rows >= 0:
+            return self.listView.model().index(self.history_rows, 0).data()
+        else:
+            return ''
+
     def getPlayerAction(self):
         return self.player_action_array.index(True)
-
-    def getPlayerPlayingOrSittingOut(self):
-        if self.action_sit_out.isChecked():
-            return PLAYER_STATUS_player_sit_out_next_turn
-        else:
-            return PLAYER_STATUS_player_is_playing
 
     def getUserName(self):
         return self.line_user_name.text()
@@ -178,9 +224,6 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def getCurrency(self):
         return self.line_currency.text()
 
-    def getSmallBlind(self):
-        return float(self.spinbox_small_blind.value())
-
     def getBigBlind(self):
         return float(self.spinbox_big_blind.value())
 
@@ -189,6 +232,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def getActionPlayOrSitOut(self):
         return self.action_play_or_sit_out.isChecked()
+
+    def getRaiseSliderValue(self):
+        return float(self.horizontalSlider.value())
 
     # ##### CONNECTs ################################################################################################
 
@@ -210,5 +256,5 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def connectActionSitOut(self, callback_function):
         self.action_play_or_sit_out.clicked.connect(callback_function)
 
-    def connectRaiseSliderMove(self, callback_function):
+    def connectRaiseSliderMoved(self, callback_function):
         self.horizontalSlider.sliderReleased.connect(callback_function)

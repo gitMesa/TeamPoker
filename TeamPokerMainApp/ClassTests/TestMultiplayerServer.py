@@ -1,6 +1,6 @@
 from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
 from TeamPokerMainApp.Multiplayer.Server import MultiplayerServerClass
-from TeamPokerMainApp.Multiplayer.Client import ClientClass
+from TeamPokerMainApp.Multiplayer.ClientCommunication import ClientCommunicationClass
 from TeamPokerMainApp.Common.VariableDefinitions import *
 import threading
 import socket
@@ -14,9 +14,9 @@ GAME_DATA_PACKET = dict.copy(packet.get_network_packet_definition())
 
 srv = MultiplayerServerClass(ip, port)
 
-clientD = ClientClass(ip, port)
-client1 = ClientClass(ip, port)
-client2 = ClientClass(ip, port)
+clientD = ClientCommunicationClass(ip, port)
+client1 = ClientCommunicationClass(ip, port)
+client2 = ClientCommunicationClass(ip, port)
 
 clientDpos = int(clientD.client_connect_to_server_and_get_position())
 client1pos = int(client1.client_connect_to_server_and_get_position())

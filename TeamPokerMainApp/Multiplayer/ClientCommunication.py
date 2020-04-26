@@ -2,11 +2,11 @@ from TeamPokerMainApp.Common.MethodDefinitions import *
 import socket
 
 
-class ClientClass:
+class ClientCommunicationClass:
 
-    def __init__(self, ip, port):
+    def __init__(self, ip_port):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.addr = (ip, port)
+        self.addr = ip_port
 
     def client_connect_to_server_and_get_position(self):
         try:  # Handshake message

@@ -40,13 +40,17 @@ ROUND_RIVER = 3
 ROUND_END = 4
 
 # Other Definitions
-DEALER = 0
+CLIENT_SRV = 0
 MAX_CLIENTS = 8  # Host(Dealer+Client) + 7 other players = 8 total players
 MESSAGE_DISCONNECTED = '!DISCONNECTED'
 COMMUNCATION_TIME = 300  # miliseconds
 BUFFERSIZE = 10240
 HEADER = 64
 FORMAT = 'utf-8'
+
+CLIENT0_FORCE_BEGIN = 21
+CLIENT0_FORCE_PAUSE = 22
+CLIENT0_FORCE_END = 23
 
 ################################
 #    Deck Stuff Definitions    #

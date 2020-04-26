@@ -5,7 +5,7 @@ class NetworkPacketClass:
 
     @staticmethod
     def get_network_packet_definition():
-        # General info fields that describe the state of the game
+        # "Dealer" General info fields that describe the state of the game
         SERVER_DEALER_FIELDS = {"GameName": str(""),
                                 "GameStatus": str(""),  # String that will contain the status that is displayed to players in the center of the table
                                 "GameState": DEALER_thinks_GAME_is_PAUSED,  # Contains the state of the game (Playing, Paused, Ended).
@@ -15,26 +15,28 @@ class NetworkPacketClass:
                                 "TablePot": float(0.0),
                                 "MinAllowedBet": float(0.0),  # Current minimum amount that can be bet (in case someone raised for example)
 
-                                "NextDecision": int(0),  # index for the list of playing players (which itself contains indexes of players)
+                                "NextDecision": int(99),  # index for the list of playing players (which itself contains indexes of players)
 
                                 "BurnedCards": int(0),
                                 "TableCards": [NO_CARD, NO_CARD, NO_CARD, NO_CARD, NO_CARD]}
 
-        # "PlayerClient" Player info fields that are editable by the user-client
+        # "PlayerClient" Player -> Server communication
         PLAYER_CLIENT_FIELDS = {"Name": str(""),
                                 "Icon": str(""),
                                 "TableSpot": int(0),
                                 "AskForBuyIn": float(0.0),
                                 "PlayerAction": ACTION_UNDECIDED,
                                 "PlayerStatus": PLAYER_STATUS_player_sit_out_next_turn,
-                                "BetAmount": float(0.0)}
+                                "BetAmount": float(0.0),
+                                "Client0ServerOverwrite": CLIENT0_FORCE_PAUSE}
 
-        # "PlayerServer" Player info fields that are editable by the server-dealer
+        # "PlayerServer" Server -> Player communication
         PLAYER_SERVER_FIELDS = {"ConnectionStatus": CONN_STATUS_EMPTY_SEAT,
                                 "isDealer": TABLE_STATUS_is_NORMAL_PLAYER,
                                 "DealerIcon": str(""),
                                 "isBlind": TABLE_STATUS_is_NORMAL_PLAYER,
                                 "BlindIcon": str(""),
+                                "MoneyBoughtIn": float(0.0),
                                 "MoneyAvailable": float(0.0),
                                 "PlayerCards": [NO_CARD, NO_CARD]}
 

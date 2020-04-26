@@ -2,8 +2,7 @@ from TeamPokerMainApp.GameUI.TeamPokerUIController import TeamPokerUIControllerC
 from TeamPokerMainApp.Multiplayer.NetworkPacket import NetworkPacketClass
 from TeamPokerMainApp.Multiplayer.Server import MultiplayerServerClass
 from TeamPokerMainApp.GameLogic.CardDeck import CardDeckClass
-from TeamPokerMainApp.Multiplayer.Client import ClientClass
-from TeamPokerMainApp.GameLogic.Dealer import DealerClass
+from TeamPokerMainApp.Multiplayer.ClientCommunication import ClientCommunicationClass
 from TeamPokerMainApp.Common.MethodDefinitions import *
 from TeamPokerMainApp.Common.VariableDefinitions import *
 from PyQt5.Qt import QTimer
@@ -27,13 +26,11 @@ from PyQt5.Qt import QTimer
 ###################################################################
 
 
-class PokerGameClass:
+class PokerGameClass(NetworkPacketClass, CardDeckClass):
 
     def __init__(self):
         self._win = TeamPokerUIControllerClass()
-        self._packet = NetworkPacketClass()
-        self.client_data = self._packet.get_network_packet_definition()
-        self._deck = CardDeckClass()
+        self.client_data = self.get_network_packet_definition()
         self.initConnectUiElements()
         self.initOtherStuff()
         self.setDevQuickLaunchSettings()
@@ -44,11 +41,10 @@ class PokerGameClass:
     def initConnectUiElements(self):
         self._win.connectStartHostingGameServer(self.start_poker_server)
         self._win.connectStartJoiningAGameServer(self.join_poker_server)
-        self._win.connectButtonServerStartGame(lambda f: self.change_game_status_on_server(DEALER_thinks_GAME_is_PLAYING))
-        self._win.connectButtonServerPauseGame(lambda f: self.change_game_status_on_server(DEALER_thinks_GAME_is_PAUSED))
-        self._win.connectButtonServerEndGame(lambda f: self.change_game_status_on_server(DEALER_thinks_GAME_is_ENDING))
-        self._win.connectActionSitOut(self.client_action_sit_out_or_playing)
-        self._win.connectRaiseSliderMove(self.set_raise_button_text)
+        self._win.connectButtonServerStartGame(lambda f: self.change_game_status_on_server(CLIENT0_FORCE_BEGIN))
+        self._win.connectButtonServerPauseGame(lambda f: self.change_game_status_on_server(CLIENT0_FORCE_PAUSE))
+        self._win.connectButtonServerEndGame(lambda f: self.change_game_status_on_server(CLIENT0_FORCE_END))
+        self._win.connectRaiseSliderMoved(self.set_raise_button_text)
 
     def initOtherStuff(self):
         for player in range(MAX_CLIENTS):
@@ -61,12 +57,14 @@ class PokerGameClass:
     def start_poker_server(self):
         if self.check_if_all_host_server_fields_have_input():
             try:
-                self._srv = MultiplayerServerClass(ip=self._win.getHostAGameIpAdress(), port=self._win.getHostAGamePortNumber())
+                ip_port = (self._win.getHostAGameIpAdress(), self._win.getHostAGamePortNumber())
+                self._srv = MultiplayerServerClass(ip_port=ip_port, game_rules=self.get_game_rules())
             except Exception as e:
                 print(f'ERROR: start_poker_server -> MultiplayerServerClass -> {e}')
 
             try:
-                self.start_network_client(ip=self._win.getHostAGameIpAdress(), port=self._win.getHostAGamePortNumber())
+                ip_port = (self._win.getHostAGameIpAdress(), self._win.getHostAGamePortNumber())
+                self.start_network_client(ip_port)
             except Exception as e:
                 print(f'ERROR: start_poker_server -> start_network_client -> {e}')
 
@@ -78,13 +76,15 @@ class PokerGameClass:
     def join_poker_server(self):
         if self.check_if_all_join_server_fields_have_input():
             try:
-                self.start_network_client(ip=self._win.getJoinAGameIpAdress(), port=self._win.getJoinAGamePortNumber())
+                ip_port = (self._win.getJoinAGameIpAdress(), self._win.getJoinAGamePortNumber())
+                self.start_network_client(ip_port=ip_port)
             except Exception as e:
+                showCustomizedInfoWindow(f'Could not connect to server! {e}')
                 print(f'ERROR: join_poker_server -> start_network_client PLAYER -> {e}')
             self._win.goToPlayingArena()
 
-    def start_network_client(self, ip, port):
-        self._client = ClientClass(ip=ip, port=port)
+    def start_network_client(self, ip_port):
+        self._client = ClientCommunicationClass(ip_port=ip_port)
         self.client_index = int(self._client.client_connect_to_server_and_get_position())
         self.table_spots = self.get_table_spots_from_client_index_point_of_view()
         self.client_init_game_data_from_own_ui()
@@ -99,11 +99,9 @@ class PokerGameClass:
         try:
             # update the game_data with own ui info (mainly new actions, decisions by the player)
             self.client_update_game_data_from_own_ui()
-            # Send your user update.
-            # and get the update from all other clients, and dealer, centralized by the server.
-            server_data = self._client.client_send_message_to_server_return_reply(self.client_data)
+            # Send your user update and get the update from all other clients, and dealer, centralized by the server.
+            self.client_data = self._client.client_send_message_to_server_return_reply(self.client_data)
             # update our own UI based on the data received from the server (cards, other players, etc.)
-            self.client_data = server_data
             self.client_update_own_ui_from_new_server_data()
         except Exception as e:
             print(f'client_server_comm_action -> {e}')
@@ -123,6 +121,7 @@ class PokerGameClass:
             self.client_data["PlayerClient"][self.client_index]["GameStatus"] = PLAYER_STATUS_player_sit_out_next_turn
         else:
             self.client_data["PlayerClient"][self.client_index]["GameStatus"] = PLAYER_STATUS_player_is_playing
+
             # If we are playing also check if it's our turn to take a decision:
             if self.client_data["Dealer"]["NextDecision"] == self.client_index:
                 playerAction = self._win.getPlayerAction()
@@ -131,46 +130,52 @@ class PokerGameClass:
                     self.client_data["PlayerClient"][self.client_index]["GameAction"] = playerAction
             else:
                 # if it's no longer our time to take a decision, reset the decision.
+                self.client_data["PlayerClient"][self.client_index]["GameAction"] = ACTION_UNDECIDED
                 self._win.reset_player_action_array()
 
     def client_update_own_ui_from_new_server_data(self):
+        # EACH PLAYER DATA
         for player in range(MAX_CLIENTS):
             if self.client_data["PlayerServer"][player]["ConnectionStatus"] is not CONN_STATUS_EMPTY_SEAT:
                 ui_pos = self.table_spots.index(player)
+                player_name = self.client_data["PlayerClient"][player]["Name"]
                 self._win.setUiHiddenPlayer(pos=ui_pos, hidden=False)  # Show the player table in UI
-                self._win.setUiPlayerName(ui_pos=ui_pos, name=self.client_data["PlayerClient"][player]["Name"])
+                self._win.setUiPlayerName(ui_pos=ui_pos, name=player_name)
                 self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.client_data["PlayerClient"][player]["Icon"])
                 self.set_ui_player_dealer_icons(ui_pos=ui_pos, player=player)
                 self.set_ui_player_money_and_currency(ui_pos=ui_pos, player=player)
                 self.set_ui_player_status_text(ui_pos=ui_pos, player=player)
                 self._win.setUiOtherPlayersCards(ui_pos)  # TODO: Show actual cards at end of round
+                # Update the tabs
+                self.set_ui_player_server_connection_statuses(player=player, player_name=player_name)
+                self.set_ui_player_money_statuses(player=player, player_name=player_name)
             else:
                 ui_pos = self.table_spots.index(player)
                 self._win.setUiHiddenPlayer(pos=ui_pos, hidden=True)
-        # update cards on table
+        # TABLE CARDS
         table_cards = self.client_data["Dealer"]["TableCards"]
         for card in range(NUMBER_OF_CARDS_ON_TABLE):
-            card_name = self._deck.get_card_name_from_card_number(table_cards[card])
+            card_name = self.get_card_name_from_card_number(table_cards[card])
             self._win.setUiTableCard(card_number=card, card_name=card_name)
-        # update cards in my hand
+        # PLAYER CARDS
         player_cards = self.client_data["PlayerServer"][self.client_index]["PlayerCards"]  # returns array with card codes
         for card in range(NUMBER_OF_CARDS_IN_HAND):
-            card_name = self._deck.get_card_name_from_card_number(player_cards[card])
+            card_name = self.get_card_name_from_card_number(player_cards[card])
             self._win.setUiEgoPlayerCards(card_number=card, card_name=card_name)
-        # Update game status text.
+        # GAME STATUSES & HISTORY
+        self.add_item_to_table_history()
         self._win.setGameStatusText(text=self.client_data["Dealer"]["GameStatus"])
         self._win.setNewPotValue(amount=self.client_data["Dealer"]["TablePot"], currency=self.client_data["Dealer"]["Currency"])
         self._win.setUiBurnedCards(number_of_burned_cards=self.client_data["Dealer"]["BurnedCards"])
-
-    def client_action_sit_out_or_playing(self):
-        # Checked = Sitting out
-        # Unchecked = Playing
-        if self._win.getActionPlayOrSitOut():
-            self._win.togglePlayOrSitOutButtonText()
-            self._win.setActionButtonsEnabled(False)
-        else:
-            self._win.togglePlayOrSitOutButtonText()
+        # If it is my turn to decide, update the call/raise button texts, and enable those buttons.
+        if self.client_data["Dealer"]["NextDecision"] == self.client_index and not self._win.getActionPlayOrSitOut():
             self._win.setActionButtonsEnabled(True)
+            self._win.setActionCallMoneyAmmount(amount=self.client_data["Dealer"]["MinAllowedBet"], currency=self.client_data["Dealer"]["Currency"])
+            self.set_minimum_maximum_slider_values()
+        else:
+            self._win.setActionButtonsEnabled(False)
+            self._win.setActionCallMoneyAmmount(amount='', currency='')
+            self._win.setActionRaiseMoneyAmmount(amount='', currency='')
 
     def get_new_player_action(self):
         if self._win.getActionCall():
@@ -209,21 +214,43 @@ class PokerGameClass:
         else:
             self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name='')
 
+    def add_item_to_table_history(self):
+        last_item = self._win.getUiTableHistoryLastRowText()
+        if last_item != self.client_data["Dealer"]["GameStatus"] or last_item == '':
+            self._win.setNewTextItemToUiTableHistory(text=self.client_data["Dealer"]["GameStatus"])
+
     def set_ui_player_money_and_currency(self, ui_pos, player):
         moneyAvailable = self.client_data["PlayerServer"][player]["MoneyAvailable"]
         currency = self.client_data["Dealer"]["Currency"]
         self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, amount=moneyAvailable, currency=currency)
 
+    def set_ui_player_server_connection_statuses(self, player, player_name):
+        stat = self.client_data["PlayerServer"][player]["ConnectionStatus"]
+        if stat is CONN_STATUS_CONNECTED:
+            stat_text = "Connected!"
+        elif stat is CONN_STATUS_DISCONNECTED:
+            stat_text = "Disconnected!"
+        else:
+            stat_text = "Empty seat."
+        self._win.setUiPlayerConnStatuses(row=player, name=player_name, stat_text=stat_text)
+
+    def set_ui_player_money_statuses(self, player, player_name):
+        money_in = self.client_data["PlayerServer"][player]["MoneyBoughtIn"]
+        money_left = self.client_data["PlayerServer"][player]["MoneyAvailable"]
+        self._win.setUiPlayerMoneyStatuses(row=player, name=player_name, money_in=money_in, money_left=money_left)
+
     def set_minimum_maximum_slider_values(self):
-        pass
+        step = self.client_data["Dealer"]["BigBlind"]
+        min_value = self.client_data["Dealer"]["MinAllowedBet"]
+        max_value = self.client_data["PlayerServer"][self.client_index]["MoneyAvailable"]
+        self._win.setRaiseScrollBarValues(min=min_value, max=max_value, step=step)
 
     def set_raise_button_text(self):
-        pass
+        self._win.setActionRaiseMoneyAmmount(amount=self._win.getRaiseSliderValue(), currency=self.client_data["Dealer"]["Currency"])
 
     def change_game_status_on_server(self, status):
         # Normally only the server should start the game. This is a workaround.
-        self.client_data["Dealer"]["GameStatus"] = status
-
+        self.client_data["PlayerClient"][self.client_index]["Client0ServerOverwrite"] = status
 
 ######################################################################################################
 # 5. Other Logic:
@@ -247,24 +274,23 @@ class PokerGameClass:
         return table_spots
 
     def get_game_rules(self):
+        gameName = self._win.getGameName()
         startingMoney = self._win.getStartingAmmount()
         currency = self._win.getCurrency()
-        smallBlind = self._win.getSmallBlind()
         bigBlind = self._win.getBigBlind()
         blindInterval = self._win.getBlindInterval()
-        tpl = (startingMoney, currency, smallBlind, bigBlind, blindInterval)
+        tpl = (gameName, startingMoney, currency, bigBlind, blindInterval)
         return tpl
 
     def check_if_all_host_server_fields_have_input(self):
         rtrn = False
-        if self._win.getStartingAmmount() > 0 and len(self._win.getCurrency()) > 0 and self._win.getSmallBlind() > 0 and self._win.getBigBlind() > 0:
+        if self._win.getStartingAmmount() > 0 and len(self._win.getCurrency()) > 0 and self._win.getBigBlind() > 0:
             rtrn = True
         return rtrn
 
     def check_if_all_join_server_fields_have_input(self):
-        rtrn = False
-        if self._win.getStartingAmmount() > 0 and len(self._win.getCurrency()) > 0 and self._win.getSmallBlind() > 0 and self._win.getBigBlind() > 0:
-            rtrn = True
+        rtrn = True
+        # TODO: check ip & port
         return rtrn
 
 ######################################################################################################
