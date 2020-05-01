@@ -1,3 +1,5 @@
+from TeamPokerMainApp.Common.NetworkPacketDefinitions import *
+
 # When you don't have cards you don't play... :)
 NO_CARD = 99
 NO_CARD_IMAGE = '99_red'
@@ -6,9 +8,6 @@ NO_CARD_IMAGE = '99_red'
 CONN_STATUS_EMPTY_SEAT = 0
 CONN_STATUS_CONNECTED = 1
 CONN_STATUS_DISCONNECTED = 2
-
-PLAYER_STATUS_player_is_playing = 3
-PLAYER_STATUS_player_sit_out_next_turn = 4
 
 TABLE_STATUS_is_DEALER = 5
 TABLE_STATUS_is_SMALL_BLIND = 6
@@ -21,9 +20,14 @@ ACTION_FOLD = 2
 ACTION_UNDECIDED = 3
 
 # Dealer Status
-DEALER_thinks_GAME_is_PLAYING = 10
-DEALER_thinks_GAME_is_PAUSED = 11
-DEALER_thinks_GAME_is_ENDING = 12
+GAME_is_PLAYING = 10
+GAME_is_PAUSED = 11
+GAME_is_ENDING = 12
+
+# Some Force Steps.
+Overwrite_START_GAME = 21
+Overwrite_PAUSE_GAME = 22
+Overwrite_END_GAME = 23
 
 # Dealer Steps
 DEALER_INIT_GAME = 0
@@ -47,10 +51,6 @@ COMMUNCATION_TIME = 300  # miliseconds
 BUFFERSIZE = 10240
 HEADER = 64
 FORMAT = 'utf-8'
-
-CLIENT0_FORCE_BEGIN = 21
-CLIENT0_FORCE_PAUSE = 22
-CLIENT0_FORCE_END = 23
 
 ################################
 #    Deck Stuff Definitions    #

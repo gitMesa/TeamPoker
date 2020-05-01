@@ -41,7 +41,6 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.action_call.clicked.connect(lambda f: self.set_player_action_array(True, False, False, False))
         self.action_raise.clicked.connect(lambda f: self.set_player_action_array(False, True, False, False))
         self.action_fold.clicked.connect(lambda f: self.set_player_action_array(False, False, True, False))
-        self.action_play_or_sit_out.clicked.connect(self.togglePlayOrSitOutButtonText)
         self.spinbox_big_blind.valueChanged.connect(self.setSmallBlindText)
 
     def showMainWindow(self):
@@ -255,6 +254,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def connectActionSitOut(self, callback_function):
         self.action_play_or_sit_out.clicked.connect(callback_function)
+
+    def connectActionBuyIn(self, callback_function):
+        self.action_buy_in.clicked.connect(callback_function)
 
     def connectRaiseSliderMoved(self, callback_function):
         self.horizontalSlider.sliderReleased.connect(callback_function)

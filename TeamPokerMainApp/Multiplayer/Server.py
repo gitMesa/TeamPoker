@@ -2,7 +2,6 @@ from TeamPokerMainApp.GameLogic.CardDeck import CardDeckClass
 from TeamPokerMainApp.GameLogic.Dealer import DealerClass
 from TeamPokerMainApp.Multiplayer.NetworkPacket import *
 from TeamPokerMainApp.Common.MethodDefinitions import *
-from TeamPokerMainApp.Common.VariableDefinitions import *
 from PyQt5.Qt import QMutex
 import threading
 import socket
@@ -55,12 +54,12 @@ class MultiplayerServerClass(NetworkPacketClass, CardDeckClass):
 
                         # Are we still connected to this player?
                         if client_data:
-                            self.server_data["PlayerServer"][client_number]["ConnectionStatus"] = CONN_STATUS_CONNECTED
+                            self.server_data[PS][client_number][PS_ConnectionStatus] = CONN_STATUS_CONNECTED
                         else:
-                            self.server_data["PlayerServer"][client_number]["ConnectionStatus"] = CONN_STATUS_DISCONNECTED
+                            self.server_data[PS][client_number][PS_ConnectionStatus] = CONN_STATUS_DISCONNECTED
 
                         # Copy the clients data onto the server data.
-                        self.server_data["PlayerClient"][client_number] = client_data["PlayerClient"][client_number]
+                        self.server_data[PC][client_number] = client_data[PC][client_number]
 
                         if client_number == CLIENT_SRV:
                             # The server should theoretically loop through communication with all clients
@@ -88,15 +87,14 @@ class MultiplayerServerClass(NetworkPacketClass, CardDeckClass):
 
     def setup_game_rules_to_server_data(self, rules):
         # 0 gameName = self._win.getGameName()
-        # 1 startingMoney = self._win.getStartingAmmount()
+        # 1 startingMoney = self._win.getStartingAmount()
         # 2 currency = self._win.getCurrency()
         # 3 bigBlind = self._win.getBigBlind()
         # 4 blindInterval = self._win.getBlindInterval()
         # tpl = (gameName, startingMoney, currency, bigBlind, blindInterval)
         for player in range(MAX_CLIENTS):
-            self.server_data["PlayerServer"][player]["MoneyAvailable"] = rules[1]
-            self.server_data["PlayerServer"][player]["MoneyBoughtIn"] = rules[1]
-        self.server_data["Dealer"]["GameName"] = str(rules[0])
-        self.server_data["Dealer"]["Currency"] = str(rules[2])
-        self.server_data["Dealer"]["BigBlind"] = float(rules[3])
-        self.server_data["Dealer"]["SmallBlind"] = float(rules[3]/2)
+            self.server_data[PS][player][PS_MoneyAvailable] = rules[1]
+            self.server_data[PS][player][PS_MoneyBoughtIn] = rules[1]
+        self.server_data[DL][DL_GameName] = str(rules[0])
+        self.server_data[DL][DL_Currency] = str(rules[2])
+        self.server_data[DL][DL_BigBlind] = float(rules[3])

@@ -12,10 +12,8 @@ Light primary color:    #534bae
 Unselected text color: #5d99c6
 */
 
-QWidget#widget_table
+QWidget#pageGame
 {background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.584, fx:0.5, fy:0.5, stop:0 rgba(35, 122, 87, 255), stop:1 rgba(9, 48, 40, 255));}
-QWidget#widget_current_user
-{background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 rgba(96, 108, 136, 255), stop:1 rgba(63, 76, 107, 255));}
 
 QWidget#pageMain,
 QWidget#pageJoinGame,
