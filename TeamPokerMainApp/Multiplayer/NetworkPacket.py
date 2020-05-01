@@ -24,7 +24,6 @@ class NetworkPacketClass:
                                 PC_BuyInReq: float(0.0),
                                 PC_idPlayerAction: ACTION_UNDECIDED,
                                 PC_isPlayerPlaying: False,  # True = Playing | False = Sitting Out
-                                PC_textPlayerTable: str(""),
                                 PC_BetAmount: float(0.0),
                                 PC_ClientOverwrite: Overwrite_PAUSE_GAME}
 
@@ -32,6 +31,7 @@ class NetworkPacketClass:
         PLAYER_SERVER_FIELDS = {PS_ConnectionStatus: CONN_STATUS_EMPTY_SEAT,
                                 PS_isDealer: TABLE_STATUS_is_NORMAL_PLAYER,
                                 PS_isBlind: TABLE_STATUS_is_NORMAL_PLAYER,
+                                PS_textPlayerTable: str(""),
                                 PS_MoneyBoughtIn: float(0.0),
                                 PS_MoneyAvailable: float(0.0),
                                 PS_PlayerCards: [NO_CARD, NO_CARD]}

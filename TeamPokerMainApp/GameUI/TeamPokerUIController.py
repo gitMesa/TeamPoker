@@ -20,6 +20,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setStyleSheet(WINDOW_STYLE)
         self.line_starting_ammount.setValidator(QDoubleValidator(0.0, 100.0, 2))
+        self.line_raise_amount.setValidator(QDoubleValidator(0.0, 100.0, 2))
         self.stackedWidget.setCurrentIndex(PAGE_MAIN)
         self.tabWidget_client_window.setCurrentIndex(0)
         self.line_host_game_ip.setText(get_ip())  # TODO: remove
@@ -59,9 +60,6 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def set_player_action_array(self, call_bool, raise_bool, fold_bool, undecided_bool):
         self.player_action_array = [call_bool, raise_bool, fold_bool, undecided_bool]
-        self.action_call.setChecked(call_bool)
-        self.action_raise.setChecked(raise_bool)
-        self.action_fold.setChecked(fold_bool)
 
     def reset_player_action_array(self):
         self.set_player_action_array(False, False, False, True)
@@ -71,7 +69,7 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.action_raise.setEnabled(bool)
         self.action_fold.setEnabled(bool)
 
-    def setGameStatusText(self, text):
+    def setTableCenterText(self, text):
         self.label_game_status_text.setText(str(text))
 
     def setNewPotValue(self, amount, currency):
@@ -80,8 +78,9 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def setActionCallMoneyAmmount(self, amount, currency):
         self.action_call.setText(f'Call {amount} {currency}')
 
-    def setActionRaiseMoneyAmmount(self, amount, currency):
+    def setActionRaiseMoneyAmount(self, amount, currency):
         self.action_raise.setText(f'Raise {amount} {currency}')
+        self.line_raise_amount.setText(f'{amount}')
 
     def setRaiseScrollBarValues(self, min, max, step):
         self.horizontalSlider.setSingleStep(step)
@@ -258,5 +257,5 @@ class TeamPokerUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def connectActionBuyIn(self, callback_function):
         self.action_buy_in.clicked.connect(callback_function)
 
-    def connectRaiseSliderMoved(self, callback_function):
-        self.horizontalSlider.sliderReleased.connect(callback_function)
+    def connectRaiseSliderChanged(self, callback_function):
+        self.horizontalSlider.valueChanged.connect(callback_function)

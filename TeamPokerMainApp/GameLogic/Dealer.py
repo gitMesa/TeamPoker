@@ -86,7 +86,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
                     self.game_data[DL][DL_idNextDecision] = self.player_decision_order[1]
                     # Clear all table texts for all players to prepare for the new round
                     for player in range(MAX_CLIENTS):
-                        self.game_data[PC][player][PC_textPlayerTable] = ''
+                        self.game_data[PS][player][PS_textPlayerTable] = ''
                     # Reset Player Action
                     self.game_data[PC][player][PC_idPlayerAction] = ACTION_UNDECIDED
 
@@ -144,7 +144,7 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
             # clear all statuses for the players
             self.game_data[PS][player][PS_isDealer] = TABLE_STATUS_is_NORMAL_PLAYER
             self.game_data[PS][player][PS_isBlind] = TABLE_STATUS_is_NORMAL_PLAYER
-            self.game_data[PC][player][PC_textPlayerTable] = ''
+            self.game_data[PS][player][PS_textPlayerTable] = ''
             # if he is not playing remove him from the card list
             if self.game_data[PC][player][PC_isPlayerPlaying] is False:
                 card_order.remove(player)
@@ -202,11 +202,11 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         old_decision_bet = self.game_data[PC][old_player][PC_BetAmount]
         currency = self.game_data[DL][DL_Currency]
         if old_decision_id == ACTION_CALL:
-            self.game_data[PC][old_player][PC_textPlayerTable] = f'Called {old_decision_bet} {currency}.'
+            self.game_data[PS][old_player][PS_textPlayerTable] = f'Called {old_decision_bet} {currency}.'
         elif old_decision_id == ACTION_RAISE:
-            self.game_data[PC][old_player][PC_textPlayerTable] = f'RAISED {old_decision_bet} {currency}!'
+            self.game_data[PS][old_player][PS_textPlayerTable] = f'RAISED {old_decision_bet} {currency}!'
         elif old_decision_id == ACTION_FOLD:
-            self.game_data[PC][old_player][PC_textPlayerTable] = f'Fold.'
+            self.game_data[PS][old_player][PS_textPlayerTable] = f'Fold.'
         # Increment the next decision player.
         # If the current player is the last to call, go to the next round
         if self.player_decision_order.index(player) == self.player_decision_order[-1]:
@@ -214,11 +214,11 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
             self.dealer_step = DEALER_HANDLE_NEXT_ROUND
             # Clear all decisions/statuses for all players to prepare for the new round
             for player in range(MAX_CLIENTS):
-                self.game_data[PC][player][PC_textPlayerTable] = ''
+                self.game_data[PS][player][PS_textPlayerTable] = ''
         else:
             # otherwise increment the next decision to the next playing player
             self.game_data[DL][DL_idNextDecision] = self.player_decision_order.index(player) + 1
-            self.game_data[PC][player][PC_textPlayerTable] = f'Deciding...'
+            self.game_data[PS][player][PS_textPlayerTable] = f'Deciding...'
 
     def set_status_message_and_update_history(self, status_message):
         self.game_data[DL][DL_textTableCenter] = status_message

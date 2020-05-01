@@ -18,7 +18,6 @@ PC_Icon = 22  # String of the icon the player uses TODO: change into ids to make
 PC_TableSpot = 23  # The selected spot at the table
 PC_BuyInReq = 24  # Request to buy in this amount (to be added at the appropriate time.)
 PC_isPlayerPlaying = 25  # True = Playing | False = Sitting Out
-PC_textPlayerTable = 26  # Text that will be displayed besides each player on the table
 PC_idPlayerAction = 27  # Action that this player selected.
 PC_BetAmount = 28  # Amount that the player has bet.
 PC_ClientOverwrite = 29  # Overwrite param for Client0 to start/pause/end the game forcefully.
@@ -28,6 +27,7 @@ PS = 40
 PS_ConnectionStatus = 41  # Connection Status of this player.
 PS_isDealer = 42  # if the player is dealer
 PS_isBlind = 44  # if the player is blind, and is he small/blind
+PS_textPlayerTable = 45  # Text that will be displayed besides each player on the table
 PS_MoneyBoughtIn = 46  # Value of the total money this player bought in this game
 PS_MoneyAvailable = 47  # Value of the money this player has available
 PS_PlayerCards = 48  # Array of cards this player has.

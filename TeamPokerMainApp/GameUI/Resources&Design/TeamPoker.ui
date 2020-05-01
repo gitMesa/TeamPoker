@@ -4188,19 +4188,26 @@
                  <number>0</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_raise_amount"/>
+                 <widget class="QLineEdit" name="line_raise_amount">
+                  <property name="frame">
+                   <bool>false</bool>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <widget class="QSlider" name="horizontalSlider">
