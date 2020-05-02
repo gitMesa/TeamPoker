@@ -123,38 +123,38 @@ class PokerGameClass(NetworkPacketClass, CardDeckClass):
 ######################################################################################################
 
     def client_init_game_data_from_own_ui(self):  # INIT stuff only!!!!!
-        self.client_data[PC][self.client_index][PC_TableSpot] = self.client_index
-        self.client_data[PC][self.client_index][PC_Icon] = self._win.getIconID()
-        self.client_data[PC][self.client_index][PC_Name] = self._win.getUserName()
+        self.client_data[self.client_index][PC_TableSpot] = self.client_index
+        self.client_data[self.client_index][PC_Icon] = self._win.getIconID()
+        self.client_data[self.client_index][PC_Name] = self._win.getUserName()
 
     def client_update_game_data_from_own_ui(self):
         # if button is checked -> Sitting Out -> isPlayerPlaying = False
-        self.client_data[PC][self.client_index][PC_isPlayerPlaying] = not self._win.getActionPlayOrSitOut()
+        self.client_data[self.client_index][PC_isPlayerPlaying] = not self._win.getActionPlayOrSitOut()
         # If it is not our time to decide, reset action
-        if self.client_data[DL][DL_idNextDecision] != self.client_index:
+        if self.client_data[DL_idNextDecision] != self.client_index:
             self._win.reset_player_action_array()
         else:  # Check if client made a decision
             player_action = self._win.getPlayerAction()
-            self.client_data[PC][self.client_index][PC_idPlayerAction] = player_action
+            self.client_data[self.client_index][PC_idPlayerAction] = player_action
             if player_action is ACTION_CALL:
-                self.client_data[PC][self.client_index][PC_BetAmount] = self.client_data[DL][DL_MinBet]
+                self.client_data[self.client_index][PC_BetAmount] = self.client_data[DL_MinBet]
             elif player_action is ACTION_RAISE:
-                self.client_data[PC][self.client_index][PC_BetAmount] = self._win.getRaiseSliderValue()
+                self.client_data[self.client_index][PC_BetAmount] = self._win.getRaiseSliderValue()
             else:  # ACTION_UNDECIDED & ACTION_FOLD
-                self.client_data[PC][self.client_index][PC_BetAmount] = 0.0
+                self.client_data[self.client_index][PC_BetAmount] = 0.0
 
     def client_update_own_ui_from_new_server_data(self):
         # EACH PLAYER DATA
         for player in range(MAX_CLIENTS):
-            if self.client_data[PS][player][PS_ConnectionStatus] is CONN_STATUS_CONNECTED:
+            if self.client_data[player][PS_ConnectionStatus] is CONN_STATUS_CONNECTED:
                 ui_pos = self.table_spots.index(player)
-                player_name = self.client_data[PC][player][PC_Name]
+                player_name = self.client_data[player][PC_Name]
                 self._win.setUiHiddenPlayer(pos=ui_pos, hidden=False)  # Show the player table in UI
                 self._win.setUiPlayerName(ui_pos=ui_pos, name=player_name)
-                self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.client_data[PC][player][PC_Icon])
+                self._win.setUiPlayerIcons(ui_pos=ui_pos, icon_name=self.client_data[player][PC_Icon])
                 self.set_ui_player_dealer_icons(ui_pos=ui_pos, player=player)
-                self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, amount=self.client_data[PS][player][PS_MoneyAvailable], currency=self.client_data[DL][DL_Currency])
-                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=self.client_data[PS][player][PS_textPlayerTable])
+                self._win.setUiPlayerMoneyCurrency(ui_pos=ui_pos, amount=self.client_data[player][PS_MoneyAvailable], currency=self.client_data[DL_Currency])
+                self._win.setUiPlayerActions(ui_pos=ui_pos, status_text=self.client_data[player][PS_textPlayerTable])
                 self._win.setUiOtherPlayersCards(ui_pos)  # TODO: Show actual cards at end of round
                 # Update the tabs
                 self.set_ui_player_server_connection_statuses(player=player, player_name=player_name)
@@ -164,21 +164,21 @@ class PokerGameClass(NetworkPacketClass, CardDeckClass):
                 self._win.setUiHiddenPlayer(pos=ui_pos, hidden=True)
         # TABLE CARDS
         for card in range(NUMBER_OF_CARDS_ON_TABLE):
-            card_name = self.get_card_name_from_card_number(self.client_data[DL][DL_TableCards][card])
+            card_name = self.get_card_name_from_card_number(self.client_data[DL_TableCards][card])
             self._win.setUiTableCard(card_number=card, card_name=card_name)
         # PLAYER CARDS
         for card in range(NUMBER_OF_CARDS_IN_HAND):
-            card_name = self.get_card_name_from_card_number(self.client_data[PS][self.client_index][PS_PlayerCards][card])
+            card_name = self.get_card_name_from_card_number(self.client_data[self.client_index][PS_PlayerCards][card])
             self._win.setUiEgoPlayerCards(card_number=card, card_name=card_name)
         # GAME STATUSES & HISTORY
         self.add_item_to_table_history()
-        self._win.setTableCenterText(text=self.client_data[DL][DL_textTableCenter])
-        self._win.setNewPotValue(amount=self.client_data[DL][DL_TablePot], currency=self.client_data[DL][DL_Currency])
-        self._win.setUiBurnedCards(number_of_burned_cards=self.client_data[DL][DL_noBurnedCards])
+        self._win.setTableCenterText(text=self.client_data[DL_textTableCenter])
+        self._win.setNewPotValue(amount=self.client_data[DL_TablePot], currency=self.client_data[DL_Currency])
+        self._win.setUiBurnedCards(number_of_burned_cards=self.client_data[DL_noBurnedCards])
         # If it is my turn to decide, update the call/raise button texts, and enable those buttons.
-        if self.client_data[DL][DL_idNextDecision] == self.client_index and not self._win.getActionPlayOrSitOut():
+        if self.client_data[DL_idNextDecision] == self.client_index and not self._win.getActionPlayOrSitOut():
             self._win.setActionButtonsEnabled(True)
-            self._win.setActionCallMoneyAmmount(amount=self.client_data[DL][DL_MinBet], currency=self.client_data[DL][DL_Currency])
+            self._win.setActionCallMoneyAmmount(amount=self.client_data[DL_MinBet], currency=self.client_data[DL_Currency])
             self.set_minimum_maximum_slider_values()
         else:
             self._win.setActionButtonsEnabled(False)
@@ -187,43 +187,43 @@ class PokerGameClass(NetworkPacketClass, CardDeckClass):
 
     def set_ui_player_dealer_icons(self, ui_pos, player):
         # There is only 1 dealer/blind icon spot. So if there are 2 players only and 1 is both dealer and big blind... fuck it.
-        if self.client_data[PS][player][PS_isDealer] is TABLE_STATUS_is_DEALER:
+        if self.client_data[player][PS_isDealer] is TABLE_STATUS_is_DEALER:
             self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name='dealer')
-        elif self.client_data[PS][player][PS_isBlind] is TABLE_STATUS_is_SMALL_BLIND:
+        elif self.client_data[player][PS_isBlind] is TABLE_STATUS_is_SMALL_BLIND:
             self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name='small_blind')
-        elif self.client_data[PS][player][PS_isBlind] is TABLE_STATUS_is_BIG_BLIND:
+        elif self.client_data[player][PS_isBlind] is TABLE_STATUS_is_BIG_BLIND:
             self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name='big_blind')
         else:
             self._win.setUiDealerIcons(ui_pos=ui_pos, dealer_icon_name='')
 
     def add_item_to_table_history(self):
         last_item = self._win.getUiTableHistoryLastRowText()
-        if last_item != self.client_data[DL][DL_textTableCenter] or last_item == '':
-            self._win.setNewTextItemToUiTableHistory(text=self.client_data[DL][DL_textTableCenter])
+        if last_item != self.client_data[DL_textTableCenter] or last_item == '':
+            self._win.setNewTextItemToUiTableHistory(text=self.client_data[DL_textTableCenter])
 
     def set_ui_player_server_connection_statuses(self, player, player_name):
         stat_text = "Disconnected!"
-        if self.client_data[PS][player][PS_ConnectionStatus] is CONN_STATUS_CONNECTED:
+        if self.client_data[player][PS_ConnectionStatus] is CONN_STATUS_CONNECTED:
             stat_text = "Connected!"
         self._win.setUiPlayerConnStatuses(row=player, name=player_name, stat_text=stat_text)
 
     def set_ui_player_money_statuses(self, player, player_name):
-        money_in = self.client_data[PS][player][PS_MoneyBoughtIn]
-        money_left = self.client_data[PS][player][PS_MoneyAvailable]
+        money_in = self.client_data[player][PS_MoneyBoughtIn]
+        money_left = self.client_data[player][PS_MoneyAvailable]
         self._win.setUiPlayerMoneyStatuses(row=player, name=player_name, money_in=money_in, money_left=money_left)
 
     def set_minimum_maximum_slider_values(self):
-        step = self.client_data[DL][DL_BigBlind]
-        min_value = self.client_data[DL][DL_MinBet]
-        max_value = self.client_data[PS][self.client_index][PS_MoneyAvailable]
+        step = self.client_data[DL_BigBlind]
+        min_value = self.client_data[DL_MinBet]
+        max_value = self.client_data[self.client_index][PS_MoneyAvailable]
         self._win.setRaiseScrollBarValues(min=min_value, max=max_value, step=step)
 
     def set_raise_button_text(self):
-        self._win.setActionRaiseMoneyAmount(amount=self._win.getRaiseSliderValue(), currency=self.client_data[DL][DL_Currency])
+        self._win.setActionRaiseMoneyAmount(amount=self._win.getRaiseSliderValue(), currency=self.client_data[DL_Currency])
 
     def change_game_status_on_server(self, status):
         # Normally only the server should start the game. This is a workaround.
-        self.client_data[PC][self.client_index][PC_ClientOverwrite] = status
+        self.client_data[self.client_index][PC_ClientOverwrite] = status
 
 ######################################################################################################
 # 5. Other Logic:
@@ -269,17 +269,22 @@ class PokerGameClass(NetworkPacketClass, CardDeckClass):
     def show_buy_in_window(self):
         buy_in_amount, ok = QInputDialog.getDouble(None, 'Buy-In', 'Enter the amount you want to buy-in:')
         if ok:
-            self.client_data[PC][self.client_index][PC_BuyInReq] = float(buy_in_amount)
+            self.client_data[self.client_index][PC_BuyInReq] = float(buy_in_amount)
 
 ######################################################################################################
 # Dev stuff to make things faster:
 ######################################################################################################
 
     def setDevQuickLaunchSettings(self):
-        self._win.line_user_name.setText('serverUser')
         self._win.line_game_name.setText('SERVER Game')
         self._win.line_starting_ammount.setText('10.0')
         self._win.line_currency.setText('RON')
         self._win.line_join_game_ip.setText(self._win.line_host_game_ip.text())
         self._win.line_join_game_port.setText(self._win.line_host_game_port.text())
 
+    def setDevUserName(self, username, icon_index):
+        self._win.line_user_name.setText(username)
+        self._win.combobox_icon_selection.setCurrentIndex(icon_index)
+
+    def setDevClickPlayButton(self):
+        self._win.action_play_or_sit_out.click()

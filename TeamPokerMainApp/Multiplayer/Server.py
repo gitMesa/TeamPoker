@@ -54,12 +54,12 @@ class MultiplayerServerClass(NetworkPacketClass, CardDeckClass):
 
                         # Are we still connected to this player?
                         if client_data:
-                            self.server_data[PS][client_number][PS_ConnectionStatus] = CONN_STATUS_CONNECTED
+                            self.server_data[client_number][PS_ConnectionStatus] = CONN_STATUS_CONNECTED
                         else:
-                            self.server_data[PS][client_number][PS_ConnectionStatus] = CONN_STATUS_DISCONNECTED
+                            self.server_data[client_number][PS_ConnectionStatus] = CONN_STATUS_DISCONNECTED
 
                         # Copy the clients data onto the server data.
-                        self.server_data[PC][client_number] = client_data[PC][client_number]
+                        self.server_update_from_this_player_data_fields(client_data=client_data, client_id=client_number)
 
                         if client_number == CLIENT_SRV:
                             # The server should theoretically loop through communication with all clients
@@ -93,8 +93,18 @@ class MultiplayerServerClass(NetworkPacketClass, CardDeckClass):
         # 4 blindInterval = self._win.getBlindInterval()
         # tpl = (gameName, startingMoney, currency, bigBlind, blindInterval)
         for player in range(MAX_CLIENTS):
-            self.server_data[PS][player][PS_MoneyAvailable] = rules[1]
-            self.server_data[PS][player][PS_MoneyBoughtIn] = rules[1]
-        self.server_data[DL][DL_GameName] = str(rules[0])
-        self.server_data[DL][DL_Currency] = str(rules[2])
-        self.server_data[DL][DL_BigBlind] = float(rules[3])
+            self.server_data[player][PS_MoneyAvailable] = rules[1]
+            self.server_data[player][PS_MoneyBoughtIn] = rules[1]
+        self.server_data[DL_GameName] = str(rules[0])
+        self.server_data[DL_Currency] = str(rules[2])
+        self.server_data[DL_BigBlind] = float(rules[3])
+
+    def server_update_from_this_player_data_fields(self, client_data, client_id):
+        self.server_data[client_id][PC_Name] = client_data[client_id][PC_Name]
+        self.server_data[client_id][PC_Icon] = client_data[client_id][PC_Icon]
+        self.server_data[client_id][PC_TableSpot] = client_data[client_id][PC_TableSpot]
+        self.server_data[client_id][PC_BuyInReq] = client_data[client_id][PC_BuyInReq]
+        self.server_data[client_id][PC_idPlayerAction] = client_data[client_id][PC_idPlayerAction]
+        self.server_data[client_id][PC_isPlayerPlaying] = client_data[client_id][PC_isPlayerPlaying]
+        self.server_data[client_id][PC_BetAmount] = client_data[client_id][PC_BetAmount]
+        self.server_data[client_id][PC_ClientOverwrite] = client_data[client_id][PC_ClientOverwrite]
