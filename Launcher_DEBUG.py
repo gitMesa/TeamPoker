@@ -44,6 +44,10 @@ class TeamPokerMain:
         self._poker5.join_poker_server()
         self._poker5.setDevClickPlayButton()
 
+        # Server Click Start Game Button
+        self._poker0.setDevClickStartGameButton()
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = TeamPokerMain()

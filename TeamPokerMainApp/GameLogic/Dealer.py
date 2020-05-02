@@ -243,10 +243,11 @@ class DealerClass(HandEvaluatorClass, CardDeckClass):
         return topCard
 
     def dealer_roll_an_order_list(self, player_list, last_player_index):
-        while player_list[-1] != last_player_index:
-            player_list.append(player_list[0])
-            player_list.remove(player_list[0])
-        return player_list
+        input_list = list.copy(player_list)  # To dereference the original list
+        while input_list[-1] != last_player_index:
+            input_list.append(input_list[0])
+            input_list.remove(input_list[0])
+        return input_list
 
     def add_money_to_pot(self, amount):
         self.game_data[DL_TablePot] += float(amount)

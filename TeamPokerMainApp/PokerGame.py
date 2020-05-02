@@ -288,3 +288,6 @@ class PokerGameClass(NetworkPacketClass, CardDeckClass):
 
     def setDevClickPlayButton(self):
         self._win.action_play_or_sit_out.click()
+
+    def setDevClickStartGameButton(self):
+        self._win.button_serverStartGame.click()
